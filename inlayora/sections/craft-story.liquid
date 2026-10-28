@@ -1,0 +1,98 @@
+{%- liquid
+  assign steps = section.blocks
+  assign seconds = section.settings.autoplay
+-%}
+<div class="frame section">
+  <step-player class="sp{% if section.settings.image_right %} sp--flip{% endif %}" data-interval="{{ seconds | times: 1000 }}" style="--dur: {{ seconds }}s">
+    <div class="sp__stage rv">
+      {%- for block in steps -%}
+        {%- assign img = block.settings.image | default: section.settings.image -%}
+        {%- if img -%}
+          {{ img | image_url: width: 1400 | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 900px) 50vw, 100vw', loading: 'lazy', alt: block.settings.title, class: 'sp__img' }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'sp__img placeholder-svg' }}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if steps.size > 1 -%}<span class="sp__count" aria-hidden="true"><b data-step-n>1</b> / {{ steps.size }}</span>{%- endif -%}
+    </div>
+
+    <div class="sp__side rv" style="--i: 1">
+      <h2 class="h-sec">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="sp__lede rte">{{ section.settings.text }}</div>{%- endif -%}
+      <ol class="sp__steps" role="list">
+        {%- for block in steps -%}
+          <li class="{% if forloop.first %}is-on{% endif %}" {{ block.shopify_attributes }}>
+            <button type="button" data-step="{{ forloop.index0 }}" {% if forloop.first %}aria-current="step"{% endif %}>
+              <b>{{ block.settings.title }}</b>
+              {%- if block.settings.text != blank -%}<span>{{ block.settings.text }}</span>{%- endif -%}
+              <i aria-hidden="true"><em></em></i>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ol>
+      {%- if section.settings.button_label != blank -%}<a class="btn btn--accent sp__cta" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+  </step-player>
+</div>
+
+{% stylesheet %}
+  .sp { display: grid; gap: 28px; }
+  @media (min-width: 900px) { .sp { grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; } .sp--flip .sp__stage { order: 2; } }
+  .sp__stage { position: relative; aspect-ratio: 4 / 5; border-radius: var(--r); overflow: hidden; background: var(--step); }
+  .sp__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 700ms ease, transform 1400ms var(--ease-out); }
+  .sp__img:first-child, .sp__img.is-on { opacity: 1; transform: none; }
+  .sp.is-ready .sp__img:not(.is-on) { opacity: 0; transform: scale(1.04); }
+  .sp__count { position: absolute; left: 14px; bottom: 14px; background: var(--paper); border-radius: 999px; padding: 5px 12px; font-size: var(--s-small); font-variant-numeric: tabular-nums; }
+  .sp__lede { color: var(--muted); margin: 12px 0 22px; max-width: 52ch; }
+  .sp__steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .sp__steps button { width: 100%; text-align: left; display: grid; gap: 2px; padding: 14px 16px 16px; border-radius: 12px; transition: background-color 250ms ease; }
+  .sp__steps b { font-weight: 500; font-size: var(--s-lead); letter-spacing: -0.01em; }
+  .sp__steps span { font-size: var(--s-small); color: var(--muted); display: grid; grid-template-rows: 0fr; opacity: 0; transition: opacity 300ms ease; max-height: 0; overflow: hidden; }
+  .sp__steps i { display: block; height: 3px; border-radius: 3px; background: rgba(0, 0, 0, 0.08); margin-top: 10px; overflow: hidden; }
+  .sp__steps em { display: block; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+  .sp__steps li.is-on button { background: var(--paper); }
+  .sp__steps li.is-on span { max-height: 80px; opacity: 1; }
+  .sp__steps li.is-done em { transform: scaleX(1); }
+  .sp.is-playing .sp__steps li.is-on em { animation: sp-fill var(--dur, 4.5s) linear forwards; }
+  @media (hover: hover) and (pointer: fine) { .sp__steps li:not(.is-on) button:hover { background: var(--step); } }
+  .sp__cta { margin-top: 24px; }
+  @keyframes sp-fill { to { transform: scaleX(1); } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Craft steps",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How each piece is made" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Four steps, about five days, one pair of hands per piece.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Fallback image", "info": "Used for any step without its own image." },
+    { "type": "range", "id": "autoplay", "label": "Seconds per step", "min": 3, "max": 9, "step": 1, "unit": "s", "default": 5 },
+    { "type": "checkbox", "id": "image_right", "label": "Image on the right", "default": false },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Step",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Choose the wood" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Seasoned mango wood is cut into border strips." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Craft steps",
+      "blocks": [
+        { "type": "point" },
+        { "type": "point", "settings": { "title": "Join the border", "text": "Strips are joined by hand into a 12 mm round frame." } },
+        { "type": "point", "settings": { "title": "Set the artwork", "text": "The pattern is printed and laid into the frame." } },
+        { "type": "point", "settings": { "title": "Seal and cure", "text": "Lacquer coats it glossy and water-resistant." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

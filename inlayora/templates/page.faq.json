@@ -1,0 +1,108 @@
+{
+  "sections": {
+    "products": {
+      "type": "faq",
+      "settings": {
+        "heading": "Products & care",
+        "text": "",
+        "show_whatsapp": false,
+        "open_first": true,
+        "schema_markup": true
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Will my piece look like the photos?",
+            "answer": "<p>The final print matches the exact artwork shown in the product photos. Because every piece is handmade from natural wood, the grain and tone can differ slightly from the photos, which gives each one its own character.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What are the trays made of?",
+            "answer": "<p>A handmade mango wood border on a durable MDF base, finished with a protective lacquer coating for a water-resistant, high-gloss surface.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for my tray?",
+            "answer": "<p>Gently clean the surface with a smooth cloth. Keep it away from sharp objects and fire, and avoid rough cloths that can scratch the finish.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I order a custom size or print?",
+            "answer": "<p>Yes. Contact us with the size or design you have in mind and we'll be happy to create a personalised piece for your space.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ]
+    },
+    "orders": {
+      "type": "faq",
+      "settings": {
+        "heading": "Orders, shipping & returns",
+        "text": "Still have a question? Contact us and we'll help.",
+        "show_whatsapp": true,
+        "open_first": false,
+        "schema_markup": true
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Are any purchases final sale?",
+            "answer": "<p>We are unable to accept returns on certain items. These will be carefully marked before purchase.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "When will I get my order?",
+            "answer": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How much does shipping cost?",
+            "answer": "<p>Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Where are your products made?",
+            "answer": "<p>Each piece is handmade by skilled artisans. We carefully select our manufacturing partners to ensure our products are high quality and a fair value.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    }
+  },
+  "order": [
+    "products",
+    "orders"
+  ]
+}

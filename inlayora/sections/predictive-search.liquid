@@ -1,0 +1,34 @@
+{%- if predictive_search.performed -%}
+  <div class="ps" data-predictive-results>
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <ul class="ps__list" role="list">
+        {%- for product in predictive_search.resources.products -%}
+          <li>
+            <a class="ps__item" href="{{ product.url }}">
+              {%- if product.featured_image -%}{{ product.featured_image | image_url: width: 120, height: 120, crop: 'center' | image_tag: alt: '', loading: 'lazy' }}{%- endif -%}
+              <span><b>{{ product.title }}</b>{% render 'price', target: product, show_from: true %}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <a class="btn btn--paper" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&type=product">{{ 'search.view_all' | t: terms: predictive_search.terms }}</a>
+    {%- else -%}
+      <p class="small">{{ 'search.no_results_html' | t: terms: predictive_search.terms }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .ps__list { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 6px; }
+  .ps__item { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: center; padding: 6px; border-radius: 12px; transition: background-color 160ms ease; }
+  .ps__item:hover, .ps__item:focus-visible { background: var(--step); }
+  .ps__item img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; }
+  .ps__item b { display: block; font-weight: 500; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": []
+}
+{% endschema %}

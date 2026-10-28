@@ -1,0 +1,298 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "settings": {
+        "image": "shopify://shop_images/inlayora-hero-tray-living-room.webp",
+        "mobile_focus": 75,
+        "height": "tall",
+        "overlay": true,
+        "heading": "Handmade trays & tables",
+        "text": "Solid mango wood, finished by artisans in India. Trays from ₹849, side tables ₹2,399.",
+        "button_1_label": "Shop serving trays",
+        "button_1_link": "shopify://collections/elegant-serving-trays",
+        "button_2_label": "Shop side tables",
+        "button_2_link": "shopify://collections/mastercrafted-tables",
+        "show_trust": true
+      }
+    },
+    "pieces": {
+      "type": "shop-by-piece",
+      "blocks": {
+        "trays": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/inlayora-serving-tray-ottoman.webp",
+            "title": "Serving trays",
+            "text": "104 designs · 3 sizes · from ₹849",
+            "link": "shopify://collections/elegant-serving-trays",
+            "button_1_label": "Shop trays",
+            "button_2_label": "Size guide",
+            "button_2_link": "",
+            "tone": "f3"
+          }
+        },
+        "tables": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/inlayora-side-table-sofa.webp",
+            "title": "Side tables",
+            "text": "380+ designs · ₹2,399",
+            "link": "shopify://collections/mastercrafted-tables",
+            "button_1_label": "Shop tables",
+            "button_2_label": "Details",
+            "button_2_link": "",
+            "tone": "f2"
+          }
+        }
+      },
+      "block_order": [
+        "trays",
+        "tables"
+      ],
+      "settings": {
+        "heading": "Shop by piece"
+      }
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Bestsellers",
+        "text": "The designs our customers order most, each one handmade to order.",
+        "collection": "our-best-sellers",
+        "limit": 9,
+        "feature_first": true,
+        "show_view_all": true
+      }
+    },
+    "promises": {
+      "type": "promise-cards",
+      "blocks": {
+        "p1": {
+          "type": "card",
+          "settings": {
+            "title": "Made by hand",
+            "stat": "100%",
+            "stat_label": "handmade in India",
+            "text": "Each border is cut and joined from solid mango wood by artisans.",
+            "tone": "f1"
+          }
+        },
+        "p2": {
+          "type": "card",
+          "settings": {
+            "title": "Sealed to last",
+            "stat": "12 mm",
+            "stat_label": "solid wood border",
+            "text": "Lacquer-sealed surface: glossy, water-resistant, easy to wipe.",
+            "tone": "f2"
+          }
+        },
+        "p3": {
+          "type": "card",
+          "settings": {
+            "title": "Delivered with care",
+            "stat": "₹999",
+            "stat_label": "free delivery above",
+            "text": "Packed in layers, dispatched in 2–3 days. COD available.",
+            "tone": "f3"
+          }
+        },
+        "p4": {
+          "type": "card",
+          "settings": {
+            "title": "Easy returns",
+            "stat": "7 days",
+            "stat_label": "replacement or refund",
+            "text": "Arrived damaged? We replace it free or refund in full.",
+            "tone": "f4"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "heading": "Made to be used daily",
+        "text": "Pieces built for tea, snacks and dinner parties, with service that takes the risk out of ordering online."
+      }
+    },
+    "new": {
+      "type": "tagged-collection",
+      "settings": {
+        "heading": "New this month",
+        "collection": "curated-new-arrivals",
+        "limit": 8
+      }
+    },
+    "story": {
+      "type": "craft-story",
+      "blocks": {
+        "s1": {
+          "type": "point",
+          "settings": {
+            "image": "shopify://shop_images/Sunlit_Artisan_Woodworking_Bench.webp",
+            "title": "Choose the wood",
+            "text": "Seasoned mango wood is cut into border strips."
+          }
+        },
+        "s2": {
+          "type": "point",
+          "settings": {
+            "image": "shopify://shop_images/Craftsman_Joining_a_Wooden_Tray_Ring.webp",
+            "title": "Join the border",
+            "text": "Strips are joined by hand into a 12 mm round frame."
+          }
+        },
+        "s3": {
+          "type": "point",
+          "settings": {
+            "image": "shopify://shop_images/Rustic_Wooden_Tray_Assembly_c845b72a-7f60-49b4-8391-572b2534f5b9.webp",
+            "title": "Set the artwork",
+            "text": "The pattern is printed and laid into the frame."
+          }
+        },
+        "s4": {
+          "type": "point",
+          "settings": {
+            "image": "shopify://shop_images/Glossy_Leaf-Inlay_Wooden_Serving_Tray_aa455f77-2898-451d-9a36-e79203cf1a95.webp",
+            "title": "Seal and cure",
+            "text": "Lacquer coats it glossy, water-resistant and easy to wipe."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "heading": "How each piece is made",
+        "text": "<p>Four steps, about five days, one pair of hands per piece.</p>",
+        "autoplay": 5,
+        "image_right": false,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "quote",
+          "settings": {
+            "quote": "Looks even better in person. The border feels solid and the glossy top wipes clean. Guests always ask about it.",
+            "name": "Priya S.",
+            "detail": "Bengaluru · 16\" tray",
+            "rating": 5
+          }
+        },
+        "r2": {
+          "type": "quote",
+          "settings": {
+            "quote": "Right size beside the sofa and light enough to move. It arrived very well packed.",
+            "name": "Rahul M.",
+            "detail": "Pune · side table",
+            "rating": 5
+          }
+        },
+        "r3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Bought two as Diwali gifts and kept one. Delivered in five days, paid cash on delivery.",
+            "name": "Ananya K.",
+            "detail": "Delhi · 12\" tray",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "What buyers say",
+        "text": "Sample reviews for the demo. Replace with your reviews app block.",
+        "show_quotes": true
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Will my piece look like the photos?",
+            "answer": "<p>The final print matches the exact artwork shown in the product photos. Because every piece is handmade from natural wood, the grain and tone can differ slightly from the photos, which gives each one its own character.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What are the trays made of?",
+            "answer": "<p>A handmade mango wood border on a durable MDF base, finished with a protective lacquer coating for a water-resistant, high-gloss surface.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "When will I get my order?",
+            "answer": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How much does shipping cost?",
+            "answer": "<p>Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "heading": "Before you order",
+        "text": "Still have a question? Contact us and we'll help.",
+        "show_whatsapp": true,
+        "open_first": true,
+        "schema_markup": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "pieces",
+    "bestsellers",
+    "promises",
+    "new",
+    "story",
+    "reviews",
+    "faq"
+  ]
+}

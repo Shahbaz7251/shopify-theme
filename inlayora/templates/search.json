@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-search",
+      "settings": {
+        "collection": "our-best-sellers"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

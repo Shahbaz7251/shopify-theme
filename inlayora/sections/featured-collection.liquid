@@ -1,0 +1,51 @@
+{%- liquid
+  assign coll = section.settings.collection
+  assign limit = section.settings.limit
+-%}
+<div class="frame section">
+  <div class="sec-head rv">
+    <div>
+      <h2 class="h-sec">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="body">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    {%- if coll and section.settings.show_view_all -%}
+      <a class="btn btn--paper" href="{{ coll.url }}">{{ 'general.view_all' | t }}</a>
+    {%- endif -%}
+  </div>
+
+  <div class="spec-grid{% if section.settings.feature_first %} spec-grid--feature{% endif %}">
+    {%- if coll and coll.products_count > 0 -%}
+      {%- for product in coll.products limit: limit -%}
+        {% render 'product-card', product: product, index: forloop.index0 %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        <div class="card"><div class="card__tile f{{ i | modulo: 3 | plus: 1 }}">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div><span class="card__name">{{ 'general.sample_product' | t }}</span></div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  @media (min-width: 900px) {
+    .spec-grid--feature > .card:first-child { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
+    .spec-grid--feature > .card:first-child .card__wrap { flex: 1; display: flex; }
+    .spec-grid--feature > .card:first-child .card__tile { flex: 1; aspect-ratio: auto; min-height: 420px; }
+  }
+  @media (max-width: 899px) { .spec-grid--feature > .card:first-child { grid-column: span 2; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Bestsellers" },
+    { "type": "text", "id": "text", "label": "Text", "default": "The designs our customers order most, each one handmade to order." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products", "min": 4, "max": 16, "step": 1, "default": 9 },
+    { "type": "checkbox", "id": "feature_first", "label": "Make the first product large", "default": true },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show View all button", "default": true }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

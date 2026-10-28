@@ -1,0 +1,18 @@
+<article class="frame page-main">
+  <h1 class="h-sec">{{ page.title }}</h1>
+  <div class="rte page-main__body">{{ page.content }}</div>
+</article>
+
+{% stylesheet %}
+  .page-main { padding-top: 32px; }
+  .page-main__body { margin-top: 24px; max-width: 72ch; }
+  .page-main__body table { width: 100%; border-collapse: collapse; }
+  .page-main__body th, .page-main__body td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--step); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Page content",
+  "settings": []
+}
+{% endschema %}

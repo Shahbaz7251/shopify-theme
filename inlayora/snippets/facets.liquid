@@ -1,0 +1,117 @@
+{% doc %}
+  Renders storefront filters and sorting for a collection or search results as a GET form.
+  On phones the filters open in a drawer; on desktop they sit in a sidebar.
+
+  @param {object} results - The collection or search object
+  @param {string} [terms] - Search terms to keep when filtering search results
+
+  @example
+  {% render 'facets', results: collection %}
+{% enddoc %}
+
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign active_count = 0
+  for filter in results.filters
+    assign active_count = active_count | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      if filter.min_value.value != null or filter.max_value.value != null
+        assign active_count = active_count | plus: 1
+      endif
+    endif
+  endfor
+-%}
+<form class="facets" data-facets-form method="get">
+  {%- if terms -%}
+    <input type="hidden" name="q" value="{{ terms | escape }}">
+    <input type="hidden" name="type" value="product">
+  {%- endif -%}
+
+  <div class="facets__bar">
+    <button type="button" class="btn btn--paper facets__open" data-open="filters">
+      {% render 'icon', name: 'filter' %}{{ 'collections.filters' | t }}{% if active_count > 0 %} ({{ active_count }}){% endif %}
+    </button>
+    <p class="small facets__count">{%- assign result_count = results.products_count | default: results.results_count | default: 0 -%}{{ 'collections.product_count' | t: count: result_count }}</p>
+    <label class="facets__sort">
+      <span class="visually-hidden">{{ 'collections.sort_by' | t }}</span>
+      <select name="sort_by" class="field">
+        {%- for option in results.sort_options -%}
+          <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+        {%- endfor -%}
+      </select>
+    </label>
+  </div>
+
+  {%- if active_count > 0 -%}
+    <div class="facets__active">
+      {%- for filter in results.filters -%}
+        {%- for value in filter.active_values -%}
+          <a class="facets__pill" href="{{ value.url_to_remove }}">{{ value.label }} {% render 'icon', name: 'close' %}</a>
+        {%- endfor -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+            <a class="facets__pill" href="{{ filter.url_to_remove }}">{{ filter.min_value.value | default: 0 | money_without_trailing_zeros }}–{{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros }} {% render 'icon', name: 'close' %}</a>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <a class="facets__clear" href="{{ results.url | default: routes.search_url }}{% if terms %}?q={{ terms | url_encode }}&type=product{% endif %}">{{ 'collections.clear_all' | t }}</a>
+    </div>
+  {%- endif -%}
+
+  <aside class="drawer drawer--left facets__drawer" data-panel="filters" aria-label="{{ 'collections.filters' | t }}" inert>
+    <div class="drawer__head">
+      <h2>{{ 'collections.filters' | t }}</h2>
+      <button class="icon-btn" type="button" data-close aria-label="{{ 'header.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </div>
+    <div class="drawer__body acc">
+      {%- for filter in results.filters -%}
+        <details class="q facet" {% if forloop.index <= 2 or filter.active_values.size > 0 %}open{% endif %}>
+          <summary>{{ filter.label }}<span class="pm" aria-hidden="true"></span></summary>
+          <div class="q__a">
+            {%- case filter.type -%}
+              {%- when 'price_range' -%}
+                <div class="facet__price">
+                  <label><span class="small">{{ 'collections.from' | t }}</span><input class="field" type="number" inputmode="numeric" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | remove: ',' }}" placeholder="0" min="0"></label>
+                  <label><span class="small">{{ 'collections.to' | t }}</span><input class="field" type="number" inputmode="numeric" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | remove: ',' }}" placeholder="{{ filter.range_max | money_without_currency | remove: ',' }}" min="0"></label>
+                </div>
+              {%- when 'boolean' -%}
+                {%- for value in filter.values -%}
+                  <label class="facet__opt"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}><span>{{ value.label }}</span></label>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for value in filter.values -%}
+                  <label class="facet__opt{% if value.count == 0 and value.active == false %} is-empty{% endif %}">
+                    <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                    <span>{{ value.label }}</span><span class="small">{{ value.count }}</span>
+                  </label>
+                {%- endfor -%}
+            {%- endcase -%}
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+    <div class="drawer__foot">
+      <button type="submit" class="btn btn--accent btn--block">{{ 'collections.show_results' | t }}</button>
+    </div>
+  </aside>
+  <noscript><button type="submit" class="btn btn--paper">{{ 'collections.apply' | t }}</button></noscript>
+</form>
+
+{% stylesheet %}
+  .facets__bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+  .facets__open .icon { width: 18px; height: 18px; }
+  .facets__count { margin: 0 auto 0 4px; }
+  .facets__sort select { min-height: 46px; padding: 0 40px 0 16px; border-radius: 999px; appearance: none; background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1c1c' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 16px; cursor: pointer; }
+  .facets__active { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+  .facets__pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px 7px 14px; border-radius: 999px; background: var(--f2); font-size: var(--s-small); font-weight: 500; }
+  .facets__pill .icon { width: 14px; height: 14px; }
+  .facets__clear { font-size: var(--s-small); text-decoration: underline; text-underline-offset: 3px; }
+  .facet__opt { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
+  .facet__opt input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .facet.q[open] { background: var(--step); color: var(--ink); }
+  .facet__opt .small { margin-left: auto; }
+  .facet__opt.is-empty { opacity: 0.45; }
+  .facet__price { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .facet__price .field { color: var(--ink); }
+  .facets__drawer .drawer__body { padding-top: 4px; padding-bottom: 16px; }
+{% endstylesheet %}

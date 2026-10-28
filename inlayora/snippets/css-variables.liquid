@@ -1,0 +1,29 @@
+{% doc %}
+  Outputs the brand font faces and the colour, layout and type tokens as CSS custom properties.
+
+  @example
+  {% render 'css-variables' %}
+{% enddoc %}
+
+{% style %}
+  @font-face { font-family: "Chillax"; src: url("{{ 'chillax-400.woff2' | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Chillax"; src: url("{{ 'chillax-500.woff2' | asset_url }}") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Chillax"; src: url("{{ 'chillax-600.woff2' | asset_url }}") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+
+  :root {
+    --bg: {{ settings.color_background }};
+    --paper: {{ settings.color_paper }};
+    --step: {{ settings.color_step }};
+    --ink: {{ settings.color_text }};
+    --muted: {{ settings.color_muted }};
+    --accent: {{ settings.color_accent }};
+    --accent-ink: {{ settings.color_accent_text }};
+    --accent-hover: {{ settings.color_accent | color_lighten: 6 }};
+    --f1: {{ settings.color_field_1 }};
+    --f2: {{ settings.color_field_2 }};
+    --f3: {{ settings.color_field_3 }};
+    --max: {{ settings.page_width }}px;
+    --r: {{ settings.corner_radius }}px;
+    --r-sm: {{ settings.corner_radius | times: 0.75 | round }}px;
+  }
+{% endstyle %}

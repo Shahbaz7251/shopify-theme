@@ -1,0 +1,86 @@
+{%- liquid
+  assign app_blocks = section.blocks | where: 'type', '@app'
+  assign questions = section.blocks | where: 'type', 'question'
+  assign initials = shop.name | downcase | slice: 0, 2
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+-%}
+<div class="frame section pxs" id="reviews">
+  <div class="sec-head">
+    <div>
+      <h2 class="h-sec">{{ section.settings.heading }}</h2>
+      {%- if rating and rating_count > 0 -%}
+        <p class="body">{{ 'products.rating_summary' | t: rating: rating.rating, count: rating_count }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="mk">
+    <div class="acc">
+      {%- for block in app_blocks -%}<div class="app-slot mk__reviews" {{ block.shopify_attributes }}>{% render block %}</div>{%- endfor -%}
+      {%- if app_blocks.size == 0 and section.settings.show_reviews_placeholder -%}
+        <div class="mk__empty f0"><b>{{ 'products.reviews_title' | t }}</b><span class="small">{{ 'products.reviews_empty' | t }}</span></div>
+      {%- endif -%}
+      {%- for block in questions -%}
+        <details class="q" name="mk-{{ section.id }}" {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }}<span class="pm" aria-hidden="true"></span></summary>
+          <div class="q__a rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    <aside class="mk__card {{ section.settings.tone }}">
+      <div class="mk__who">
+        <span aria-hidden="true">{{ initials }}</span>
+        <div><b>{{ section.settings.title }}</b><div class="small">{{ section.settings.subtitle }}</div></div>
+      </div>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if settings.whatsapp_number != blank -%}
+        <a class="btn btn--paper" href="https://wa.me/{{ settings.whatsapp_number }}?text={{ 'products.whatsapp_text' | t: title: product.title | url_encode }}" target="_blank" rel="noopener">{% render 'icon', name: 'whatsapp' %}{{ 'header.whatsapp' | t }}</a>
+      {%- elsif settings.contact_email != blank -%}
+        <a class="btn btn--paper" href="mailto:{{ settings.contact_email }}">{{ 'products.ask_question' | t }}</a>
+      {%- endif -%}
+    </aside>
+  </div>
+</div>
+
+{% stylesheet %}
+  .mk { display: grid; gap: 12px; }
+  @media (min-width: 900px) { .mk { grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; } }
+  .mk__card { border-radius: var(--r); padding: 22px; display: grid; gap: 14px; align-content: start; }
+  .mk__card .btn { justify-self: start; }
+  .mk__card .btn .icon { width: 18px; height: 18px; }
+  .mk__who { display: flex; gap: 14px; align-items: center; }
+  .mk__who > span { width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 600; letter-spacing: -0.04em; flex: none; }
+  .mk__who b { font-weight: 500; }
+  .mk__empty { border-radius: var(--r); padding: 20px 22px; display: grid; gap: 6px; }
+  .mk__empty b { font-weight: 500; }
+  .mk__reviews { background: var(--paper); border-radius: var(--r); padding: 16px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Reviews & questions",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews & questions" },
+    { "type": "checkbox", "id": "show_reviews_placeholder", "label": "Show reviews placeholder", "info": "Shown until a reviews app block is added.", "default": false },
+    { "type": "header", "content": "Workshop note" },
+    { "type": "select", "id": "tone", "label": "Card colour", "options": [{ "value": "f1", "label": "Slate" }, { "value": "f2", "label": "Sage" }, { "value": "f3", "label": "Blush" }, { "value": "f0", "label": "Stone" }], "default": "f1" },
+    { "type": "text", "id": "title", "label": "Title", "default": "From the Inlayora workshop" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Handmade in India" },
+    { "type": "richtext", "id": "text", "label": "Note", "default": "<p>Every tray is cut, joined and sealed by hand, so the wood grain on yours will be slightly different from the photos. The printed artwork matches exactly. Need a custom size or print? Ask us.</p>" }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Will my tray look like the photos?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>The printed artwork matches the photos. The mango wood grain and tone vary slightly because each piece is handmade.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Reviews & questions" }],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

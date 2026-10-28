@@ -1,0 +1,66 @@
+{% doc %}
+  Renders a product as a colour tile with name, short fact, price and a quick add button.
+
+  @param {product} product - The product to render
+  @param {number} [index] - Position in the grid; picks the tile colour and reveal delay
+  @param {boolean} [eager] - Load the image eagerly (first row above the fold)
+
+  @example
+  {% render 'product-card', product: product, index: forloop.index0 %}
+{% enddoc %}
+
+{%- liquid
+  assign i = index | default: 0
+  assign tone = i | modulo: 4
+  case tone
+    when 0
+      assign field = 'f3'
+    when 1
+      assign field = 'f2'
+    when 2
+      assign field = 'f1'
+    else
+      assign field = 'f0'
+  endcase
+  assign delay = i | modulo: 4
+  assign img = product.featured_media.preview_image
+  assign alt_img = product.media[1].preview_image
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+  assign fact = product.metafields.custom.short_fact.value | default: product.type
+  assign first_available = product.selected_or_first_available_variant
+  assign img_alt = img.alt | default: product.title | escape
+-%}
+<article class="card rv" style="--i: {{ delay }}">
+  <div class="card__wrap">
+    <a class="card__tile {{ field }}" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+      {%- if img -%}
+        {{ img | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 25vw, 50vw', loading: loading, alt: img_alt }}
+        {%- if alt_img -%}
+          {{ alt_img | image_url: width: 900 | image_tag: class: 'card__alt', widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 25vw, 50vw', loading: 'lazy', alt: '' }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+    {%- unless product.available -%}
+      <span class="card__badge">{{ 'products.sold_out' | t }}</span>
+    {%- endunless -%}
+    {%- if product.available -%}
+      {%- if product.has_only_default_variant -%}
+        <button type="button" class="card__add" data-quick-add="{{ first_available.id }}" aria-label="{{ 'products.add_named' | t: title: product.title | escape }}">
+          {% render 'icon', name: 'plus' %}{{ 'products.add_short' | t }}
+        </button>
+      {%- else -%}
+        <a class="card__add" href="{{ product.url }}" aria-label="{{ 'products.choose_named' | t: title: product.title | escape }}">{{ 'products.choose_short' | t }}</a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  <a class="card__name" href="{{ product.url }}">{{ product.title }}</a>
+  <div class="card__fact">
+    <span>{{ fact }}</span>
+    {% render 'price', target: product, show_from: true %}
+  </div>
+</article>

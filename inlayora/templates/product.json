@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "card_tone": "f3",
+        "gallery_tag": "Handmade in India",
+        "fit_link": "Not sure? See it to scale",
+        "show_buy_now": true
+      }
+    },
+    "highlights": {
+      "type": "product-highlights",
+      "settings": {
+        "heading": "Why it earns a place on your table"
+      },
+      "blocks": {
+        "h1": {
+          "type": "highlight",
+          "settings": {
+            "title": "Wipes clean",
+            "text": "Lacquer-sealed, water-resistant gloss. Spills come off with a soft cloth.",
+            "tone": "f2"
+          }
+        },
+        "h2": {
+          "type": "highlight",
+          "settings": {
+            "title": "Real mango wood",
+            "text": "A 12 mm solid wood border, joined by hand. Every grain is different.",
+            "tone": "f3"
+          }
+        },
+        "h3": {
+          "type": "highlight",
+          "settings": {
+            "title": "Sits steady",
+            "text": "Rigid base with rubber feet that protect your table.",
+            "tone": "f1"
+          }
+        },
+        "h4": {
+          "type": "highlight",
+          "settings": {
+            "title": "A gift that gets used",
+            "text": "For housewarmings, weddings and anniversaries.",
+            "tone": "f0"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ]
+    },
+    "fit": {
+      "type": "product-fit",
+      "settings": {
+        "heading": "Will it fit?",
+        "summary": "See each size to scale on an ottoman",
+        "open": false,
+        "text": "Drawn to scale on a typical 60 cm ottoman, with a mug for reference.",
+        "surface_label": "Ottoman, about 60 cm",
+        "surface_cm": 60
+      }
+    },
+    "maker": {
+      "type": "product-maker",
+      "settings": {
+        "heading": "Reviews & questions",
+        "show_reviews_placeholder": false,
+        "tone": "f1",
+        "title": "From the Inlayora workshop",
+        "subtitle": "Handmade in India"
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Will my tray look like the photos?",
+            "answer": "<p>The printed artwork matches the photos. The mango wood grain and tone vary slightly because each piece is handmade.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Can it get wet?",
+            "answer": "<p>The surface is water-resistant. Wipe spills promptly with a soft cloth.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "When will it arrive?",
+            "answer": "<p>Made and dispatched in 2–3 working days, usually delivered in 5–7 days with tracking.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ]
+    },
+    "related": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Complete the set",
+        "intent": "related",
+        "limit": 4
+      }
+    }
+  },
+  "order": [
+    "main",
+    "fit",
+    "highlights",
+    "related",
+    "maker"
+  ]
+}

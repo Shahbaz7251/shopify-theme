@@ -1,0 +1,136 @@
+{%- liquid
+  assign wordmark = section.settings.wordmark | default: shop.name | downcase
+-%}
+<footer class="foot">
+  {%- if section.blocks.size > 0 -%}
+    <ul class="foot__trust" role="list">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          {% render 'icon', name: block.settings.icon %}
+          <span><b>{{ block.settings.title }}</b>{{ block.settings.text }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <div class="foot__main">
+    <div class="foot__news">
+      <h2 class="h-sub">{{ section.settings.news_heading }}</h2>
+      {%- if section.settings.news_text != blank -%}<p>{{ section.settings.news_text }}</p>{%- endif -%}
+      {%- form 'customer', class: 'foot__form', id: 'FooterNewsletter' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="form-success" role="status">{{ 'footer.subscribed' | t }}</p>
+        {%- else -%}
+          <div class="foot__field">
+            <label class="visually-hidden" for="FooterEmail">{{ 'contact.email' | t }}</label>
+            <input id="FooterEmail" type="email" name="contact[email]" placeholder="{{ 'footer.email_placeholder' | t }}" autocomplete="email" required>
+            <button class="btn btn--accent" type="submit">{{ 'footer.subscribe' | t }}</button>
+          </div>
+          {%- if form.errors -%}<p class="form-error" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    {%- assign menus = 'menu_1,menu_2,menu_3' | split: ',' -%}
+    {%- for key in menus -%}
+      {%- assign menu = section.settings[key] -%}
+      <nav class="foot__col" aria-label="{{ menu.title | default: key | escape }}">
+        {%- if menu.links.size > 0 -%}
+          <h2 class="foot__h">{{ menu.title }}</h2>
+          <ul role="list">{%- for link in menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+        {%- else -%}
+          {%- case forloop.index -%}
+            {%- when 1 -%}
+              <h2 class="foot__h">{{ 'footer.shop' | t }}</h2>
+              <ul role="list">
+                {%- for c in collections limit: 5 -%}{%- if c.handle != 'frontpage' and c.products_count > 0 -%}<li><a href="{{ c.url }}">{{ c.title }}</a></li>{%- endif -%}{%- endfor -%}
+              </ul>
+            {%- when 2 -%}
+              <h2 class="foot__h">{{ 'footer.help' | t }}</h2>
+              <ul role="list">
+                <li><a href="{{ routes.search_url }}">{{ 'header.search' | t }}</a></li>
+                {%- for policy in shop.policies -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endfor -%}
+              </ul>
+            {%- else -%}
+              <h2 class="foot__h">{{ wordmark }}</h2>
+              <ul role="list">
+                {%- if settings.whatsapp_number != blank -%}<li><a href="https://wa.me/{{ settings.whatsapp_number }}" target="_blank" rel="noopener">WhatsApp</a></li>{%- endif -%}
+                {%- if settings.contact_email != blank -%}<li><a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></li>{%- endif -%}
+                {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a></li>{%- endif -%}
+                {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook</a></li>{%- endif -%}
+                {%- if settings.social_pinterest != blank -%}<li><a href="{{ settings.social_pinterest }}" target="_blank" rel="noopener">Pinterest</a></li>{%- endif -%}
+              </ul>
+          {%- endcase -%}
+        {%- endif -%}
+      </nav>
+    {%- endfor -%}
+  </div>
+
+  <div class="foot__mark">
+    <div class="foot__row">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ wordmark | capitalize }}. {{ 'footer.rights' | t }}</span>
+      {%- if section.settings.legal_menu.links.size > 0 -%}
+        <span class="foot__legal">{%- for link in section.settings.legal_menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}</span>
+      {%- endif -%}
+    </div>
+    <p class="foot__word" aria-hidden="true">{{ wordmark }}</p>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .foot { padding: 120px 8px 8px; display: grid; gap: 8px; }
+  .foot__trust { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .foot__trust li { display: flex; gap: 12px; align-items: center; background: var(--paper); border-radius: var(--r); padding: 16px 18px; font-size: var(--s-small); color: var(--muted); }
+  .foot__trust .icon { color: var(--accent); }
+  .foot__trust b { display: block; font-weight: 500; color: var(--ink); font-size: 0.9375rem; }
+  .foot__main { background: var(--paper); border-radius: var(--r); padding: 32px 22px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
+  .foot__news { grid-column: 1 / -1; }
+  .foot__news p { color: var(--muted); margin: 8px 0 16px; max-width: 34ch; }
+  .foot__field { display: flex; gap: 6px; background: var(--step); border-radius: 999px; padding: 5px; max-width: 400px; }
+  .foot__field input { flex: 1; min-width: 0; border: 0; background: none; outline: 0; padding: 0 14px; font-size: 1rem; }
+  .foot__field .btn { min-height: 44px; padding: 0 20px; }
+  .foot__h { font-size: 0.9375rem; font-weight: 500; letter-spacing: 0; margin-bottom: 12px; }
+  .foot__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: var(--s-small); color: var(--muted); }
+  .foot__col a { transition: color 160ms ease; }
+  .foot__col a:hover { color: var(--ink); }
+  .foot__mark { background: var(--f2); border-radius: var(--r); overflow: hidden; padding: 20px 22px 0; }
+  .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: var(--s-small); color: var(--muted); }
+  .foot__legal { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .foot__legal a:hover { color: var(--ink); }
+  .foot__word { margin: 18px 0 0; font-weight: 600; letter-spacing: -0.06em; line-height: 0.8; font-size: clamp(4.5rem, 1rem + 18vw, 16rem); color: var(--accent); text-align: center; height: 0.7em; overflow: hidden; user-select: none; }
+  @media (min-width: 900px) {
+    .foot { padding: 160px 12px 12px; }
+    .foot__trust { grid-template-columns: repeat(4, 1fr); }
+    .foot__main { grid-template-columns: 1.3fr repeat(3, 1fr); padding: 40px; }
+    .foot__news { grid-column: auto; }
+    .foot__mark { padding: 24px 28px 0; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "inlayora", "info": "The large name at the bottom." },
+    { "type": "text", "id": "news_heading", "label": "Newsletter heading", "default": "New designs, first" },
+    { "type": "text", "id": "news_text", "label": "Newsletter text", "default": "Early access to new patterns and festive drops. No spam." },
+    { "type": "link_list", "id": "menu_1", "label": "Column 1 menu", "info": "Leave empty to list your collections." },
+    { "type": "link_list", "id": "menu_2", "label": "Column 2 menu", "info": "Leave empty to list your policies." },
+    { "type": "link_list", "id": "menu_3", "label": "Column 3 menu", "info": "Leave empty to show contact and social links." },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal links menu" }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust point",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "truck", "label": "Delivery" }, { "value": "cash", "label": "Cash" }, { "value": "return", "label": "Returns" }, { "value": "shield", "label": "Secure" }, { "value": "check", "label": "Check" }], "default": "truck" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free delivery" },
+        { "type": "text", "id": "text", "label": "Text", "default": "On orders over ₹999" }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+{% doc %}
+  Renders a product or variant price with an optional "from" prefix and compare-at price.
+
+  @param {object} target - A product or variant
+  @param {boolean} [show_from] - Prefix "from" when a product's prices vary
+
+  @example
+  {% render 'price', target: product, show_from: true %}
+{% enddoc %}
+
+{%- liquid
+  assign price = target.price
+  assign compare = target.compare_at_price
+  assign varies = false
+  if show_from and target.price_varies
+    assign varies = true
+    assign price = target.price_min
+    assign compare = target.compare_at_price_min
+  endif
+-%}
+<span class="price">
+  {%- if varies %}{{ 'products.from' | t }} {% endif -%}
+  {{ price | money }}
+  {%- if compare > price %}<s><span class="visually-hidden">{{ 'products.regular_price' | t }}</span>{{ compare | money }}</s>{% endif -%}
+</span>

@@ -1,0 +1,184 @@
+{%- liquid
+  assign menu = section.settings.menu
+-%}
+<header class="bar" data-header>
+  <div class="frame bar__in">
+    <button class="icon-btn bar__menu" type="button" data-open="menu" aria-controls="MenuDrawer" aria-label="{{ 'header.open_menu' | t }}">
+      {% render 'icon', name: 'menu' %}
+    </button>
+
+    <a class="mark" href="{{ routes.root_url }}">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, width: settings.logo_width, style: 'height:auto', loading: 'eager' }}
+      {%- else -%}
+        {{ shop.name | downcase }}
+      {%- endif -%}
+    </a>
+
+    {%- if menu.links.size > 0 -%}
+      <nav class="links" aria-label="{{ 'header.main_menu' | t }}">
+        {%- for link in menu.links -%}
+          <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="tools">
+      <button class="icon-btn" type="button" data-open="search" aria-controls="SearchPanel" aria-label="{{ 'header.search' | t }}">
+        {% render 'icon', name: 'search' %}
+      </button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn only-wide" href="{{ routes.account_url }}" aria-label="{{ 'header.account' | t }}">{% render 'icon', name: 'user' %}</a>
+      {%- endif -%}
+      <a class="icon-btn" href="{{ routes.cart_url }}" data-open="cart" aria-controls="CartDrawer" aria-label="{{ 'header.cart' | t }}">
+        {% render 'icon', name: 'bag' %}
+        <span class="cart-count" data-cart-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+<div class="find" id="SearchPanel" data-panel="search" role="dialog" aria-label="{{ 'header.search' | t }}" inert>
+    <div class="frame">
+      <predictive-search>
+        <form class="find__field" action="{{ routes.search_url }}" method="get" role="search">
+          {% render 'icon', name: 'search' %}
+          <label class="visually-hidden" for="HeaderSearch">{{ 'header.search' | t }}</label>
+          <input id="HeaderSearch" type="search" name="q" placeholder="{{ 'header.search_placeholder' | t }}" autocomplete="off" data-search-input>
+          <input type="hidden" name="type" value="product">
+          <button class="icon-btn" type="button" data-close aria-label="{{ 'header.close' | t }}">{% render 'icon', name: 'close' %}</button>
+        </form>
+        <div class="find__results" data-search-results aria-live="polite"></div>
+        <div class="find__default">
+          {%- if section.settings.search_menu.links.size > 0 -%}
+            <div class="find__col">
+              <h2 class="find__h">{{ 'header.popular' | t }}</h2>
+              <div class="chips">
+                {%- for link in section.settings.search_menu.links -%}
+                  {%- assign tone = forloop.index0 | modulo: 4 -%}
+                  <a class="t{{ tone }}" href="{{ link.url }}">{{ link.title }}</a>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- else -%}
+            <div class="find__col">
+              <h2 class="find__h">{{ 'header.popular' | t }}</h2>
+              <div class="chips">
+                {%- for c in collections limit: 6 -%}
+                  {%- if c.handle != 'frontpage' and c.products_count > 0 -%}
+                    {%- assign tone = forloop.index0 | modulo: 4 -%}
+                    <a class="t{{ tone }}" href="{{ c.url }}">{{ c.title }}</a>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- assign suggest = section.settings.search_collection -%}
+          {%- if suggest and suggest.products_count > 0 -%}
+            <div class="find__col find__col--wide">
+              <h2 class="find__h">{{ suggest.title }}</h2>
+              <div class="find__grid">
+                {%- for p in suggest.products limit: 4 -%}
+                  <a href="{{ p.url }}">
+                    {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 300, height: 300, crop: 'center' | image_tag: alt: '', loading: 'lazy' }}{%- endif -%}
+                    <span>{{ p.title }}</span>
+                    {% render 'price', target: p, show_from: true %}
+                  </a>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </predictive-search>
+    </div>
+  </div>
+</header>
+
+<aside class="drawer drawer--left" id="MenuDrawer" data-panel="menu" aria-label="{{ 'header.menu' | t }}" inert>
+  <div class="drawer__head">
+    <span class="mark">{{ shop.name | downcase }}</span>
+    <button class="icon-btn" type="button" data-close aria-label="{{ 'header.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <div class="drawer__body">
+    <nav class="mlinks" aria-label="{{ 'header.mobile_menu' | t }}">
+      {%- for link in menu.links -%}
+        {%- assign tone = forloop.index0 | modulo: 4 -%}
+        {%- if link.links.size > 0 -%}
+          <details class="mlinks__group">
+            <summary class="mlinks__item t{{ tone }}">{{ link.title }}<span class="pm" aria-hidden="true"></span></summary>
+            <div class="mlinks__sub">
+              <a href="{{ link.url }}">{{ 'header.view_all' | t: title: link.title }}</a>
+              {%- for child in link.links -%}<a href="{{ child.url }}">{{ child.title }}</a>{%- endfor -%}
+            </div>
+          </details>
+        {%- else -%}
+          <a class="mlinks__item t{{ tone }}" href="{{ link.url }}">{{ link.title }}{% render 'icon', name: 'arrow' %}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+    <div class="mextra">
+      {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">{{ 'header.account' | t }}</a>{%- endif -%}
+      {%- if settings.whatsapp_number != blank -%}<a href="https://wa.me/{{ settings.whatsapp_number }}" target="_blank" rel="noopener">{{ 'header.whatsapp' | t }}</a>{%- endif -%}
+      {%- if settings.contact_email != blank -%}<a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a>{%- endif -%}
+    </div>
+  </div>
+</aside>
+
+{% stylesheet %}
+  .section-header { position: sticky; top: 0; z-index: 40; }
+  .bar { background: var(--bg); transition: background-color 200ms ease; }
+  .bar.is-scrolled { background: var(--paper); }
+  .bar__in { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .links { display: none; gap: 28px; font-weight: 500; }
+  .links a { position: relative; padding: 6px 0; }
+  .links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-out); }
+  .links a[aria-current]::after { transform: scaleX(1); }
+  @media (hover: hover) and (pointer: fine) { .links a:hover::after { transform: scaleX(1); } }
+  .tools { display: flex; align-items: center; gap: 2px; }
+  .cart-count { position: absolute; top: 5px; right: 3px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 0.75rem; font-weight: 600; display: grid; place-items: center; }
+  .cart-count[data-cart-count="0"] { display: none; }
+  .only-wide { display: none; }
+  @media (min-width: 1024px) { .bar__in { height: 76px; } .links { display: flex; } .bar__menu { display: none; } .only-wide { display: grid; } }
+
+  .mlinks__item { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; margin-bottom: 6px; border-radius: 12px; font-size: var(--s-lead); font-weight: 500; list-style: none; cursor: pointer; }
+  .mlinks__item::-webkit-details-marker { display: none; }
+  .mlinks .t0 { background: var(--f1); } .mlinks .t1 { background: var(--f2); } .mlinks .t2 { background: var(--f3); } .mlinks .t3 { background: var(--step); }
+  .mlinks__group[open] .pm::after { transform: rotate(0); }
+  .mlinks__sub { display: grid; gap: 4px; padding: 4px 18px 14px; }
+  .mlinks__sub a { padding: 8px 0; }
+  .mextra { display: grid; gap: 12px; padding: 16px 4px; color: var(--muted); }
+
+  .find { position: absolute; left: 0; right: 0; top: 100%; background: var(--paper); border-radius: 0 0 var(--r) var(--r); padding: 18px 0 26px; max-height: calc(100svh - 120px); overflow-y: auto; clip-path: inset(0 0 0 0); transition: clip-path 380ms var(--ease-out), display 380ms allow-discrete; box-shadow: 0 24px 40px -24px rgba(28, 28, 28, 0.3); }
+  .find[inert] { display: none; clip-path: inset(0 0 100% 0); }
+  @starting-style { .find.is-open { clip-path: inset(0 0 100% 0); } }
+  .bar { position: relative; }
+  .bar:has(.find.is-open) { background: var(--paper); }
+  .find__field { display: flex; align-items: center; gap: 10px; background: var(--step); border-radius: 999px; padding: 0 6px 0 18px; }
+  .find__field input[type="search"] { flex: 1; min-width: 0; border: 0; outline: 0; background: none; height: 52px; font-size: 1rem; }
+  .find__results:not(:empty) { margin-top: 16px; }
+  .find__results:not(:empty) + .find__default { display: none; }
+  .find__default { display: grid; gap: 22px; margin-top: 18px; }
+  @media (min-width: 900px) { .find__default { grid-template-columns: 1fr 2fr; gap: 32px; } }
+  .find__h { font-size: var(--s-small); font-weight: 500; color: var(--muted); letter-spacing: 0; margin-bottom: 10px; }
+  .find__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (min-width: 900px) { .find__grid { grid-template-columns: repeat(4, 1fr); } }
+  .find__grid a { display: grid; gap: 2px; font-size: var(--s-small); }
+  .find__grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; margin-bottom: 6px; transition: transform 500ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .find__grid a:hover img { transform: scale(1.03); } }
+  .find__grid span { font-weight: 500; line-height: 1.3; }
+  .find__default .chips { margin-top: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chips a { padding: 9px 16px; border-radius: 999px; font-size: var(--s-small); font-weight: 500; transition: transform 160ms var(--ease-out); }
+  .chips a:active { transform: scale(0.96); }
+  .chips .t0 { background: var(--f3); } .chips .t1 { background: var(--f2); } .chips .t2 { background: var(--f1); } .chips .t3 { background: var(--step); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "link_list", "id": "search_menu", "label": "Popular searches menu", "info": "Shown as quick links in the search panel." },
+    { "type": "collection", "id": "search_collection", "label": "Products shown in search panel", "info": "Shown before the customer types, e.g. Bestsellers." }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "wordmark": "inlayora",
+        "news_heading": "New designs, first",
+        "news_text": "Early access to new patterns and festive drops. No spam.",
+        "menu_2": "help"
+      },
+      "blocks": {
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "title": "Free delivery",
+            "text": "On orders over ₹999"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "icon": "cash",
+            "title": "Cash on delivery",
+            "text": "On most pincodes"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "icon": "return",
+            "title": "7-day returns",
+            "text": "Damage-free promise"
+          }
+        },
+        "t4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield",
+            "title": "Secure payment",
+            "text": "UPI, cards, net banking"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

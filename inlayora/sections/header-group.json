@@ -1,0 +1,20 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Free delivery across India over ₹999 · Cash on delivery"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "search_collection": "our-best-sellers"
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

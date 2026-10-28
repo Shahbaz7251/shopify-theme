@@ -1,0 +1,196 @@
+{
+  "404": {
+    "title": "This page wandered off",
+    "not_found": "The link may be old or mistyped. Search for a piece or head back to the shop.",
+    "back_to_shopping": "Back to the shop"
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
+  "blog": {
+    "article_comments": "Comments",
+    "article_metadata_html": "{{ date }} by {{ author }}",
+    "comment_form_body": "Comment",
+    "comment_form_email": "Email",
+    "comment_form_name": "Name",
+    "comment_form_submit": "Post",
+    "comment_form_title": "Add a comment"
+  },
+  "cart": {
+    "title": "Your cart",
+    "title_count": {
+      "one": "Your cart ({{ count }})",
+      "other": "Your cart ({{ count }})"
+    },
+    "added": "Added to your cart",
+    "error": "Something went wrong. Please try again.",
+    "checkout": "Check out securely",
+    "continue": "Continue shopping",
+    "empty": "Your cart is empty.",
+    "view_cart": "View cart",
+    "subtotal": "Subtotal",
+    "taxes_note": "Taxes included. Delivery calculated at checkout.",
+    "free_shipping_left_html": "Add <b>{{ amount }}</b> more for free delivery",
+    "free_shipping_done": "Free delivery unlocked",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "quantity_for": "Quantity for {{ title }}",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "note": "Order note (optional)"
+  },
+  "collections": {
+    "title": "All collections",
+    "filters": "Filters",
+    "sort_by": "Sort by",
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "clear_all": "Clear all",
+    "show_results": "Show results",
+    "apply": "Apply",
+    "from": "From",
+    "to": "To",
+    "empty": "No products match these filters."
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "order": "Order number (optional)",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Thanks! We'll get back to you within one working day.",
+    "hours": "Support hours"
+  },
+  "customers": {
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "title": "Login"
+    }
+  },
+  "footer": {
+    "write_to_us": "Write to us",
+    "subscribed": "Thanks! You're on the list.",
+    "email_placeholder": "Email address",
+    "subscribe": "Subscribe",
+    "shop": "Shop",
+    "help": "Help",
+    "rights": "All rights reserved."
+  },
+  "general": {
+    "home": "Home",
+    "view_all": "View all",
+    "pagination": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "sample_product": "Your product",
+    "stars": {
+      "one": "{{ count }} out of 5 stars",
+      "other": "{{ count }} out of 5 stars"
+    },
+    "free_delivery_over": "Free delivery over ₹{{ amount }}",
+    "cod": "Cash on delivery",
+    "easy_returns": "{{ days }}-day easy returns"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Add to Apple Wallet",
+    "card": "Gift card",
+    "expired": "This gift card has expired",
+    "expires_on": "Expires on {{ expires_on }}",
+    "use_at_checkout": "Use this gift card at checkout"
+  },
+  "header": {
+    "open_menu": "Open menu",
+    "menu": "Menu",
+    "main_menu": "Main menu",
+    "mobile_menu": "Mobile menu",
+    "close": "Close",
+    "search": "Search",
+    "search_placeholder": "Search trays, tables, patterns",
+    "account": "Account",
+    "cart": "Cart",
+    "view_all": "All {{ title }}",
+    "whatsapp": "Chat on WhatsApp",
+    "popular": "Popular"
+  },
+  "password": {
+    "title": "This shop is private",
+    "password": "Password",
+    "enter": "Enter"
+  },
+  "products": {
+    "from": "from",
+    "regular_price": "Regular price",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "add_to_cart": "Add to cart",
+    "add_short": "Add",
+    "add_named": "Add {{ title }} to cart",
+    "choose_short": "Choose",
+    "choose_named": "Choose options for {{ title }}",
+    "breadcrumb": "Breadcrumb",
+    "gallery": "Product images",
+    "zoom": "Open image {{ number }} full screen",
+    "show_image": "Show image {{ number }}",
+    "reviews_count": {
+      "one": "{{ count }} review",
+      "other": "{{ count }} reviews"
+    },
+    "tax_note": "Inclusive of all taxes",
+    "in_stock": "In stock, dispatched in {{ days }} days",
+    "quick_buy": "Quick buy",
+    "promise_cod_html": "<b>Cash on delivery</b> available",
+    "promise_returns_html": "<b>{{ days }}-day</b> easy returns",
+    "promise_secure_html": "<b>Secure</b> UPI & card payments",
+    "tab_description": "Description",
+    "tab_specs": "Dimensions & materials",
+    "tab_care": "Care",
+    "tab_shipping": "Delivery & returns",
+    "spec_dimensions": "Dimensions",
+    "spec_material": "Material",
+    "spec_finish": "Finish",
+    "ship_line_1": "Dispatched in {{ days }} working days, delivered in about {{ total }} days across India.",
+    "ship_line_2": "Damaged on arrival or changed your mind? Returns accepted within {{ days }} days on unused items.",
+    "delivery": {
+      "label": "Pincode",
+      "placeholder": "Pincode for delivery date",
+      "check": "Check",
+      "default": "Usually delivered in {{ days }} days",
+      "invalid": "Enter a 6-digit pincode to see your delivery date.",
+      "result_html": "Delivers to [pincode] by <b>[date]</b>.",
+      "cod": "Cash on delivery available."
+    },
+    "size_check": {
+      "mug": "A 9 cm mug for scale",
+      "mug_note": "Mug shown for scale",
+      "fit_small": "Fits a side table or breakfast in bed",
+      "fit_medium": "Fits most ottomans and coffee tables",
+      "fit_large": "Fits a large ottoman or dining centrepiece",
+      "across": "[cm] cm across"
+    },
+    "eta_by": "By",
+    "eta_days": "in {{ days }} days",
+    "eta_note": "Made in {{ days }} days, then shipped with tracking",
+    "cod_title": "Pay on delivery",
+    "cod_note": "Or UPI, cards and net banking",
+    "returns_note": "Free replacement if it arrives damaged",
+    "reviews_title": "Reviews",
+    "reviews_empty": "No reviews yet. Verified reviews with photos appear here from your reviews app.",
+    "whatsapp_text": "Hi! I have a question about {{ title }}",
+    "buy_now": "Buy it now",
+    "rating_summary": "Rated {{ rating }} out of 5 from {{ count }} reviews",
+    "ask_question": "Ask a question",
+    "buy_short": "Buy now"
+  },
+  "search": {
+    "title": "Search",
+    "submit": "Search",
+    "popular": "Popular right now",
+    "view_all": "See all results for “{{ terms }}”",
+    "no_results_html": "No results for “{{ terms }}”. Try a pattern or product name."
+  }
+}

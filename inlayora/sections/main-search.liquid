@@ -1,0 +1,64 @@
+<div class="frame coll">
+  <header class="coll__head">
+    <h1 class="h-sec">{{ 'search.title' | t }}</h1>
+    <form class="search-page__form" action="{{ routes.search_url }}" method="get" role="search">
+      <label class="visually-hidden" for="SearchPage">{{ 'header.search' | t }}</label>
+      <input class="field" id="SearchPage" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'header.search_placeholder' | t }}">
+      <input type="hidden" name="type" value="product">
+      <button class="btn btn--accent" type="submit">{{ 'search.submit' | t }}</button>
+    </form>
+  </header>
+
+  {%- if search.performed -%}
+    {%- paginate search.results by 24 -%}
+      {% render 'facets', results: search, terms: search.terms %}
+      {%- if search.results_count > 0 -%}
+        <div class="spec-grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item, index: forloop.index0 %}
+            {%- else -%}
+              <a class="card search-page__other f0" href="{{ item.url }}"><span class="card__name">{{ item.title }}</span></a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span class="current" aria-current="page">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div class="coll__empty f0"><p>{{ 'search.no_results_html' | t: terms: search.terms }}</p></div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+
+  {%- if search.performed == false or search.results_count == 0 -%}
+    {%- assign suggest = section.settings.collection -%}
+    {%- if suggest -%}
+      <div class="section section--tight">
+        <h2 class="h-sub" style="margin-bottom:20px">{{ 'search.popular' | t }}</h2>
+        <div class="spec-grid">
+          {%- for product in suggest.products limit: 4 -%}{% render 'product-card', product: product, index: forloop.index0 %}{%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .search-page__form { display: flex; gap: 8px; margin-top: 18px; max-width: 640px; }
+  .search-page__form .field { border-radius: 999px; }
+  .search-page__other { border-radius: var(--r); padding: 20px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Popular products (shown when nothing is found)" }
+  ]
+}
+{% endschema %}

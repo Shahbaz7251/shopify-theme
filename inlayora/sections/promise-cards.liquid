@@ -1,0 +1,68 @@
+<div class="frame section">
+  <div class="sec-head rv">
+    <div>
+      <h2 class="h-sec">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="body">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+  </div>
+  <div class="promise-grid">
+    {%- for block in section.blocks -%}
+      <article class="promise {{ block.settings.tone }} rv" style="--i: {{ forloop.index0 | modulo: 4 }}" {{ block.shopify_attributes }}>
+        <h3 class="h-sub">{{ block.settings.title }}</h3>
+        {%- if block.settings.stat != blank -%}
+          <p class="promise__stat">{{ block.settings.stat }}{%- if block.settings.stat_label != blank -%}<small>{{ block.settings.stat_label }}</small>{%- endif -%}</p>
+        {%- elsif block.settings.image -%}
+          {{ block.settings.image | image_url: width: 500, height: 500, crop: 'center' | image_tag: loading: 'lazy', alt: block.settings.image.alt }}
+        {%- endif -%}
+        <p>{{ block.settings.text }}</p>
+      </article>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .promise-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  @media (min-width: 900px) { .promise-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
+  .promise { border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .promise img { width: 70%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-sm); }
+  .promise > p:last-child { margin: auto 0 0; font-size: var(--s-small); }
+  .promise__stat { margin: auto 0; font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.5rem); font-weight: 500; letter-spacing: -0.04em; line-height: 0.9; font-variant-numeric: tabular-nums; }
+  .promise__stat small { display: block; margin-top: 10px; font-size: var(--s-small); letter-spacing: 0; font-weight: 400; opacity: 0.8; }
+  @media (min-width: 900px) { .promise { padding: 26px; gap: 18px; min-height: 380px; } .promise > p:last-child { font-size: var(--s-body); } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Promise cards",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made to be used daily" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Pieces built for tea, snacks and dinner parties, with service that takes the risk out of ordering online." }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Made by hand" },
+        { "type": "text", "id": "stat", "label": "Big fact", "info": "e.g. 100%, 12 mm, 7 days. Only use real numbers. Leave empty to show the image instead." },
+        { "type": "text", "id": "stat_label", "label": "Fact label" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Each border is cut and joined from solid mango wood by artisans in India." },
+        { "type": "select", "id": "tone", "label": "Colour", "options": [{ "value": "f1", "label": "Slate" }, { "value": "f2", "label": "Sage" }, { "value": "f3", "label": "Blush" }, { "value": "f4", "label": "Accent" }], "default": "f1" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Promise cards",
+      "blocks": [
+        { "type": "card", "settings": { "stat": "100%", "stat_label": "handmade in India" } },
+        { "type": "card", "settings": { "title": "Sealed to last", "stat": "12 mm", "stat_label": "solid wood border", "text": "A lacquer coat makes the surface glossy, water-resistant and easy to wipe.", "tone": "f2" } },
+        { "type": "card", "settings": { "title": "Delivered with care", "stat": "₹999", "stat_label": "free delivery above", "text": "Packed in layers, dispatched in 2–3 days. COD available.", "tone": "f3" } },
+        { "type": "card", "settings": { "title": "Easy returns", "stat": "7 days", "stat_label": "replacement or refund", "text": "Arrived damaged? Free replacement or a full refund.", "tone": "f4" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

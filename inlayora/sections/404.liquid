@@ -1,0 +1,28 @@
+<div class="frame nf">
+  <div class="nf__box f3">
+    <h1 class="h-hero">{{ '404.title' | t }}</h1>
+    <p class="lead">{{ '404.not_found' | t }}</p>
+    <form class="nf__search" action="{{ routes.search_url }}" method="get" role="search">
+      <label class="visually-hidden" for="NotFoundSearch">{{ 'header.search' | t }}</label>
+      <input class="field" id="NotFoundSearch" type="search" name="q" placeholder="{{ 'header.search_placeholder' | t }}">
+      <input type="hidden" name="type" value="product">
+      <button class="btn btn--accent" type="submit">{{ 'search.submit' | t }}</button>
+    </form>
+    <a class="btn btn--paper" href="{{ routes.all_products_collection_url }}">{{ '404.back_to_shopping' | t }}</a>
+  </div>
+</div>
+
+{% stylesheet %}
+  .nf { padding-top: 32px; }
+  .nf__box { border-radius: calc(var(--r) + 6px); padding: 48px 22px; display: grid; gap: 18px; justify-items: start; }
+  @media (min-width: 768px) { .nf__box { padding: 80px 56px; } }
+  .nf__search { display: flex; gap: 8px; width: 100%; max-width: 560px; }
+  .nf__search .field { border-radius: 999px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %}

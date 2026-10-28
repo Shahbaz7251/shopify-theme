@@ -1,0 +1,24 @@
+{
+  "current": {
+    "color_background": "#f3f2ef",
+    "color_paper": "#fbfbfa",
+    "color_step": "#ece9e3",
+    "color_text": "#1c1c1c",
+    "color_muted": "#4a5259",
+    "color_accent": "#2c3620",
+    "color_accent_text": "#ecebe4",
+    "color_field_1": "#dde3e7",
+    "color_field_2": "#dfe8e1",
+    "color_field_3": "#ede5df",
+    "page_width": 1380,
+    "corner_radius": 14,
+    "animations": true,
+    "free_shipping_threshold": 999,
+    "dispatch_days": 3,
+    "delivery_days": 7,
+    "cod_available": true,
+    "return_days": 7,
+    "contact_email": "inlayoraindia@gmail.com",
+    "logo_width": 120
+  }
+}

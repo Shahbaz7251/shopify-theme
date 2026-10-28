@@ -1,0 +1,82 @@
+{%- liquid
+  assign threshold = settings.free_shipping_threshold | times: 100
+  assign left = threshold | minus: cart.total_price
+  assign left_money = left | money
+  if threshold > 0
+    assign pct = cart.total_price | times: 1.0 | divided_by: threshold
+    if pct > 1
+      assign pct = 1
+    endif
+  endif
+-%}
+<div class="frame cartpage" data-main-cart data-section-id="{{ section.id }}">
+  <h1 class="h-sec">{{ 'cart.title' | t }}</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="coll__empty f0 cartpage__empty">
+      <p>{{ 'cart.empty' | t }}</p>
+      <a class="btn btn--accent" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a>
+    </div>
+  {%- else -%}
+    <div class="cartpage__grid">
+      <ul class="lines" role="list">
+        {%- for item in cart.items -%}
+          <li class="line">
+            <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">{%- if item.image -%}{{ item.image | image_url: width: 200, height: 200, crop: 'center' | image_tag: class: 'line__img', alt: '', loading: 'lazy' }}{%- endif -%}</a>
+            <div>
+              <a class="line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}<div class="line__meta">{{ item.variant.title }}</div>{%- endunless -%}
+              <div class="line__meta">{{ item.final_price | money }}</div>
+              <div class="qty" role="group" aria-label="{{ 'cart.quantity_for' | t: title: item.product.title | escape }}">
+                <button type="button" data-line-change="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.decrease' | t }}">&minus;</button>
+                <input type="number" value="{{ item.quantity }}" min="0" data-line-input="{{ forloop.index }}" aria-label="{{ 'cart.quantity' | t }}">
+                <button type="button" data-line-change="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.increase' | t }}">+</button>
+              </div>
+            </div>
+            <div>
+              <div class="line__price">{{ item.final_line_price | money }}</div>
+              <button type="button" class="line__remove" data-line-change="{{ forloop.index }}" data-qty="0">{{ 'cart.remove' | t }}</button>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <form class="cartpage__sum f0" action="{{ routes.cart_url }}" method="post">
+        {%- if threshold > 0 -%}
+          <div class="meter">
+            {%- if left > 0 -%}{{ 'cart.free_shipping_left_html' | t: amount: left_money }}{%- else -%}{{ 'cart.free_shipping_done' | t }}{%- endif -%}
+            <div class="meter__bar"><span style="transform: scaleX({{ pct | default: 1 }})"></span></div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.show_note -%}
+          <label class="label" for="CartNote">{{ 'cart.note' | t }}</label>
+          <textarea class="field" id="CartNote" name="note" rows="3">{{ cart.note }}</textarea>
+        {%- endif -%}
+        <div class="sum"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+        <p class="sum-note">{{ 'cart.taxes_note' | t }}</p>
+        <button class="btn btn--accent btn--block" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+        {%- if additional_checkout_buttons -%}<div class="cartpage__extra">{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
+      </form>
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .cartpage { padding-top: 32px; }
+  .cartpage__empty { margin-top: 28px; }
+  .cartpage__grid { display: grid; gap: 24px; margin-top: 28px; }
+  @media (min-width: 900px) { .cartpage__grid { grid-template-columns: 7fr 5fr; gap: 48px; align-items: start; } .cartpage__sum { position: sticky; top: 96px; } }
+  .cartpage__sum { border-radius: var(--r); padding: 22px; display: grid; gap: 12px; }
+  .cartpage__sum .meter { background: var(--paper); }
+  .cartpage__sum .sum-note { margin: 0; }
+  .cartpage__extra { margin-top: 4px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": true }
+  ]
+}
+{% endschema %}
