@@ -11,18 +11,8 @@
   {% content_for 'block', type: 'group', id: 'group' %}
 {% enddoc %}
 
-<div
-  class="group {{ block.settings.layout_direction }}"
-  style="
-    --padding: {{ block.settings.padding }}px;
-    --alignment: {{ block.settings.alignment }};
-  "
-  {{ block.shopify_attributes }}
->
-  {% content_for 'blocks' %}
-</div>
+<style>
 
-{% stylesheet %}
   .group {
     display: flex;
     flex-wrap: nowrap;
@@ -42,7 +32,22 @@
     align-items: var(--alignment);
     padding: var(--padding) 0;
   }
-{% endstylesheet %}
+</style>
+
+
+<div
+  class="group {{ block.settings.layout_direction }}"
+  style="
+    --padding: {{ block.settings.padding }}px;
+    --alignment: {{ block.settings.alignment }};
+  "
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+
+
 
 {% schema %}
 {

@@ -62,7 +62,7 @@
     "message": "Message",
     "send": "Send message",
     "success": "Thanks! We'll get back to you within one working day.",
-    "hours": "Support hours"
+    "hours": "Visit us"
   },
   "customers": {
     "login": {
@@ -94,7 +94,8 @@
     },
     "free_delivery_over": "Free delivery over ₹{{ amount }}",
     "cod": "Cash on delivery",
-    "easy_returns": "{{ days }}-day easy returns"
+    "easy_returns": "{{ days }}-day easy returns",
+    "free_delivery_all": "Free delivery across India"
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
@@ -192,5 +193,12 @@
     "popular": "Popular right now",
     "view_all": "See all results for “{{ terms }}”",
     "no_results_html": "No results for “{{ terms }}”. Try a pattern or product name."
+  },
+  "whatsapp": {
+    "title": "WhatsApp chat",
+    "open": "Chat with us on WhatsApp",
+    "ask": "What would you like to ask about?",
+    "topic_product": "Question about this product",
+    "msg_prefix": "Hi Inlayora! I have a question about"
   }
 }

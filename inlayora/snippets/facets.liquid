@@ -9,6 +9,24 @@
   {% render 'facets', results: collection %}
 {% enddoc %}
 
+<style>
+  .facets__bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+  .facets__open .icon { width: 18px; height: 18px; }
+  .facets__count { margin: 0 auto 0 4px; }
+  .facets__sort select { min-height: 46px; padding: 0 40px 0 16px; border-radius: 999px; appearance: none; background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1c1c' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 16px; cursor: pointer; }
+  .facets__active { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+  .facets__pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px 7px 14px; border-radius: 999px; background: var(--f2); font-size: var(--s-small); font-weight: 500; }
+  .facets__pill .icon { width: 14px; height: 14px; }
+  .facets__clear { font-size: var(--s-small); text-decoration: underline; text-underline-offset: 3px; }
+  .facet__opt { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
+  .facet__opt input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .facet.q[open] { background: var(--step); color: var(--ink); }
+  .facet__opt .small { margin-left: auto; }
+  .facet__opt.is-empty { opacity: 0.45; }
+  .facet__price { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .facet__price .field { color: var(--ink); }
+  .facets__drawer .drawer__body { padding-top: 4px; padding-bottom: 16px; }
+</style>
 {%- liquid
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign active_count = 0
@@ -97,21 +115,3 @@
   <noscript><button type="submit" class="btn btn--paper">{{ 'collections.apply' | t }}</button></noscript>
 </form>
 
-{% stylesheet %}
-  .facets__bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
-  .facets__open .icon { width: 18px; height: 18px; }
-  .facets__count { margin: 0 auto 0 4px; }
-  .facets__sort select { min-height: 46px; padding: 0 40px 0 16px; border-radius: 999px; appearance: none; background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1c1c' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 16px; cursor: pointer; }
-  .facets__active { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
-  .facets__pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px 7px 14px; border-radius: 999px; background: var(--f2); font-size: var(--s-small); font-weight: 500; }
-  .facets__pill .icon { width: 14px; height: 14px; }
-  .facets__clear { font-size: var(--s-small); text-decoration: underline; text-underline-offset: 3px; }
-  .facet__opt { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
-  .facet__opt input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
-  .facet.q[open] { background: var(--step); color: var(--ink); }
-  .facet__opt .small { margin-left: auto; }
-  .facet__opt.is-empty { opacity: 0.45; }
-  .facet__price { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .facet__price .field { color: var(--ink); }
-  .facets__drawer .drawer__body { padding-top: 4px; padding-bottom: 16px; }
-{% endstylesheet %}

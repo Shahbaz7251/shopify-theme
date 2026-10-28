@@ -10,13 +10,26 @@
     {% render 'facets', results: collection %}
 
     {%- if collection.products.size > 0 -%}
+      {%- liquid
+        assign exclude = section.settings.exclude_collection
+        assign exclude_handle = ''
+        if exclude and exclude.handle != collection.handle and current_page == 1
+          assign exclude_handle = exclude.handle
+        endif
+        assign shown = 0
+      -%}
       <div class="spec-grid">
         {%- for product in collection.products -%}
-          {%- if forloop.index <= 4 -%}
-            {% render 'product-card', product: product, index: forloop.index0, eager: true %}
-          {%- else -%}
-            {% render 'product-card', product: product, index: forloop.index0 %}
+          {%- if exclude_handle != blank -%}
+            {%- assign handles = product.collections | map: 'handle' -%}
+            {%- if handles contains exclude_handle -%}{%- continue -%}{%- endif -%}
           {%- endif -%}
+          {%- if shown < 4 -%}
+            {% render 'product-card', product: product, index: shown, eager: true %}
+          {%- else -%}
+            {% render 'product-card', product: product, index: shown %}
+          {%- endif -%}
+          {%- assign shown = shown | plus: 1 -%}
         {%- endfor -%}
       </div>
     {%- else -%}
@@ -43,7 +56,8 @@
   "name": "Collection",
   "settings": [
     { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
-    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true }
+    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
+    { "type": "collection", "id": "exclude_collection", "label": "Hide products shown in highlight", "info": "Use the same collection as the Collection highlight section, so those products are not repeated below." }
   ]
 }
 {% endschema %}

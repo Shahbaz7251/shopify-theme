@@ -1,3 +1,8 @@
+<style>
+  .search-page__form { display: flex; gap: 8px; margin-top: 18px; max-width: 640px; }
+  .search-page__form .field { border-radius: 999px; }
+  .search-page__other { border-radius: var(--r); padding: 20px; }
+</style>
 <div class="frame coll">
   <header class="coll__head">
     <h1 class="h-sec">{{ 'search.title' | t }}</h1>
@@ -47,12 +52,6 @@
     {%- endif -%}
   {%- endif -%}
 </div>
-
-{% stylesheet %}
-  .search-page__form { display: flex; gap: 8px; margin-top: 18px; max-width: 640px; }
-  .search-page__form .field { border-radius: 999px; }
-  .search-page__other { border-radius: var(--r); padding: 20px; }
-{% endstylesheet %}
 
 {% schema %}
 {

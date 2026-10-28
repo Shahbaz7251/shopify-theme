@@ -4,11 +4,24 @@
       "type": "main-collection",
       "settings": {
         "per_page": 24,
-        "show_description": true
+        "show_description": true,
+        "exclude_collection": "diwali-special"
+      }
+    },
+    "diwali": {
+      "type": "collection-highlight",
+      "settings": {
+        "collection": "diwali-special",
+        "badge": "Diwali edit",
+        "heading": "Diwali special",
+        "text": "Festive designs, handmade for the season.",
+        "limit": 4,
+        "tone": "f3"
       }
     }
   },
   "order": [
+    "diwali",
     "main"
   ]
 }

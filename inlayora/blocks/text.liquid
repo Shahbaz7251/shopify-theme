@@ -5,15 +5,8 @@
   {% content_for 'block', type: 'text', id: 'text' %}
 {% enddoc %}
 
-<div
-  class="text {{ block.settings.text_style }}"
-  style="--text-align: {{ block.settings.alignment }}"
-  {{ block.shopify_attributes }}
->
-  {{ block.settings.text }}
-</div>
+<style>
 
-{% stylesheet %}
   .text {
     text-align: var(--text-align);
   }
@@ -24,7 +17,19 @@
   .text--subtitle {
     font-size: 1.5rem;
   }
-{% endstylesheet %}
+</style>
+
+
+<div
+  class="text {{ block.settings.text_style }}"
+  style="--text-align: {{ block.settings.alignment }}"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.text }}
+</div>
+
+
+
 
 {% schema %}
 {

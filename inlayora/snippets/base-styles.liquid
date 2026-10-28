@@ -1,3 +1,9 @@
+{% doc %}
+  Global design tokens and shared component styles, inlined in <head> so the first paint does not wait on a stylesheet request.
+
+  @example
+  <style>{% render 'base-styles' %}</style>
+{% enddoc %}
 :root {
   --m: 16px;
   --font: "Chillax", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;

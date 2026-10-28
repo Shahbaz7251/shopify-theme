@@ -37,9 +37,9 @@
   <div class="card__wrap">
     <a class="card__tile {{ field }}" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
       {%- if img -%}
-        {{ img | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 25vw, 50vw', loading: loading, alt: img_alt }}
+        {{ img | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 21vw, 41vw', loading: loading, alt: img_alt }}
         {%- if alt_img -%}
-          {{ alt_img | image_url: width: 900 | image_tag: class: 'card__alt', widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 25vw, 50vw', loading: 'lazy', alt: '' }}
+          {{ alt_img | image_url: width: 900 | image_tag: class: 'card__alt', widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 21vw, 41vw', loading: 'lazy', alt: '' }}
         {%- endif -%}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}

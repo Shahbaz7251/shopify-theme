@@ -1,3 +1,12 @@
+<style>
+  .quotes { display: grid; gap: 10px; }
+  @media (min-width: 900px) { .quotes { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
+  .quote { margin: 0; border-radius: var(--r); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .quote blockquote { margin: 0; }
+  .quote figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; font-size: var(--s-small); color: var(--muted); }
+  .quote figcaption img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
+  .quote figcaption b { display: block; font-weight: 500; font-size: 1rem; color: var(--ink); }
+</style>
 {%- liquid
   assign app_blocks = section.blocks | where: 'type', '@app'
   assign quotes = section.blocks | where: 'type', 'quote'
@@ -19,7 +28,7 @@
       {%- for block in quotes -%}
         {%- assign tone = forloop.index0 | modulo: 3 -%}
         <figure class="quote {% case tone %}{% when 0 %}f3{% when 1 %}f2{% else %}f1{% endcase %} rv" style="--i: {{ forloop.index0 }}" {{ block.shopify_attributes }}>
-          <span class="stars" aria-label="{{ 'general.stars' | t: count: block.settings.rating }}">{%- for i in (1..block.settings.rating) -%}{% render 'icon', name: 'star' %}{%- endfor -%}</span>
+          <span class="stars" role="img" aria-label="{{ 'general.stars' | t: count: block.settings.rating }}">{%- for i in (1..block.settings.rating) -%}{% render 'icon', name: 'star' %}{%- endfor -%}</span>
           <blockquote>{{ block.settings.quote }}</blockquote>
           <figcaption>
             {%- if block.settings.image -%}{{ block.settings.image | image_url: width: 96, height: 96, crop: 'center' | image_tag: alt: '', loading: 'lazy' }}{%- endif -%}
@@ -30,16 +39,6 @@
     </div>
   {%- endif -%}
 </div>
-
-{% stylesheet %}
-  .quotes { display: grid; gap: 10px; }
-  @media (min-width: 900px) { .quotes { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
-  .quote { margin: 0; border-radius: var(--r); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
-  .quote blockquote { margin: 0; }
-  .quote figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; font-size: var(--s-small); color: var(--muted); }
-  .quote figcaption img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
-  .quote figcaption b { display: block; font-weight: 500; font-size: 1rem; color: var(--ink); }
-{% endstylesheet %}
 
 {% schema %}
 {

@@ -1,3 +1,17 @@
+<style>
+  .tags { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 8px; }
+  @media (min-width: 900px) { .tags { grid-template-columns: repeat(4, 1fr); gap: 28px 12px; } }
+  .tagged { display: block; border-radius: var(--r); overflow: hidden; }
+  .tagged__pic { aspect-ratio: 4 / 5; overflow: hidden; background: var(--step); }
+  .tagged__pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .tagged:hover .tagged__pic img { transform: scale(1.04); } }
+  .tagged__strip { padding: 12px 14px 14px; font-size: var(--s-small); display: grid; gap: 4px; }
+  .tagged__strip b { font-weight: 500; font-size: 1rem; line-height: 1.3; }
+  .tagged__strip > span { display: flex; justify-content: space-between; gap: 8px; }
+  .tagged__strip .price { color: inherit; }
+  .tagged__strip .price s { color: inherit; opacity: 0.7; }
+  @media (max-width: 599px) { .tagged__strip > span { flex-direction: column; gap: 0; } }
+</style>
 {%- assign coll = section.settings.collection -%}
 <div class="frame section">
   <div class="sec-head rv">
@@ -22,21 +36,6 @@
     {%- endif -%}
   </div>
 </div>
-
-{% stylesheet %}
-  .tags { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 8px; }
-  @media (min-width: 900px) { .tags { grid-template-columns: repeat(4, 1fr); gap: 28px 12px; } }
-  .tagged { display: block; border-radius: var(--r); overflow: hidden; }
-  .tagged__pic { aspect-ratio: 4 / 5; overflow: hidden; background: var(--step); }
-  .tagged__pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
-  @media (hover: hover) and (pointer: fine) { .tagged:hover .tagged__pic img { transform: scale(1.04); } }
-  .tagged__strip { padding: 12px 14px 14px; font-size: var(--s-small); display: grid; gap: 4px; }
-  .tagged__strip b { font-weight: 500; font-size: 1rem; line-height: 1.3; }
-  .tagged__strip > span { display: flex; justify-content: space-between; gap: 8px; }
-  .tagged__strip .price { color: inherit; }
-  .tagged__strip .price s { color: inherit; opacity: 0.7; }
-  @media (max-width: 599px) { .tagged__strip > span { flex-direction: column; gap: 0; } }
-{% endstylesheet %}
 
 {% schema %}
 {

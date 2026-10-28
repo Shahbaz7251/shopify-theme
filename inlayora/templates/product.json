@@ -7,7 +7,9 @@
         "gallery_tag": "Handmade in India",
         "fit_link": "Not sure? See it to scale",
         "show_buy_now": true
-      }
+      },
+      "blocks": {},
+      "block_order": []
     },
     "highlights": {
       "type": "product-highlights",
@@ -96,9 +98,14 @@
             "question": "When will it arrive?",
             "answer": "<p>Made and dispatched in 2–3 working days, usually delivered in 5–7 days with tracking.</p>"
           }
+        },
+        "jm_widget": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
         }
       },
       "block_order": [
+        "jm_widget",
         "q1",
         "q2",
         "q3"

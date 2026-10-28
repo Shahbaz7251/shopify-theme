@@ -7,9 +7,8 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
     {%- endif -%}
     {{ 'chillax-500.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
-    {{ 'chillax-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {% render 'css-variables' %}
-    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <style>{% render 'base-styles' %}</style>
     <script>
       document.documentElement.classList.replace('no-js', 'js');
       {%- if settings.animations and request.design_mode == false %}
@@ -30,6 +29,7 @@
 
     {% sections 'footer-group' %}
 
+    {% render 'whatsapp' %}
     {% section 'cart-drawer' %}
     <div class="scrim" data-scrim></div>
     <div class="toast" role="status" aria-live="polite" data-toast></div>

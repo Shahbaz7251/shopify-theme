@@ -1,3 +1,13 @@
+<style>
+  .promise-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  @media (min-width: 900px) { .promise-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
+  .promise { border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .promise img { width: 70%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-sm); }
+  .promise > p:last-child { margin: auto 0 0; font-size: var(--s-small); }
+  .promise__stat { margin: auto 0; font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.5rem); font-weight: 500; letter-spacing: -0.04em; line-height: 0.9; font-variant-numeric: tabular-nums; }
+  .promise__stat small { display: block; margin-top: 10px; font-size: var(--s-small); letter-spacing: 0; font-weight: 400; opacity: 0.8; }
+  @media (min-width: 900px) { .promise { padding: 26px; gap: 18px; min-height: 380px; } .promise > p:last-child { font-size: var(--s-body); } }
+</style>
 <div class="frame section">
   <div class="sec-head rv">
     <div>
@@ -19,17 +29,6 @@
     {%- endfor -%}
   </div>
 </div>
-
-{% stylesheet %}
-  .promise-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  @media (min-width: 900px) { .promise-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
-  .promise { border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-  .promise img { width: 70%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-sm); }
-  .promise > p:last-child { margin: auto 0 0; font-size: var(--s-small); }
-  .promise__stat { margin: auto 0; font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.5rem); font-weight: 500; letter-spacing: -0.04em; line-height: 0.9; font-variant-numeric: tabular-nums; }
-  .promise__stat small { display: block; margin-top: 10px; font-size: var(--s-small); letter-spacing: 0; font-weight: 400; opacity: 0.8; }
-  @media (min-width: 900px) { .promise { padding: 26px; gap: 18px; min-height: 380px; } .promise > p:last-child { font-size: var(--s-body); } }
-{% endstylesheet %}
 
 {% schema %}
 {

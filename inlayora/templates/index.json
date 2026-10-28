@@ -1,28 +1,22 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
       "type": "image-banner",
       "settings": {
-        "image": "shopify://shop_images/inlayora-hero-tray-living-room.webp",
+        "image": "shopify://shop_images/inlayora-diwali-hero-desktop.webp",
         "mobile_focus": 75,
         "height": "tall",
         "overlay": true,
-        "heading": "Handmade trays & tables",
-        "text": "Solid mango wood, finished by artisans in India. Trays from ₹849, side tables ₹2,399.",
-        "button_1_label": "Shop serving trays",
+        "heading": "Make every corner Diwali-ready",
+        "text": "Handcrafted mango wood side tables and serving trays, made by artisans in India. Festive gifts from ₹849.",
+        "button_1_label": "Shop Diwali gifts",
         "button_1_link": "shopify://collections/elegant-serving-trays",
         "button_2_label": "Shop side tables",
         "button_2_link": "shopify://collections/mastercrafted-tables",
-        "show_trust": true
+        "show_trust": true,
+        "image_mobile": "shopify://shop_images/inlayora-diwali-hero-mobile.webp",
+        "badge": "Diwali edit",
+        "mobile_text": "Handcrafted in India. Festive gifts from ₹849."
       }
     },
     "pieces": {
@@ -31,26 +25,26 @@
         "trays": {
           "type": "panel",
           "settings": {
-            "image": "shopify://shop_images/inlayora-serving-tray-ottoman.webp",
-            "title": "Serving trays",
-            "text": "104 designs · 3 sizes · from ₹849",
+            "image": "shopify://shop_images/inlayora-diwali-rangoli-tray.webp",
+            "title": "Diwali Rangoli Tray",
+            "text": "New festive design · 3 sizes · from ₹849",
             "link": "shopify://collections/elegant-serving-trays",
             "button_1_label": "Shop trays",
-            "button_2_label": "Size guide",
-            "button_2_link": "",
+            "button_2_label": "View design",
+            "button_2_link": "shopify://products/diwali-rangoli-serving-tray",
             "tone": "f3"
           }
         },
         "tables": {
           "type": "panel",
           "settings": {
-            "image": "shopify://shop_images/inlayora-side-table-sofa.webp",
-            "title": "Side tables",
-            "text": "380+ designs · ₹2,399",
+            "image": "shopify://shop_images/inlayora-diwali-rangoli-table.webp",
+            "title": "Diwali Rangoli Side Table",
+            "text": "New festive design · ₹2,399",
             "link": "shopify://collections/mastercrafted-tables",
             "button_1_label": "Shop tables",
-            "button_2_label": "Details",
-            "button_2_link": "",
+            "button_2_label": "View design",
+            "button_2_link": "shopify://products/diwali-rangoli-side-table",
             "tone": "f2"
           }
         }
@@ -60,7 +54,7 @@
         "tables"
       ],
       "settings": {
-        "heading": "Shop by piece"
+        "heading": "Diwali special"
       }
     },
     "bestsellers": {
@@ -101,8 +95,8 @@
           "type": "card",
           "settings": {
             "title": "Delivered with care",
-            "stat": "₹999",
-            "stat_label": "free delivery above",
+            "stat": "Free",
+            "stat_label": "delivery on every order",
             "text": "Packed in layers, dispatched in 2–3 days. COD available.",
             "tone": "f3"
           }
@@ -283,12 +277,32 @@
         "open_first": true,
         "schema_markup": true
       }
+    },
+    "diwali_gifting": {
+      "type": "image-banner",
+      "settings": {
+        "image": "shopify://shop_images/inlayora-diwali-gifting-desktop.webp",
+        "image_mobile": "shopify://shop_images/inlayora-diwali-gifting-mobile.webp",
+        "height": "medium",
+        "overlay": true,
+        "mobile_focus": 50,
+        "heading": "Gifts that glow this Diwali",
+        "text": "Hand-finished serving trays, ready for sweets, diyas and family visits.",
+        "button_1_label": "Shop gift trays",
+        "button_1_link": "shopify://collections/elegant-serving-trays",
+        "button_2_label": "",
+        "button_2_link": "",
+        "show_trust": false,
+        "badge": "Gift ideas",
+        "mobile_text": "Serving trays made for sweets, diyas and family visits."
+      }
     }
   },
   "order": [
     "hero",
     "pieces",
     "bestsellers",
+    "diwali_gifting",
     "promises",
     "new",
     "story",

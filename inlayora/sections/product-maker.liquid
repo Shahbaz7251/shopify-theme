@@ -1,3 +1,16 @@
+<style>
+  .mk { display: grid; gap: 12px; }
+  @media (min-width: 900px) { .mk { grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; } }
+  .mk__card { border-radius: var(--r); padding: 22px; display: grid; gap: 14px; align-content: start; }
+  .mk__card .btn { justify-self: start; }
+  .mk__card .btn .icon { width: 18px; height: 18px; }
+  .mk__who { display: flex; gap: 14px; align-items: center; }
+  .mk__who > span { width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 600; letter-spacing: -0.04em; flex: none; }
+  .mk__who b { font-weight: 500; }
+  .mk__empty { border-radius: var(--r); padding: 20px 22px; display: grid; gap: 6px; }
+  .mk__empty b { font-weight: 500; }
+  .mk__reviews { background: var(--paper); border-radius: var(--r); padding: 16px; }
+</style>
 {%- liquid
   assign app_blocks = section.blocks | where: 'type', '@app'
   assign questions = section.blocks | where: 'type', 'question'
@@ -42,20 +55,6 @@
     </aside>
   </div>
 </div>
-
-{% stylesheet %}
-  .mk { display: grid; gap: 12px; }
-  @media (min-width: 900px) { .mk { grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; } }
-  .mk__card { border-radius: var(--r); padding: 22px; display: grid; gap: 14px; align-content: start; }
-  .mk__card .btn { justify-self: start; }
-  .mk__card .btn .icon { width: 18px; height: 18px; }
-  .mk__who { display: flex; gap: 14px; align-items: center; }
-  .mk__who > span { width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 600; letter-spacing: -0.04em; flex: none; }
-  .mk__who b { font-weight: 500; }
-  .mk__empty { border-radius: var(--r); padding: 20px 22px; display: grid; gap: 6px; }
-  .mk__empty b { font-weight: 500; }
-  .mk__reviews { background: var(--paper); border-radius: var(--r); padding: 16px; }
-{% endstylesheet %}
 
 {% schema %}
 {

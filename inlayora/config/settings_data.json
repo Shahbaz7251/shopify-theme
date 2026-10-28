@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_background": "#f3f2ef",
@@ -13,12 +22,40 @@
     "page_width": 1380,
     "corner_radius": 14,
     "animations": true,
-    "free_shipping_threshold": 999,
+    "free_shipping_threshold": 0,
     "dispatch_days": 3,
     "delivery_days": 7,
     "cod_available": true,
     "return_days": 7,
+    "whatsapp_number": "916397977620",
+    "whatsapp_enabled": true,
+    "whatsapp_title": "Chat with Inlayora",
+    "whatsapp_subtitle": "We reply on WhatsApp",
+    "whatsapp_topic_1": "Diwali offers",
+    "whatsapp_topic_2": "Order & delivery help",
+    "whatsapp_topic_3": "Something else",
     "contact_email": "inlayoraindia@gmail.com",
-    "logo_width": 120
+    "logo_width": 120,
+    "sections": {
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "13047258039897440615": {
+        "type": "shopify://apps/judge-me-reviews/blocks/cart_drawer_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {
+          "widget_type": "review-widget"
+        }
+      }
+    }
   }
 }

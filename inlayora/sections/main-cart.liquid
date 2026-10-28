@@ -1,3 +1,13 @@
+<style>
+  .cartpage { padding-top: 32px; }
+  .cartpage__empty { margin-top: 28px; }
+  .cartpage__grid { display: grid; gap: 24px; margin-top: 28px; }
+  @media (min-width: 900px) { .cartpage__grid { grid-template-columns: 7fr 5fr; gap: 48px; align-items: start; } .cartpage__sum { position: sticky; top: 96px; } }
+  .cartpage__sum { border-radius: var(--r); padding: 22px; display: grid; gap: 12px; }
+  .cartpage__sum .meter { background: var(--paper); }
+  .cartpage__sum .sum-note { margin: 0; }
+  .cartpage__extra { margin-top: 4px; }
+</style>
 {%- liquid
   assign threshold = settings.free_shipping_threshold | times: 100
   assign left = threshold | minus: cart.total_price
@@ -60,17 +70,6 @@
     </div>
   {%- endif -%}
 </div>
-
-{% stylesheet %}
-  .cartpage { padding-top: 32px; }
-  .cartpage__empty { margin-top: 28px; }
-  .cartpage__grid { display: grid; gap: 24px; margin-top: 28px; }
-  @media (min-width: 900px) { .cartpage__grid { grid-template-columns: 7fr 5fr; gap: 48px; align-items: start; } .cartpage__sum { position: sticky; top: 96px; } }
-  .cartpage__sum { border-radius: var(--r); padding: 22px; display: grid; gap: 12px; }
-  .cartpage__sum .meter { background: var(--paper); }
-  .cartpage__sum .sum-note { margin: 0; }
-  .cartpage__extra { margin-top: 4px; }
-{% endstylesheet %}
 
 {% schema %}
 {

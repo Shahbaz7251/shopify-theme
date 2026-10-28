@@ -1,3 +1,11 @@
+<style>
+  .contact { display: grid; gap: 32px; }
+  @media (min-width: 900px) { .contact { grid-template-columns: 5fr 7fr; gap: 56px; align-items: start; } }
+  .contact__ways { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 8px; }
+  .contact__ways li { border-radius: 12px; padding: 14px 18px; display: grid; gap: 2px; font-weight: 500; }
+  .contact__form { border-radius: var(--r); padding: 22px; display: grid; gap: 14px; }
+  @media (min-width: 600px) { .contact__form { grid-template-columns: 1fr 1fr; } .contact__full, .contact__form > p, .contact__form > [role="alert"] { grid-column: 1 / -1; } }
+</style>
 <div class="frame section contact">
   <div class="rv">
     <h2 class="h-sec">{{ section.settings.heading }}</h2>
@@ -40,22 +48,13 @@
   {%- endform -%}
 </div>
 
-{% stylesheet %}
-  .contact { display: grid; gap: 32px; }
-  @media (min-width: 900px) { .contact { grid-template-columns: 5fr 7fr; gap: 56px; align-items: start; } }
-  .contact__ways { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 8px; }
-  .contact__ways li { border-radius: 12px; padding: 14px 18px; display: grid; gap: 2px; font-weight: 500; }
-  .contact__form { border-radius: var(--r); padding: 22px; display: grid; gap: 14px; }
-  @media (min-width: 600px) { .contact__form { grid-template-columns: 1fr 1fr; } .contact__full, .contact__form > p, .contact__form > [role="alert"] { grid-column: 1 / -1; } }
-{% endstylesheet %}
-
 {% schema %}
 {
   "name": "Contact form",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Talk to us" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Questions about sizes, custom orders or an existing order? We reply within one working day.</p>" },
-    { "type": "text", "id": "hours", "label": "Support hours", "default": "Mon–Sat, 10am–7pm IST" }
+    { "type": "text", "id": "hours", "label": "Address" }
   ],
   "presets": [{ "name": "Contact form" }]
 }

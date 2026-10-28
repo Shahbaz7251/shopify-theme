@@ -396,6 +396,28 @@
     }
   });
 
+  /* whatsapp button */
+  const wa = $('[data-wa]');
+  if (wa) {
+    const panel = $('.wa__panel', wa);
+    const toggle = $('[data-wa-toggle]', wa);
+    const setOpen = (open) => { panel.hidden = !open; toggle.setAttribute('aria-expanded', String(open)); };
+    toggle.addEventListener('click', () => setOpen(panel.hidden));
+    $('[data-wa-close]', wa).addEventListener('click', () => { setOpen(false); toggle.focus(); });
+    document.addEventListener('click', (e) => { if (!panel.hidden && !wa.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) { setOpen(false); toggle.focus(); } });
+
+    // Tuck the button away while scrolling down so it doesn't sit on top of cards and buttons; bring it back on scroll up
+    let lastY = scrollY;
+    addEventListener('scroll', () => {
+      const y = scrollY;
+      if (Math.abs(y - lastY) < 8) return;
+      wa.classList.toggle('is-tucked', y > lastY && y > 200 && panel.hidden);
+      lastY = y;
+    }, { passive: true });
+    wa.addEventListener('focusin', () => wa.classList.remove('is-tucked'));
+  }
+
   /* product recommendations */
   customElements.define('product-recommendations', class extends HTMLElement {
     connectedCallback() {

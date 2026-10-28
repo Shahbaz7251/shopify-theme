@@ -5,7 +5,8 @@
     "announcement": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Free delivery across India over ₹999 · Cash on delivery"
+        "text": "Diwali gifting is here · Handcrafted in India",
+        "link": "shopify://collections/elegant-serving-trays"
       }
     },
     "header": {
@@ -16,5 +17,8 @@
       }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }

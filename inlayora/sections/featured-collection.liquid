@@ -1,3 +1,11 @@
+<style>
+  @media (min-width: 900px) {
+    .spec-grid--feature > .card:first-child { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
+    .spec-grid--feature > .card:first-child .card__wrap { flex: 1; display: flex; }
+    .spec-grid--feature > .card:first-child .card__tile { flex: 1; aspect-ratio: auto; min-height: 420px; }
+  }
+  @media (max-width: 899px) { .spec-grid--feature > .card:first-child { grid-column: span 2; } }
+</style>
 {%- liquid
   assign coll = section.settings.collection
   assign limit = section.settings.limit
@@ -25,15 +33,6 @@
     {%- endif -%}
   </div>
 </div>
-
-{% stylesheet %}
-  @media (min-width: 900px) {
-    .spec-grid--feature > .card:first-child { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
-    .spec-grid--feature > .card:first-child .card__wrap { flex: 1; display: flex; }
-    .spec-grid--feature > .card:first-child .card__tile { flex: 1; aspect-ratio: auto; min-height: 420px; }
-  }
-  @media (max-width: 899px) { .spec-grid--feature > .card:first-child { grid-column: span 2; } }
-{% endstylesheet %}
 
 {% schema %}
 {

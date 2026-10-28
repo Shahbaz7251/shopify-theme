@@ -7,7 +7,7 @@
     {% render 'css-variables' %}
 
     {% # Load and preload the critical CSS %}
-    {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+    <style>{% render 'base-styles' %}</style>
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}

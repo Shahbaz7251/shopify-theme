@@ -1,3 +1,40 @@
+<style>
+  .banner { position: relative; margin: 0 var(--m); border-radius: calc(var(--r) + 6px); overflow: hidden; display: flex; align-items: flex-end; color: #fff; }
+  .banner--tall { min-height: min(76svh, 700px); }
+  .banner--medium { min-height: min(58svh, 520px); }
+  .banner--short { min-height: 340px; }
+  .banner__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 767px) { .banner__img { object-position: var(--focus-x, 50%) 50%; } }
+  .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 18, 14, 0.05) 0%, rgba(20, 18, 14, 0.5) 40%, rgba(20, 18, 14, 0.82) 100%); }
+  .banner--clean::after { display: none; }
+  .banner--clean { color: var(--ink); }
+  .banner__body { position: relative; z-index: 1; padding: 28px 22px; max-width: 640px; }
+  .banner .lead { color: inherit; opacity: 0.92; }
+  .banner__badge { display: inline-block; margin-bottom: 14px; padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.18); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); font-size: var(--s-small); font-weight: 500; letter-spacing: 0.02em; }
+  .banner--clean .banner__badge { background: var(--step); }
+  .banner__short { display: none; }
+  .banner__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .btn--ghost { color: #fff; outline: 1.5px solid rgba(255, 255, 255, 0.8); outline-offset: -1.5px; }
+  @media (hover: hover) and (pointer: fine) { .btn--ghost:hover { background: #fff; color: var(--ink); } }
+  .banner__facts { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: var(--s-small); opacity: 0.9; }
+  .banner__facts li { display: flex; align-items: center; gap: 6px; }
+  .banner__facts .icon { width: 16px; height: 16px; }
+  @media (max-width: 767px) {
+    .banner::after { background: linear-gradient(180deg, rgba(20, 18, 14, 0) 45%, rgba(20, 18, 14, 0.35) 65%, rgba(20, 18, 14, 0.72) 100%); }
+    .banner__body { padding: 20px 18px 20px; width: 100%; }
+    .banner .h-hero { font-size: clamp(1.9rem, 1.3rem + 3.2vw, 2.4rem); }
+    .banner .lead, .banner__facts { display: none; }
+    .banner__badge { margin-bottom: 10px; padding: 5px 11px; }
+    .banner__short { display: block; margin: 10px 0 0; font-size: 1rem; line-height: 1.4; opacity: 0.92; max-width: 32ch; }
+    .banner__ctas { flex-wrap: nowrap; gap: 8px; margin-top: 16px; }
+    .banner__ctas .btn { flex: 1 1 0; min-width: 0; min-height: 46px; padding: 0 12px; font-size: 0.9375rem; }
+  }
+  @media (min-width: 768px) {
+    .banner { margin: 0 auto; width: calc(100% - 2 * var(--m)); max-width: calc(var(--max) - 2 * var(--m)); align-items: center; }
+    .banner::after { background: linear-gradient(90deg, rgba(20, 18, 14, 0.66) 0%, rgba(20, 18, 14, 0.3) 45%, rgba(20, 18, 14, 0) 72%); }
+    .banner__body { padding: 56px; }
+  }
+</style>
 {%- liquid
   assign img = section.settings.image
   assign img_mobile = section.settings.image_mobile | default: img
@@ -26,10 +63,12 @@
     {{ 'lifestyle-1' | placeholder_svg_tag: 'banner__img placeholder-svg' }}
   {%- endif -%}
   <div class="banner__body">
+    {%- if section.settings.badge != blank -%}<span class="banner__badge">{{ section.settings.badge }}</span>{%- endif -%}
     {%- if section.settings.heading != blank -%}
       <{{ heading_tag }} class="h-hero" id="Banner-{{ section.id }}">{{ section.settings.heading }}</{{ heading_tag }}>
     {%- endif -%}
     {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    {%- if section.settings.mobile_text != blank -%}<p class="banner__short">{{ section.settings.mobile_text }}</p>{%- endif -%}
     {%- if section.settings.button_1_label != blank or section.settings.button_2_label != blank -%}
       <div class="banner__ctas">
         {%- if section.settings.button_1_label != blank -%}<a class="btn btn--paper" href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}">{{ section.settings.button_1_label }}</a>{%- endif -%}
@@ -38,38 +77,13 @@
     {%- endif -%}
     {%- if section.settings.show_trust -%}
       <ul class="banner__facts">
-        {%- if settings.free_shipping_threshold > 0 -%}<li>{% render 'icon', name: 'check' %}{{ 'general.free_delivery_over' | t: amount: settings.free_shipping_threshold }}</li>{%- endif -%}
+        {%- if settings.free_shipping_threshold > 0 -%}<li>{% render 'icon', name: 'check' %}{{ 'general.free_delivery_over' | t: amount: settings.free_shipping_threshold }}</li>{%- else -%}<li>{% render 'icon', name: 'check' %}{{ 'general.free_delivery_all' | t }}</li>{%- endif -%}
         {%- if settings.cod_available -%}<li>{% render 'icon', name: 'check' %}{{ 'general.cod' | t }}</li>{%- endif -%}
         <li>{% render 'icon', name: 'check' %}{{ 'general.easy_returns' | t: days: settings.return_days }}</li>
       </ul>
     {%- endif -%}
   </div>
 </section>
-
-{% stylesheet %}
-  .banner { position: relative; margin: 0 var(--m); border-radius: calc(var(--r) + 6px); overflow: hidden; display: flex; align-items: flex-end; color: #fff; }
-  .banner--tall { min-height: min(76svh, 700px); }
-  .banner--medium { min-height: min(58svh, 520px); }
-  .banner--short { min-height: 340px; }
-  .banner__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  @media (max-width: 767px) { .banner__img { object-position: var(--focus-x, 50%) 50%; } }
-  .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 18, 14, 0.05) 0%, rgba(20, 18, 14, 0.5) 40%, rgba(20, 18, 14, 0.82) 100%); }
-  .banner--clean::after { display: none; }
-  .banner--clean { color: var(--ink); }
-  .banner__body { position: relative; z-index: 1; padding: 28px 22px; max-width: 640px; }
-  .banner .lead { color: inherit; opacity: 0.92; }
-  .banner__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-  .btn--ghost { color: #fff; outline: 1.5px solid rgba(255, 255, 255, 0.8); outline-offset: -1.5px; }
-  @media (hover: hover) and (pointer: fine) { .btn--ghost:hover { background: #fff; color: var(--ink); } }
-  .banner__facts { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: var(--s-small); opacity: 0.9; }
-  .banner__facts li { display: flex; align-items: center; gap: 6px; }
-  .banner__facts .icon { width: 16px; height: 16px; }
-  @media (min-width: 768px) {
-    .banner { margin: 0 auto; width: calc(100% - 2 * var(--m)); max-width: calc(var(--max) - 2 * var(--m)); align-items: center; }
-    .banner::after { background: linear-gradient(90deg, rgba(20, 18, 14, 0.66) 0%, rgba(20, 18, 14, 0.3) 45%, rgba(20, 18, 14, 0) 72%); }
-    .banner__body { padding: 56px; }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -81,7 +95,9 @@
     { "type": "select", "id": "height", "label": "Height", "options": [{ "value": "tall", "label": "Tall" }, { "value": "medium", "label": "Medium" }, { "value": "short", "label": "Short" }], "default": "tall" },
     { "type": "checkbox", "id": "overlay", "label": "Darken image behind text", "default": true },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Handmade trays & tables" },
+    { "type": "text", "id": "badge", "label": "Label", "info": "Small tag above the heading, e.g. Diwali edit." },
     { "type": "textarea", "id": "text", "label": "Text", "default": "Solid mango wood, finished by artisans in India. Trays from ₹849, side tables ₹2,399." },
+    { "type": "text", "id": "mobile_text", "label": "Mobile text", "info": "Short line shown on phones instead of the text above." },
     { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "Shop serving trays" },
     { "type": "url", "id": "button_1_link", "label": "Button 1 link" },
     { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "Shop side tables" },

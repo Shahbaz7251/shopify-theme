@@ -1,3 +1,37 @@
+<style>
+  .foot { padding: 120px 8px 8px; display: grid; gap: 8px; }
+  .foot__trust { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .foot__trust li { display: flex; gap: 12px; align-items: center; background: var(--paper); border-radius: var(--r); padding: 16px 18px; font-size: var(--s-small); color: var(--muted); }
+  .foot__trust .icon { color: var(--accent); }
+  .foot__trust b { display: block; font-weight: 500; color: var(--ink); font-size: 0.9375rem; }
+  .foot__main { background: var(--paper); border-radius: var(--r); padding: 32px 22px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
+  .foot__news { grid-column: 1 / -1; }
+  .foot__news p { color: var(--muted); margin: 8px 0 16px; max-width: 34ch; }
+  .foot__field { display: flex; gap: 6px; background: var(--step); border-radius: 999px; padding: 5px; max-width: 400px; }
+  .foot__field input { flex: 1; min-width: 0; border: 0; background: none; outline: 0; padding: 0 14px; font-size: 1rem; }
+  .foot__field .btn { min-height: 44px; padding: 0 20px; }
+  .foot__h { font-size: 0.9375rem; font-weight: 500; letter-spacing: 0; margin-bottom: 12px; }
+  .foot__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: var(--s-small); color: var(--muted); }
+  .foot__col a { transition: color 160ms ease; }
+  .foot__col a:hover { color: var(--ink); }
+  .foot__mark { background: var(--f2); border-radius: var(--r); overflow: hidden; padding: 20px 22px 0; }
+  .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: var(--s-small); color: var(--muted); }
+  .foot__legal { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .foot__legal a:hover { color: var(--ink); }
+  @media (max-width: 999px), (pointer: coarse) {
+    .foot__col ul { gap: 0; }
+    .foot__col a, .foot__legal a { display: inline-flex; align-items: center; min-height: 44px; }
+    .foot__legal { gap: 0 18px; }
+  }
+  .foot__word { margin: 18px 0 0; font-weight: 600; letter-spacing: -0.06em; line-height: 0.8; font-size: clamp(4.5rem, 1rem + 18vw, 16rem); color: var(--accent); text-align: center; height: 0.7em; overflow: hidden; user-select: none; }
+  @media (min-width: 900px) {
+    .foot { padding: 160px 12px 12px; }
+    .foot__trust { grid-template-columns: repeat(4, 1fr); }
+    .foot__main { grid-template-columns: 1.3fr repeat(3, 1fr); padding: 40px; }
+    .foot__news { grid-column: auto; }
+    .foot__mark { padding: 24px 28px 0; }
+  }
+</style>
 {%- liquid
   assign wordmark = section.settings.wordmark | default: shop.name | downcase
 -%}
@@ -78,36 +112,6 @@
   </div>
 </footer>
 
-{% stylesheet %}
-  .foot { padding: 120px 8px 8px; display: grid; gap: 8px; }
-  .foot__trust { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .foot__trust li { display: flex; gap: 12px; align-items: center; background: var(--paper); border-radius: var(--r); padding: 16px 18px; font-size: var(--s-small); color: var(--muted); }
-  .foot__trust .icon { color: var(--accent); }
-  .foot__trust b { display: block; font-weight: 500; color: var(--ink); font-size: 0.9375rem; }
-  .foot__main { background: var(--paper); border-radius: var(--r); padding: 32px 22px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
-  .foot__news { grid-column: 1 / -1; }
-  .foot__news p { color: var(--muted); margin: 8px 0 16px; max-width: 34ch; }
-  .foot__field { display: flex; gap: 6px; background: var(--step); border-radius: 999px; padding: 5px; max-width: 400px; }
-  .foot__field input { flex: 1; min-width: 0; border: 0; background: none; outline: 0; padding: 0 14px; font-size: 1rem; }
-  .foot__field .btn { min-height: 44px; padding: 0 20px; }
-  .foot__h { font-size: 0.9375rem; font-weight: 500; letter-spacing: 0; margin-bottom: 12px; }
-  .foot__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: var(--s-small); color: var(--muted); }
-  .foot__col a { transition: color 160ms ease; }
-  .foot__col a:hover { color: var(--ink); }
-  .foot__mark { background: var(--f2); border-radius: var(--r); overflow: hidden; padding: 20px 22px 0; }
-  .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: var(--s-small); color: var(--muted); }
-  .foot__legal { display: flex; flex-wrap: wrap; gap: 4px 14px; }
-  .foot__legal a:hover { color: var(--ink); }
-  .foot__word { margin: 18px 0 0; font-weight: 600; letter-spacing: -0.06em; line-height: 0.8; font-size: clamp(4.5rem, 1rem + 18vw, 16rem); color: var(--accent); text-align: center; height: 0.7em; overflow: hidden; user-select: none; }
-  @media (min-width: 900px) {
-    .foot { padding: 160px 12px 12px; }
-    .foot__trust { grid-template-columns: repeat(4, 1fr); }
-    .foot__main { grid-template-columns: 1.3fr repeat(3, 1fr); padding: 40px; }
-    .foot__news { grid-column: auto; }
-    .foot__mark { padding: 24px 28px 0; }
-  }
-{% endstylesheet %}
-
 {% schema %}
 {
   "name": "Footer",
@@ -127,7 +131,7 @@
       "settings": [
         { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "truck", "label": "Delivery" }, { "value": "cash", "label": "Cash" }, { "value": "return", "label": "Returns" }, { "value": "shield", "label": "Secure" }, { "value": "check", "label": "Check" }], "default": "truck" },
         { "type": "text", "id": "title", "label": "Title", "default": "Free delivery" },
-        { "type": "text", "id": "text", "label": "Text", "default": "On orders over ₹999" }
+        { "type": "text", "id": "text", "label": "Text", "default": "On every order across India" }
       ]
     }
   ],
