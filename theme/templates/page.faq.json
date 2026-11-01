@@ -13,29 +13,29 @@
         "q1": {
           "type": "question",
           "settings": {
-            "question": "Will my piece look like the photos?",
-            "answer": "<p>The final print matches the exact artwork shown in the product photos. Because every piece is handmade from natural wood, the grain and tone can differ slightly from the photos, which gives each one its own character.</p>"
+            "question": "Sample question one?",
+            "answer": "<p>Add your answer here.</p>"
           }
         },
         "q2": {
           "type": "question",
           "settings": {
-            "question": "What are the trays made of?",
-            "answer": "<p>A handmade mango wood border on a durable MDF base, finished with a protective lacquer coating for a water-resistant, high-gloss surface.</p>"
+            "question": "What are your products made of?",
+            "answer": "<p>Add your answer here.</p>"
           }
         },
         "q3": {
           "type": "question",
           "settings": {
-            "question": "How do I care for my tray?",
-            "answer": "<p>Gently clean the surface with a smooth cloth. Keep it away from sharp objects and fire, and avoid rough cloths that can scratch the finish.</p>"
+            "question": "How do I care for my product?",
+            "answer": "<p>Add your answer here.</p>"
           }
         },
         "q4": {
           "type": "question",
           "settings": {
-            "question": "Can I order a custom size or print?",
-            "answer": "<p>Yes. Contact us with the size or design you have in mind and we'll be happy to create a personalised piece for your space.</p>"
+            "question": "Do you offer custom orders?",
+            "answer": "<p>Add your answer here.</p>"
           }
         }
       },
@@ -88,7 +88,7 @@
           "type": "question",
           "settings": {
             "question": "Where are your products made?",
-            "answer": "<p>Each piece is handmade by skilled artisans. We carefully select our manufacturing partners to ensure our products are high quality and a fair value.</p>"
+            "answer": "<p>Add your answer here.</p>"
           }
         }
       },

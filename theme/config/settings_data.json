@@ -27,14 +27,14 @@
     "delivery_days": 7,
     "cod_available": true,
     "return_days": 7,
-    "whatsapp_number": "916397977620",
+    "whatsapp_number": "",
     "whatsapp_enabled": true,
-    "whatsapp_title": "Chat with Inlayora",
+    "whatsapp_title": "Chat with us",
     "whatsapp_subtitle": "We reply on WhatsApp",
-    "whatsapp_topic_1": "Diwali offers",
+    "whatsapp_topic_1": "Product question",
     "whatsapp_topic_2": "Order & delivery help",
     "whatsapp_topic_3": "Something else",
-    "contact_email": "inlayoraindia@gmail.com",
+    "contact_email": "",
     "logo_width": 120,
     "sections": {
       "cart-drawer": {
@@ -42,20 +42,6 @@
         "settings": {}
       }
     },
-    "content_for_index": [],
-    "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "13047258039897440615": {
-        "type": "shopify://apps/judge-me-reviews/blocks/cart_drawer_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {
-          "widget_type": "review-widget"
-        }
-      }
-    }
+    "content_for_index": []
   }
 }

@@ -11,7 +11,6 @@
       "settings": {
         "heading": "You might also like",
         "text": "",
-        "collection": "our-best-sellers",
         "limit": 4,
         "feature_first": false,
         "show_view_all": false

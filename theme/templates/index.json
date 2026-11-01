@@ -1,0 +1,280 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "settings": {
+        "mobile_focus": 75,
+        "height": "tall",
+        "overlay": true,
+        "heading": "Welcome to our store",
+        "text": "Tell customers what you sell and why they will love it.",
+        "button_1_label": "Shop now",
+        "button_1_link": "shopify://collections/all",
+        "button_2_label": "Shop all",
+        "button_2_link": "shopify://collections/all",
+        "show_trust": true,
+        "badge": "New in",
+        "mobile_text": "Tell customers what you sell."
+      }
+    },
+    "pieces": {
+      "type": "shop-by-piece",
+      "blocks": {
+        "panel_1": {
+          "type": "panel",
+          "settings": {
+            "title": "Category one",
+            "text": "Add a short description",
+            "link": "shopify://collections/all",
+            "button_1_label": "Shop",
+            "button_2_label": "View",
+            "tone": "f3"
+          }
+        },
+        "panel_2": {
+          "type": "panel",
+          "settings": {
+            "title": "Category two",
+            "text": "Add a short description",
+            "link": "shopify://collections/all",
+            "button_1_label": "Shop",
+            "button_2_label": "View",
+            "tone": "f2"
+          }
+        }
+      },
+      "block_order": [
+        "panel_1",
+        "panel_2"
+      ],
+      "settings": {
+        "heading": "Featured"
+      }
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Bestsellers",
+        "text": "The products our customers order most.",
+        "limit": 9,
+        "feature_first": true,
+        "show_view_all": true
+      }
+    },
+    "promises": {
+      "type": "promise-cards",
+      "blocks": {
+        "p1": {
+          "type": "card",
+          "settings": {
+            "title": "Quality first",
+            "stat": "100%",
+            "stat_label": "quality checked",
+            "text": "Describe what makes your product well made.",
+            "tone": "f1"
+          }
+        },
+        "p2": {
+          "type": "card",
+          "settings": {
+            "title": "Built to last",
+            "stat": "1 year",
+            "stat_label": "of everyday use",
+            "text": "Describe your materials and finish.",
+            "tone": "f2"
+          }
+        },
+        "p3": {
+          "type": "card",
+          "settings": {
+            "title": "Delivered with care",
+            "stat": "Free",
+            "stat_label": "delivery on every order",
+            "text": "Describe your packing and dispatch times.",
+            "tone": "f3"
+          }
+        },
+        "p4": {
+          "type": "card",
+          "settings": {
+            "title": "Easy returns",
+            "stat": "7 days",
+            "stat_label": "replacement or refund",
+            "text": "Describe your return promise.",
+            "tone": "f4"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "heading": "Why shop with us",
+        "text": "Add a few reasons customers can order with confidence."
+      }
+    },
+    "new": {
+      "type": "tagged-collection",
+      "settings": {
+        "heading": "New this month",
+        "limit": 8
+      }
+    },
+    "story": {
+      "type": "craft-story",
+      "blocks": {
+        "s1": {
+          "type": "point",
+          "settings": {
+            "title": "Step one",
+            "text": "Describe the first step."
+          }
+        },
+        "s2": {
+          "type": "point",
+          "settings": {
+            "title": "Step two",
+            "text": "Describe the second step."
+          }
+        },
+        "s3": {
+          "type": "point",
+          "settings": {
+            "title": "Step three",
+            "text": "Describe the third step."
+          }
+        },
+        "s4": {
+          "type": "point",
+          "settings": {
+            "title": "Step four",
+            "text": "Describe the final step."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "heading": "How it is made",
+        "text": "<p>Tell the story behind your product.</p>",
+        "autoplay": 5,
+        "image_right": false,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "quote",
+          "settings": {
+            "quote": "Sample review. Replace it with a real customer review.",
+            "name": "Customer name",
+            "detail": "City · product",
+            "rating": 5
+          }
+        },
+        "r2": {
+          "type": "quote",
+          "settings": {
+            "quote": "Sample review. Replace it with a real customer review.",
+            "name": "Customer name",
+            "detail": "City · product",
+            "rating": 5
+          }
+        },
+        "r3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Sample review. Replace it with a real customer review.",
+            "name": "Customer name",
+            "detail": "City · product",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "What buyers say",
+        "text": "Sample reviews for the demo. Replace with your reviews app block.",
+        "show_quotes": true
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Sample question one?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What are your products made of?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "When will I get my order?",
+            "answer": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How much does shipping cost?",
+            "answer": "<p>Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "heading": "Before you order",
+        "text": "Still have a question? Contact us and we'll help.",
+        "show_whatsapp": true,
+        "open_first": true,
+        "schema_markup": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "pieces",
+    "bestsellers",
+    "promises",
+    "new",
+    "story",
+    "reviews",
+    "faq"
+  ]
+}

@@ -62,11 +62,11 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews & questions" },
     { "type": "checkbox", "id": "show_reviews_placeholder", "label": "Show reviews placeholder", "info": "Shown until a reviews app block is added.", "default": false },
-    { "type": "header", "content": "Workshop note" },
+    { "type": "header", "content": "Team note" },
     { "type": "select", "id": "tone", "label": "Card colour", "options": [{ "value": "f1", "label": "Slate" }, { "value": "f2", "label": "Sage" }, { "value": "f3", "label": "Blush" }, { "value": "f0", "label": "Stone" }], "default": "f1" },
-    { "type": "text", "id": "title", "label": "Title", "default": "From the Inlayora workshop" },
-    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Handmade in India" },
-    { "type": "richtext", "id": "text", "label": "Note", "default": "<p>Every tray is cut, joined and sealed by hand, so the wood grain on yours will be slightly different from the photos. The printed artwork matches exactly. Need a custom size or print? Ask us.</p>" }
+    { "type": "text", "id": "title", "label": "Title", "default": "From our team" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Add a short tag" },
+    { "type": "richtext", "id": "text", "label": "Note", "default": "<p>Add a short note about how your product is made.</p>" }
   ],
   "blocks": [
     { "type": "@app" },
@@ -74,8 +74,8 @@
       "type": "question",
       "name": "Question",
       "settings": [
-        { "type": "text", "id": "question", "label": "Question", "default": "Will my tray look like the photos?" },
-        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>The printed artwork matches the photos. The mango wood grain and tone vary slightly because each piece is handmade.</p>" }
+        { "type": "text", "id": "question", "label": "Question", "default": "Sample question?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Add your answer here.</p>" }
       ]
     }
   ],

@@ -5,15 +5,14 @@
     "announcement": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Diwali gifting is here · Handcrafted in India",
-        "link": "shopify://collections/elegant-serving-trays"
+        "text": "Add your announcement here",
+        "link": "shopify://collections/all"
       }
     },
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu",
-        "search_collection": "our-best-sellers"
+        "menu": "main-menu"
       }
     }
   },

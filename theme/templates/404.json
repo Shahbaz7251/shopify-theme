@@ -9,7 +9,6 @@
       "settings": {
         "heading": "Popular right now",
         "text": "",
-        "collection": "our-best-sellers",
         "limit": 4,
         "feature_first": false,
         "show_view_all": true

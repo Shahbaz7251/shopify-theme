@@ -111,7 +111,7 @@
     "mobile_menu": "Mobile menu",
     "close": "Close",
     "search": "Search",
-    "search_placeholder": "Search trays, tables, patterns",
+    "search_placeholder": "Search products",
     "account": "Account",
     "cart": "Cart",
     "view_all": "All {{ title }}",
@@ -168,7 +168,7 @@
     "size_check": {
       "mug": "A 9 cm mug for scale",
       "mug_note": "Mug shown for scale",
-      "fit_small": "Fits a side table or breakfast in bed",
+      "fit_small": "Fits small spaces",
       "fit_medium": "Fits most ottomans and coffee tables",
       "fit_large": "Fits a large ottoman or dining centrepiece",
       "across": "[cm] cm across"
@@ -199,6 +199,6 @@
     "open": "Chat with us on WhatsApp",
     "ask": "What would you like to ask about?",
     "topic_product": "Question about this product",
-    "msg_prefix": "Hi Inlayora! I have a question about"
+    "msg_prefix": "Hi! I have a question about"
   }
 }

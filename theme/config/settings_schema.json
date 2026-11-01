@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Inlayora",
+    "theme_name": "Storefront",
     "theme_version": "1.0.0",
-    "theme_author": "Inlayora",
+    "theme_author": "Storefront",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
   },
@@ -36,7 +36,7 @@
   {
     "name": "Cart and delivery",
     "settings": [
-      { "type": "number", "id": "free_shipping_threshold", "label": "Free delivery from (₹)", "info": "Shows a progress bar in the cart. Set 0 if delivery is free on every order.", "default": 999 },
+      { "type": "number", "id": "free_shipping_threshold", "label": "Free delivery from (store currency)", "info": "Shows a progress bar in the cart. Set 0 if delivery is free on every order.", "default": 999 },
       { "type": "range", "id": "dispatch_days", "label": "Dispatch time (working days)", "min": 1, "max": 10, "step": 1, "default": 3 },
       { "type": "range", "id": "delivery_days", "label": "Delivery time incl. dispatch (days)", "min": 2, "max": 21, "step": 1, "default": 7 },
       { "type": "checkbox", "id": "cod_available", "label": "Cash on delivery available", "default": true },
@@ -48,12 +48,12 @@
     "settings": [
       { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number", "info": "International format without +, e.g. 919876543210" },
       { "type": "checkbox", "id": "whatsapp_enabled", "label": "Show floating WhatsApp button", "default": true },
-      { "type": "text", "id": "whatsapp_title", "label": "WhatsApp panel title", "default": "Chat with Inlayora" },
+      { "type": "text", "id": "whatsapp_title", "label": "WhatsApp panel title", "default": "Chat with us" },
       { "type": "text", "id": "whatsapp_subtitle", "label": "WhatsApp panel subtitle", "default": "We reply on WhatsApp" },
-      { "type": "text", "id": "whatsapp_topic_1", "label": "Topic 1", "default": "Diwali offers" },
+      { "type": "text", "id": "whatsapp_topic_1", "label": "Topic 1", "default": "Product question" },
       { "type": "text", "id": "whatsapp_topic_2", "label": "Topic 2", "default": "Order & delivery help" },
       { "type": "text", "id": "whatsapp_topic_3", "label": "Topic 3", "default": "Something else" },
-      { "type": "text", "id": "contact_email", "label": "Contact email", "default": "inlayoraindia@gmail.com" },
+      { "type": "text", "id": "contact_email", "label": "Contact email" },
       { "type": "url", "id": "social_instagram", "label": "Instagram" },
       { "type": "url", "id": "social_facebook", "label": "Facebook" },
       { "type": "url", "id": "social_pinterest", "label": "Pinterest" }

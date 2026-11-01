@@ -1,0 +1,105 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "settings": {
+        "height": "medium",
+        "heading": "About us",
+        "text": "Tell customers who you are, what you make and why you started.",
+        "button_1_label": "Shop the collection",
+        "button_1_link": "shopify://collections/all",
+        "button_2_label": "",
+        "show_trust": false
+      }
+    },
+    "story": {
+      "type": "craft-story",
+      "settings": {
+        "heading": "How it is made",
+        "text": "<p>Tell the story behind your product.</p>",
+        "button_label": "",
+        "image_right": false
+      },
+      "blocks": {
+        "s1": {
+          "type": "point",
+          "settings": {
+            "title": "Step one",
+            "text": "Describe the first step."
+          }
+        },
+        "s2": {
+          "type": "point",
+          "settings": {
+            "title": "Step two",
+            "text": "Describe the second step."
+          }
+        },
+        "s3": {
+          "type": "point",
+          "settings": {
+            "title": "Step three",
+            "text": "Describe the third step."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "values": {
+      "type": "promise-cards",
+      "settings": {
+        "heading": "What makes us different",
+        "text": ""
+      },
+      "blocks": {
+        "v1": {
+          "type": "card",
+          "settings": {
+            "title": "Quality first",
+            "text": "Add a reason customers choose you.",
+            "tone": "f1"
+          }
+        },
+        "v2": {
+          "type": "card",
+          "settings": {
+            "title": "Good materials",
+            "text": "Add a reason customers choose you.",
+            "tone": "f2"
+          }
+        },
+        "v3": {
+          "type": "card",
+          "settings": {
+            "title": "Fair prices",
+            "text": "Add a reason customers choose you.",
+            "tone": "f3"
+          }
+        },
+        "v4": {
+          "type": "card",
+          "settings": {
+            "title": "Real support",
+            "text": "Add a reason customers choose you.",
+            "tone": "f4"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "story",
+    "values"
+  ]
+}

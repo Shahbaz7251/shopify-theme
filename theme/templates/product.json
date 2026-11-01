@@ -4,7 +4,7 @@
       "type": "main-product",
       "settings": {
         "card_tone": "f3",
-        "gallery_tag": "Handmade in India",
+        "gallery_tag": "Add a short tag",
         "fit_link": "Not sure? See it to scale",
         "show_buy_now": true
       },
@@ -14,38 +14,38 @@
     "highlights": {
       "type": "product-highlights",
       "settings": {
-        "heading": "Why it earns a place on your table"
+        "heading": "Why customers love it"
       },
       "blocks": {
         "h1": {
           "type": "highlight",
           "settings": {
-            "title": "Wipes clean",
-            "text": "Lacquer-sealed, water-resistant gloss. Spills come off with a soft cloth.",
+            "title": "Benefit one",
+            "text": "Describe this benefit.",
             "tone": "f2"
           }
         },
         "h2": {
           "type": "highlight",
           "settings": {
-            "title": "Real mango wood",
-            "text": "A 12 mm solid wood border, joined by hand. Every grain is different.",
+            "title": "Benefit two",
+            "text": "Describe this benefit.",
             "tone": "f3"
           }
         },
         "h3": {
           "type": "highlight",
           "settings": {
-            "title": "Sits steady",
-            "text": "Rigid base with rubber feet that protect your table.",
+            "title": "Benefit three",
+            "text": "Describe this benefit.",
             "tone": "f1"
           }
         },
         "h4": {
           "type": "highlight",
           "settings": {
-            "title": "A gift that gets used",
-            "text": "For housewarmings, weddings and anniversaries.",
+            "title": "Benefit four",
+            "text": "Describe this benefit.",
             "tone": "f0"
           }
         }
@@ -74,38 +74,33 @@
         "heading": "Reviews & questions",
         "show_reviews_placeholder": false,
         "tone": "f1",
-        "title": "From the Inlayora workshop",
-        "subtitle": "Handmade in India"
+        "title": "From our team",
+        "subtitle": "Add a short tag"
       },
       "blocks": {
         "q1": {
           "type": "question",
           "settings": {
-            "question": "Will my tray look like the photos?",
-            "answer": "<p>The printed artwork matches the photos. The mango wood grain and tone vary slightly because each piece is handmade.</p>"
+            "question": "Sample question one?",
+            "answer": "<p>Add your answer here.</p>"
           }
         },
         "q2": {
           "type": "question",
           "settings": {
-            "question": "Can it get wet?",
-            "answer": "<p>The surface is water-resistant. Wipe spills promptly with a soft cloth.</p>"
+            "question": "Sample question two?",
+            "answer": "<p>Add your answer here.</p>"
           }
         },
         "q3": {
           "type": "question",
           "settings": {
             "question": "When will it arrive?",
-            "answer": "<p>Made and dispatched in 2–3 working days, usually delivered in 5–7 days with tracking.</p>"
+            "answer": "<p>Add your delivery times here.</p>"
           }
-        },
-        "jm_widget": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
         }
       },
       "block_order": [
-        "jm_widget",
         "q1",
         "q2",
         "q3"

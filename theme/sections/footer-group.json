@@ -5,10 +5,8 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "wordmark": "inlayora",
-        "news_heading": "New designs, first",
-        "news_text": "Early access to new patterns and festive drops. No spam.",
-        "menu_2": "help"
+        "news_heading": "Stay in touch",
+        "news_text": "Early access to new products and offers. No spam."
       },
       "blocks": {
         "t1": {
@@ -16,7 +14,7 @@
           "settings": {
             "icon": "truck",
             "title": "Free delivery",
-            "text": "On every order across India"
+            "text": "Add your delivery promise"
           }
         },
         "t2": {
@@ -24,15 +22,15 @@
           "settings": {
             "icon": "cash",
             "title": "Cash on delivery",
-            "text": "On most pincodes"
+            "text": "Add where it is available"
           }
         },
         "t3": {
           "type": "trust",
           "settings": {
             "icon": "return",
-            "title": "7-day returns",
-            "text": "Damage-free promise"
+            "title": "Easy returns",
+            "text": "Add your return window"
           }
         },
         "t4": {
@@ -40,7 +38,7 @@
           "settings": {
             "icon": "shield",
             "title": "Secure payment",
-            "text": "UPI, cards, net banking"
+            "text": "Add your payment methods"
           }
         }
       },
