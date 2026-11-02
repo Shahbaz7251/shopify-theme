@@ -1,0 +1,212 @@
+{%- liquid
+  assign line_1 = section.settings.heading_1
+  assign line_2 = section.settings.heading_2
+  if settings.season != 'none' and section.settings.season_heading_1 != blank
+    assign line_1 = section.settings.season_heading_1
+    assign line_2 = section.settings.season_heading_2
+  endif
+  assign fp = section.settings.float_product
+  assign fv = section.settings.float_video
+  assign bag_label = section.settings.float_label | split: ' ' | first
+  if fp
+    assign bag_label = fp.title | split: ' ' | first
+  endif
+-%}
+{%- capture poster_inner -%}
+  {% render 'cutout',
+    image: section.settings.float_poster,
+    stand_in: 'poster',
+    sizes: '180px',
+    width: 540
+  %}
+  <span class="hero-peek__play" aria-hidden="true">
+    <i><svg focusable="false"><use href="#i-play"/></svg></i>
+  </span>
+{%- endcapture -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter hero-peek"
+  data-section="hero-peek"
+  style="--c:var(--hero);--i:var(--hero-ink)"
+>
+  <h1 class="hero-peek__title">
+    <span class="ln"><span style="--n:0">{{ line_1 | escape }}</span></span>
+    {%- if line_2 != blank -%}
+      <span class="ln"><span style="--n:1">{{ line_2 | escape }}</span></span>
+    {%- endif -%}
+  </h1>
+
+  <div class="hero-peek__float hero-peek__float--product" style="--n:0">
+    {%- if fp -%}
+      <a class="hero-peek__fp" href="{{ fp.url }}">
+        <span class="hero-peek__bag">
+          {%- if fp.featured_image -%}
+            {{ fp.featured_image | image_url: width: 400 | image_tag: class: 'cutout', sizes: '190px', alt: fp.featured_image.alt, loading: 'eager', widths: '200, 300, 400' }}
+          {%- else -%}
+            {% render 'stand-in', name: 'bag', label: bag_label %}
+          {%- endif -%}
+        </span>
+        <b>{{ fp.title | escape }}</b>
+        <span class="hero-peek__price">{{ fp.price | money }}</span>
+      </a>
+    {%- else -%}
+      <a class="hero-peek__fp" href="{{ routes.all_products_collection_url }}">
+        <span class="hero-peek__bag">{% render 'stand-in', name: 'bag', label: bag_label %}</span>
+        <b>{{ section.settings.float_label | escape }}</b>
+        <span class="hero-peek__price">{{ section.settings.float_price | escape }}</span>
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="hero-peek__float hero-peek__float--video" style="--n:1">
+    {%- if fv -%}
+      <button type="button" class="hero-peek__poster" data-video-open aria-label="{{ 'general.play_video' | t }}">
+        {{- poster_inner -}}
+      </button>
+    {%- else -%}
+      <div class="hero-peek__poster">
+        {{- poster_inner -}}
+      </div>
+    {%- endif -%}
+    <p>{{ section.settings.float_caption | escape }}</p>
+  </div>
+
+  <div class="hero-peek__stage">
+    <div class="hero-peek__col">
+      <div class="hero-peek__peek" data-peek>
+        <div class="hero-peek__duck" data-duck>
+          <div class="hero-peek__rise" style="--n:1">
+            <div class="hero-peek__lean" data-lean>
+              {% render 'cutout',
+                image: section.settings.pet_left,
+                stand_in: 'dachs',
+                sizes: '(min-width: 721px) 360px, 34vw',
+                width: 900
+              %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-peek__block">
+        <span class="hero-peek__stat">
+          <span data-count>{{ section.settings.stat_left_value | escape }}</span>
+          {%- if section.settings.stat_left_star -%}
+            <svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg>
+          {%- endif -%}
+        </span>
+        <p>{{ section.settings.stat_left_label | escape }}</p>
+      </div>
+    </div>
+
+    <div class="hero-peek__col hero-peek__col--main">
+      <div class="hero-peek__peek" data-peek>
+        <div class="hero-peek__duck" data-duck>
+          <div class="hero-peek__rise" style="--n:0">
+            <div class="hero-peek__lean" data-lean>
+              {% render 'cutout',
+                image: section.settings.pet_main,
+                stand_in: 'golden',
+                sizes: '(min-width: 721px) 480px, 50vw',
+                width: 1200,
+                loading: 'eager'
+              %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-peek__block">
+        <p>{{ section.settings.text | escape }}</p>
+        {%- if section.settings.button_label != blank -%}
+          <a class="btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+            {{- section.settings.button_label | escape -}}
+            <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="hero-peek__col">
+      <div class="hero-peek__peek" data-peek>
+        <div class="hero-peek__duck" data-duck>
+          <div class="hero-peek__rise" style="--n:2">
+            <div class="hero-peek__lean" data-lean>
+              {% render 'cutout',
+                image: section.settings.pet_right,
+                stand_in: 'cat',
+                sizes: '(min-width: 721px) 360px, 34vw',
+                width: 900
+              %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-peek__block">
+        <span class="hero-peek__stat"><span data-count>{{ section.settings.stat_right_value | escape }}</span></span>
+        <p>{{ section.settings.stat_right_label | escape }}</p>
+      </div>
+    </div>
+  </div>
+
+  {%- if fv -%}
+    <dialog class="hero-peek__dialog" data-video-dialog data-lenis-prevent aria-label="{{ section.settings.float_caption | escape }}">
+      <button type="button" class="hero-peek__close" data-video-close aria-label="{{ 'general.close' | t }}">
+        <svg aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+      </button>
+      {{ fv | video_tag: controls: true, playsinline: true, preload: 'none', image_size: '1280x' }}
+    </dialog>
+  {%- endif -%}
+</section>
+
+
+{% schema %}
+{
+  "name": "Peek hero",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Headline" },
+    { "type": "text", "id": "heading_1", "label": "First line", "default": "One ingredient." },
+    { "type": "text", "id": "heading_2", "label": "Second line", "default": "All tail wags." },
+    {
+      "type": "text",
+      "id": "season_heading_1",
+      "label": "Seasonal first line",
+      "info": "Shown instead of the headline when a seasonal look is on in theme settings.",
+      "default": "Treats and tails,"
+    },
+    { "type": "text", "id": "season_heading_2", "label": "Seasonal second line", "default": "season style." },
+    { "type": "header", "content": "Centre block" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Add one line that says what your store sells."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the treats" },
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
+    { "type": "header", "content": "Pets" },
+    {
+      "type": "image_picker",
+      "id": "pet_left",
+      "label": "Left pet",
+      "info": "Use a cut-out with a transparent background, cropped at the paws."
+    },
+    { "type": "image_picker", "id": "pet_main", "label": "Centre pet" },
+    { "type": "image_picker", "id": "pet_right", "label": "Right pet" },
+    { "type": "header", "content": "Figures" },
+    { "type": "text", "id": "stat_left_value", "label": "Left figure", "default": "4.9" },
+    { "type": "text", "id": "stat_left_label", "label": "Left label", "default": "Average review score" },
+    { "type": "checkbox", "id": "stat_left_star", "label": "Show star beside left figure", "default": true },
+    { "type": "text", "id": "stat_right_value", "label": "Right figure", "default": "1" },
+    { "type": "text", "id": "stat_right_label", "label": "Right label", "default": "Ingredient in every bag" },
+    { "type": "header", "content": "Floating product" },
+    { "type": "product", "id": "float_product", "label": "Product" },
+    { "type": "text", "id": "float_label", "label": "Sample name", "info": "Shown until a product is chosen.", "default": "Chicken chips" },
+    { "type": "text", "id": "float_price", "label": "Sample price", "info": "Shown until a product is chosen.", "default": "$13.95" },
+    { "type": "header", "content": "Floating video" },
+    { "type": "video", "id": "float_video", "label": "Video" },
+    { "type": "image_picker", "id": "float_poster", "label": "Cover image" },
+    { "type": "text", "id": "float_caption", "label": "Caption", "default": "Watch dogs review the treats" }
+  ],
+  "presets": [{ "name": "Peek hero" }]
+}
+{% endschema %}

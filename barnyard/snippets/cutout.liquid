@@ -1,0 +1,29 @@
+{% doc %}
+  Renders an uploaded picture, or the drawn stand-in when none has been uploaded yet.
+
+  @param {image} [image] - Uploaded picture
+  @param {string} stand_in - Stand-in name for the stand-in snippet
+  @param {string} [label] - Text printed on a bag stand-in
+  @param {string} [alt] - Alternative text for the uploaded picture
+  @param {string} [sizes] - Sizes attribute for the uploaded picture
+  @param {number} [width] - Largest image width to request
+  @param {string} [loading] - Set to eager for pictures on the first screen
+
+  @example
+  {% render 'cutout', image: section.settings.pet, stand_in: 'golden', sizes: '40vw' %}
+{% enddoc %}
+{%- if image -%}
+  {%- liquid
+    assign w = width | default: 1200
+    assign lazy = loading | default: 'lazy'
+    assign text = alt | default: image.alt | escape
+    assign s = sizes | default: '100vw'
+  -%}
+  {%- if lazy == 'eager' -%}
+    {{ image | image_url: width: w | image_tag: class: 'cutout', sizes: s, alt: text, loading: 'eager', fetchpriority: 'high', widths: '360, 540, 720, 900, 1200, 1600' }}
+  {%- else -%}
+    {{ image | image_url: width: w | image_tag: class: 'cutout', sizes: s, alt: text, loading: 'lazy', widths: '360, 540, 720, 900, 1200, 1600' }}
+  {%- endif -%}
+{%- else -%}
+  {% render 'stand-in', name: stand_in, label: label, loading: loading %}
+{%- endif -%}

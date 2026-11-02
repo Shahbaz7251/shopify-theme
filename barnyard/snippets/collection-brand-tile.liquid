@@ -1,0 +1,33 @@
+{% doc %}
+  Wide brand tile placed between products on the collection page.
+
+  @param {number} index - 1 or 2, used to identify the tile
+  @param {string} text - Headline
+  @param {string} [small] - Small text
+  @param {string} [link] - Destination URL
+  @param {string} token - Colour token name
+  @param {string} stand_in - Stand-in picture name
+
+  @example
+  {% render 'collection-brand-tile', index: 1, text: 'One ingredient.', token: 'block-b', stand_in: 'chip' %}
+{% enddoc %}
+{%- if text != blank -%}
+  <div class="cp-brand" data-brand="{{ index }}" style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)">
+    <div class="cp-brand__tx">
+      <p class="cp-brand__head">
+        {%- if link != blank -%}
+          <a href="{{ link }}">{{ text | escape }}</a>
+        {%- else -%}
+          {{ text | escape }}
+        {%- endif -%}
+      </p>
+      {%- if small != blank -%}
+        <p class="cp-brand__small">{{ small | escape }}</p>
+      {%- endif -%}
+    </div>
+    <div class="cp-brand__pic" aria-hidden="true">
+      {% render 'stand-in', name: stand_in, label: 'Treats' %}
+    </div>
+  </div>
+{%- endif -%}
+

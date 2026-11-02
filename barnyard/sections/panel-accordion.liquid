@@ -1,0 +1,146 @@
+{%- assign token = section.settings.color -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter panel-accordion"
+  data-section="panel-accordion"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink);--n:{{ section.blocks.size }}"
+>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="sr-only">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+  <div class="panel-accordion__row">
+    {%- for block in section.blocks -%}
+      {%- assign panel_token = block.settings.color -%}
+      <div
+        class="panel-accordion__panel{% if forloop.first %} is-open{% endif %}"
+        style="--c:var(--{{ panel_token }});--i:var(--{{ panel_token }}-ink)"
+        {{ block.shopify_attributes }}
+      >
+        <button
+          type="button"
+          class="panel-accordion__tab"
+          aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="panel-{{ block.id }}"
+        >
+          <span>{{ block.settings.title | escape }}</span>
+        </button>
+        <div
+          class="panel-accordion__body{% if block.settings.image or block.settings.photo != 'none' %} has-pic{% endif %}"
+          id="panel-{{ block.id }}"
+        >
+          <div class="panel-accordion__copy">
+            <h3 class="heading-head" tabindex="-1" data-panel-title>{{ block.settings.title | escape }}</h3>
+            <div class="panel-accordion__foot">
+              {%- if block.settings.text != blank -%}
+                <p>{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.link_label != blank -%}
+                <a class="btn btn--paper" href="{{ block.settings.link | default: routes.all_products_collection_url }}">
+                  {{- block.settings.link_label | escape -}}
+                  <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- if block.settings.image or block.settings.photo != 'none' -%}
+            <div class="panel-accordion__pic">
+              {%- render 'cutout',
+                image: block.settings.image,
+                stand_in: block.settings.photo,
+                sizes: '(min-width: 721px) 32vw, 100vw',
+                width: 1200
+              -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Panel accordion",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading for screen readers",
+      "default": "More from the farm"
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button colour" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "paper"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Antlers" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Sample text for your chews." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop now" },
+        { "type": "select", "id": "photo", "label": "Default photo", "options": [{ "value": "none", "label": "None" }], "default": "none" },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Picture",
+          "info": "Optional. Shows in the right half of the open panel."
+        },
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Panel colour",
+          "options": [
+            { "value": "hero", "label": "Hero" },
+            { "value": "paper", "label": "Page" },
+            { "value": "ink", "label": "Text colour" },
+            { "value": "block-a", "label": "Light block" },
+            { "value": "block-b", "label": "Dark block" },
+            { "value": "action", "label": "Button colour" },
+            { "value": "pop", "label": "Accent" },
+            { "value": "rain", "label": "Chip rain" },
+            { "value": "chicken", "label": "Chicken" },
+            { "value": "turkey", "label": "Turkey" },
+            { "value": "beef", "label": "Beef" },
+            { "value": "fish", "label": "Fish" }
+          ],
+          "default": "block-b"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Panel accordion",
+      "blocks": [
+        { "type": "panel" },
+        { "type": "panel" },
+        { "type": "panel" },
+        { "type": "panel" }
+      ]
+    }
+  ]
+}
+{% endschema %}

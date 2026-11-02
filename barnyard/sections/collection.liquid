@@ -1,0 +1,207 @@
+{%- liquid
+  assign head = section.settings.head_colour
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+-%}
+{%- capture pills -%}
+  <button type="button" class="cp-pill" data-f="all" aria-pressed="true">{{ 'collections.filter_all' | t }}</button>
+  <button type="button" class="cp-pill" data-f="chicken" data-label="{{ section.settings.label_chicken | escape }}" aria-pressed="false" hidden>{{ section.settings.label_chicken | escape }}</button>
+  <button type="button" class="cp-pill" data-f="turkey" data-label="{{ section.settings.label_turkey | escape }}" aria-pressed="false" hidden>{{ section.settings.label_turkey | escape }}</button>
+  <button type="button" class="cp-pill" data-f="beef" data-label="{{ section.settings.label_beef | escape }}" aria-pressed="false" hidden>{{ section.settings.label_beef | escape }}</button>
+  <button type="button" class="cp-pill" data-f="fish" data-label="{{ section.settings.label_fish | escape }}" aria-pressed="false" hidden>{{ section.settings.label_fish | escape }}</button>
+{%- endcapture -%}
+{%- capture sort_options -%}
+  {%- for option in collection.sort_options -%}
+    <option value="{{ option.value | escape }}"{% if option.value == current_sort %} selected{% endif %}>{{ option.name | escape }}</option>
+  {%- endfor -%}
+{%- endcapture -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter collection-page"
+  data-section="collection-page"
+  data-section-id="{{ section.id }}"
+  style="--c:var(--{{ head }});--i:var(--{{ head }}-ink)"
+>
+  <div class="cp-head" data-head>
+    <div class="cp-head__flood" data-flood></div>
+    <div class="wrap cp-head__in">
+      <h1 class="heading-poster cp-head__title"><span class="ln"><span data-title>{{ collection.title | escape }}</span></span></h1>
+      <p class="cp-head__count" data-count data-template="{{ 'collections.count' | t: count: '__N__' | escape }}" aria-live="polite">{{ 'collections.count' | t: count: collection.products_count }}</p>
+    </div>
+    <div class="cp-head__peek" aria-hidden="true">
+      <div class="cp-head__pet">
+        {% render 'cutout', image: section.settings.pet, stand_in: section.settings.pet_stand_in, sizes: '(min-width: 720px) 240px, 28vw', width: 720, alt: '' %}
+      </div>
+    </div>
+  </div>
+
+  <div class="cp-body" data-body>
+    <div class="cp-bar" data-bar>
+      <div class="wrap cp-bar__in">
+        <div class="cp-pills cp-pills--bar" role="group" aria-label="{{ 'collections.filter_label' | t | escape }}">
+          {{ pills }}
+        </div>
+        <button type="button" class="cp-filter-btn" data-sheet-open aria-haspopup="dialog">
+          <span>{{ 'collections.filter_label' | t }}</span>
+          <span class="cp-filter-btn__now" data-filter-now>{{ 'collections.filter_all' | t }}</span>
+        </button>
+        {%- if collection.sort_options.size > 0 -%}
+          <form class="cp-sort cp-bar__sort" action="{{ collection.url }}" method="get" data-sort-form>
+            <label for="cp-sort-{{ section.id }}">{{ 'collections.sort_label' | t }}</label>
+            <select id="cp-sort-{{ section.id }}" name="sort_by" data-sort>{{ sort_options }}</select>
+            <noscript><button type="submit" class="btn btn--soft">{{ 'collections.sort_label' | t }}</button></noscript>
+          </form>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="wrap">
+      {%- paginate collection.products by 50 -%}
+        {%- if collection.products.size == 0 -%}
+          <div class="cp-empty">
+            <p class="lead">{{ 'collections.empty' | t }}</p>
+            <a class="btn" href="{{ routes.all_products_collection_url }}">
+              {{- section.settings.empty_link_label | escape -}}
+              <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+            </a>
+          </div>
+        {%- else -%}
+          {%- liquid
+            assign pos_1 = section.settings.brand_1_position
+            assign pos_2 = section.settings.brand_2_position
+            assign total = collection.products.size
+          -%}
+          <div class="cp-grid" data-grid>
+            {%- for product in collection.products -%}
+              {% render 'product-tile', product: product, sizes: '(min-width: 721px) 25vw, 50vw' %}
+              {%- if forloop.index == pos_1 or forloop.last and pos_1 > total -%}
+                {% render 'collection-brand-tile', index: 1, text: section.settings.brand_1_text, small: section.settings.brand_1_small, link: section.settings.brand_1_link, token: section.settings.brand_1_colour, stand_in: 'chip' %}
+              {%- endif -%}
+              {%- if forloop.index == pos_2 or forloop.last and pos_2 > total -%}
+                {% render 'collection-brand-tile', index: 2, text: section.settings.brand_2_text, small: section.settings.brand_2_small, link: section.settings.brand_2_link, token: section.settings.brand_2_colour, stand_in: 'bag' %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- if paginate.pages > 1 -%}
+            <nav class="cp-pagination" data-pagination>{{ paginate | default_pagination }}</nav>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  </div>
+
+  <dialog class="cp-sheet" data-sheet aria-label="{{ 'collections.filter_label' | t | escape }}" data-lenis-prevent>
+    <div class="cp-sheet__in" data-sheet-panel>
+      <div class="cp-sheet__handle" data-sheet-handle aria-hidden="true"><span></span></div>
+      <div class="cp-sheet__top">
+        <h2>{{ 'collections.filter_label' | t }}</h2>
+        <button type="button" class="btn btn--soft" data-sheet-close>{{ 'general.close' | t }}</button>
+      </div>
+      <div class="cp-pills" role="group" aria-label="{{ 'collections.filter_label' | t | escape }}">
+        {{ pills }}
+      </div>
+      {%- if collection.sort_options.size > 0 -%}
+        <div class="cp-sort">
+          <label for="cp-sort-sheet-{{ section.id }}">{{ 'collections.sort_label' | t }}</label>
+          <select id="cp-sort-sheet-{{ section.id }}" data-sort>{{ sort_options }}</select>
+        </div>
+      {%- endif -%}
+    </div>
+  </dialog>
+</section>
+
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "select",
+      "id": "head_colour",
+      "label": "Header colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "hero"
+    },
+    { "type": "image_picker", "id": "pet", "label": "Peeking pet" },
+    {
+      "type": "select",
+      "id": "pet_stand_in",
+      "label": "Stand-in pet",
+      "options": [
+        { "value": "golden", "label": "Golden dog" },
+        { "value": "dachs", "label": "Dachshund" },
+        { "value": "cat", "label": "Cat" }
+      ],
+      "default": "golden"
+    },
+    { "type": "text", "id": "empty_link_label", "label": "Empty collection button", "default": "Shop all treats" },
+    { "type": "header", "content": "Filter labels" },
+    { "type": "text", "id": "label_chicken", "label": "Chicken", "default": "Chicken" },
+    { "type": "text", "id": "label_turkey", "label": "Turkey", "default": "Turkey" },
+    { "type": "text", "id": "label_beef", "label": "Beef", "default": "Beef" },
+    { "type": "text", "id": "label_fish", "label": "Fish", "default": "Fish" },
+    { "type": "header", "content": "Brand tile 1" },
+    { "type": "text", "id": "brand_1_text", "label": "Headline", "default": "One ingredient. Every bag." },
+    { "type": "text", "id": "brand_1_small", "label": "Small text", "default": "Add a short line about your products." },
+    { "type": "url", "id": "brand_1_link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "brand_1_colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "block-b"
+    },
+    { "type": "range", "id": "brand_1_position", "label": "Show after product", "min": 1, "max": 20, "step": 1, "default": 4 },
+    { "type": "header", "content": "Brand tile 2" },
+    { "type": "text", "id": "brand_2_text", "label": "Headline", "default": "Your brand message." },
+    { "type": "text", "id": "brand_2_small", "label": "Small text", "default": "Add how you make them." },
+    { "type": "url", "id": "brand_2_link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "brand_2_colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "pop"
+    },
+    { "type": "range", "id": "brand_2_position", "label": "Show after product", "min": 1, "max": 20, "step": 1, "default": 10 }
+  ]
+}
+{% endschema %}

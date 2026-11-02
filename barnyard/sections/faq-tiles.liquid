@@ -1,0 +1,72 @@
+{%- assign token = section.settings.colour -%}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+<section
+  id="section-{{ section.id }}"
+  class="chapter faq-tiles"
+  data-section="faq-tiles"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap faq-tiles__in">
+    <h2 class="faq-tiles__heading">{{ section.settings.heading | escape }}</h2>
+    <div class="faq-tiles__list">
+      {%- for block in section.blocks -%}
+        <details class="faq-tiles__tile" name="faq-{{ section.id }}" data-rise {{ block.shopify_attributes }}>
+          <summary>
+            <span>{{ block.settings.question | escape }}</span>
+            <i class="faq-tiles__icon" aria-hidden="true"></i>
+          </summary>
+          <div class="faq-tiles__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "FAQ tiles",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Good questions" },
+    {
+      "type": "select",
+      "id": "colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button colour" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "paper"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What ingredients are in these treats?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Just one.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ tiles",
+      "blocks": [
+        { "type": "question" }
+      ]
+    }
+  ]
+}
+{% endschema %}

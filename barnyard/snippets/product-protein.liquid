@@ -1,0 +1,28 @@
+{% doc %}
+  Outputs chicken, turkey, beef, fish or other for a product. Reads the custom.protein metafield, then protein-* tags. Capture the output to use it.
+
+  @param {product} product - Product to read
+
+  @example
+  {% capture protein %}{% render 'product-protein', product: product %}{% endcapture %}
+{% enddoc %}
+{%- liquid
+  assign result = 'other'
+  assign found = product.metafields.custom.protein.value | default: ''
+  assign found = found | downcase
+  if found == ''
+    if product.tags contains 'protein-chicken'
+      assign found = 'chicken'
+    elsif product.tags contains 'protein-turkey'
+      assign found = 'turkey'
+    elsif product.tags contains 'protein-beef'
+      assign found = 'beef'
+    elsif product.tags contains 'protein-fish'
+      assign found = 'fish'
+    endif
+  endif
+  if found == 'turkey' or found == 'beef' or found == 'fish' or found == 'chicken'
+    assign result = found
+  endif
+  echo result
+-%}

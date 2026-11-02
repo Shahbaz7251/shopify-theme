@@ -1,0 +1,417 @@
+{
+  "sections": {
+    "hero_peek": {
+      "type": "hero-peek",
+      "settings": {
+        "heading_1": "One ingredient.",
+        "heading_2": "All tail wags.",
+        "season_heading_1": "Treats and tails,",
+        "season_heading_2": "season style.",
+        "text": "Add one line that says what your store sells.",
+        "button_label": "Shop the treats",
+        "button_link": "shopify://collections/all",
+        "stat_left_value": "4.9",
+        "stat_left_label": "Sample review score",
+        "stat_left_star": true,
+        "stat_right_value": "1",
+        "stat_right_label": "Add your own stat",
+        "float_label": "Your product",
+        "float_price": "$00.00",
+        "float_caption": "Watch dogs review the treats"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "quotes_marquee": {
+      "type": "quotes-marquee",
+      "settings": {
+        "colour": "action",
+        "label": "Customer quotes"
+      },
+      "blocks": {
+        "quote_1": {
+          "type": "quote",
+          "settings": {
+            "text": "Sample quote: my dog waits by the cupboard."
+          }
+        },
+        "quote_2": {
+          "type": "quote",
+          "settings": {
+            "text": "Sample quote: now on our monthly list."
+          }
+        },
+        "quote_3": {
+          "type": "quote",
+          "settings": {
+            "text": "Sample quote: gone in one crunch."
+          }
+        }
+      },
+      "block_order": [
+        "quote_1",
+        "quote_2",
+        "quote_3"
+      ]
+    },
+    "label_scene": {
+      "type": "label-scene",
+      "settings": {
+        "heading": "Ingredients:",
+        "list": "Chicken meal, corn gluten, wheat flour, glycerin, cane molasses, soy grits, salt, sorbic acid, natural smoke flavour, caramel colour, BHA, propylene glycol, sodium nitrite, powdered cellulose, brewers rice",
+        "keep": "chicken breast",
+        "keep_position": 7,
+        "start_text": "A typical treat label. Scroll to read it the way your customers should.",
+        "done_text": "That is the whole label.",
+        "colour": "paper"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "protein_picker": {
+      "type": "protein-picker",
+      "settings": {
+        "heading": "Pick a protein"
+      },
+      "blocks": {
+        "chicken": {
+          "type": "protein",
+          "settings": {
+            "name": "Chicken",
+            "field": "#FFC531",
+            "line": "Ingredients: chicken breast.",
+            "fact": "Sample text about this protein.",
+            "link": "/collections/all",
+            "link_label": "Shop chicken"
+          }
+        },
+        "turkey": {
+          "type": "protein",
+          "settings": {
+            "name": "Turkey",
+            "field": "#F39A6B",
+            "line": "Ingredients: turkey breast.",
+            "fact": "Sample text about this protein.",
+            "link": "/collections/all",
+            "link_label": "Shop turkey"
+          }
+        },
+        "beef": {
+          "type": "protein",
+          "settings": {
+            "name": "Beef",
+            "field": "#4A1D16",
+            "line": "Ingredients: beef.",
+            "fact": "Sample text about this protein.",
+            "link": "/collections/all",
+            "link_label": "Shop beef"
+          }
+        },
+        "fish": {
+          "type": "protein",
+          "settings": {
+            "name": "Fish",
+            "field": "#0E7C86",
+            "line": "Ingredients: wild-caught fish.",
+            "fact": "Sample text about this protein.",
+            "link": "/collections/all",
+            "link_label": "Shop fish"
+          }
+        }
+      },
+      "block_order": [
+        "chicken",
+        "turkey",
+        "beef",
+        "fish"
+      ]
+    },
+    "product_rail": {
+      "type": "product-rail",
+      "settings": {
+        "heading": "Best sellers",
+        "limit": 8,
+        "link_label": "Shop all treats",
+        "colour": "paper"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "fan_cards": {
+      "type": "fan-cards",
+      "settings": {
+        "heading": "From farm to bowl",
+        "text": "Tell shoppers how your treats are made, in four steps.",
+        "colour": "ink"
+      },
+      "blocks": {
+        "farm": {
+          "type": "card",
+          "settings": {
+            "title": "Farm",
+            "text": "Add where your ingredients come from.",
+            "stand_in": "barn",
+            "colour": "block-a"
+          }
+        },
+        "slice": {
+          "type": "card",
+          "settings": {
+            "title": "Slice",
+            "text": "Add how you prepare them.",
+            "stand_in": "slice",
+            "colour": "paper"
+          }
+        },
+        "dry": {
+          "type": "card",
+          "settings": {
+            "title": "Dry",
+            "text": "Add how you make them.",
+            "stand_in": "chip",
+            "colour": "chicken"
+          }
+        },
+        "bag": {
+          "type": "card",
+          "settings": {
+            "title": "Bag",
+            "text": "Add how you pack and ship.",
+            "stand_in": "bag",
+            "colour": "action"
+          }
+        }
+      },
+      "block_order": [
+        "farm",
+        "slice",
+        "dry",
+        "bag"
+      ]
+    },
+    "pet_split": {
+      "type": "pet-split",
+      "settings": {},
+      "blocks": {
+        "dogs": {
+          "type": "panel",
+          "settings": {
+            "title": "For dogs",
+            "text": "Add a line about your dog treats here.",
+            "stand_in": "golden",
+            "link": "/collections/all",
+            "link_label": "Shop dog treats",
+            "colour": "hero"
+          }
+        },
+        "cats": {
+          "type": "panel",
+          "settings": {
+            "title": "For cats",
+            "text": "Add a line about your cat treats here.",
+            "stand_in": "cat",
+            "link": "/collections/all",
+            "link_label": "Shop cat treats",
+            "colour": "block-a"
+          }
+        }
+      },
+      "block_order": [
+        "dogs",
+        "cats"
+      ]
+    },
+    "chip_snap": {
+      "type": "chip-snap",
+      "settings": {
+        "heading": "One chip, four training bites",
+        "text": "Show how your treat breaks into smaller rewards for training.",
+        "button_label": "Shop training treats",
+        "button_link": "shopify://collections/all",
+        "color": "pop"
+      }
+    },
+    "held_story": {
+      "type": "held-story",
+      "settings": {
+        "color": "paper",
+        "count_word": "of"
+      },
+      "blocks": {
+        "step_vets": {
+          "type": "step",
+          "settings": {
+            "stand_in": "vets",
+            "field": "block-a",
+            "heading": "Made with care",
+            "text": "Sample text. Explain why pet parents can trust your treats, using claims you can back up."
+          }
+        },
+        "step_tummy": {
+          "type": "step",
+          "settings": {
+            "stand_in": "tummy",
+            "field": "chicken",
+            "heading": "Happy pets",
+            "text": "Sample text. Share what makes your treats a good fit for everyday snacking."
+          }
+        }
+      },
+      "block_order": [
+        "step_vets",
+        "step_tummy"
+      ]
+    },
+    "review_stack": {
+      "type": "review-stack",
+      "settings": {
+        "score": "4.9",
+        "heading": "Reviews from our customers",
+        "text": "Flick a card away to read the next one.",
+        "next_label": "Next review",
+        "small_note": "Sample reviews until real ones are added.",
+        "color": "block-a"
+      },
+      "blocks": {
+        "review_beagle": {
+          "type": "review",
+          "settings": {
+            "quote": "Sample review. My dog sits before I open the bag.",
+            "author": "Sample customer",
+            "product_name": "Chicken chips",
+            "stand_in": "dachs",
+            "color": "paper"
+          }
+        },
+        "review_skin": {
+          "type": "review",
+          "settings": {
+            "quote": "Sample review. Replace this with real customer words.",
+            "author": "Sample customer",
+            "product_name": "Turkey chips",
+            "stand_in": "golden",
+            "color": "pop"
+          }
+        },
+        "review_cat": {
+          "type": "review",
+          "settings": {
+            "quote": "Sample review. Even the cat wants one.",
+            "author": "Sample customer",
+            "product_name": "Cat crumbles",
+            "stand_in": "cat",
+            "color": "block-b"
+          }
+        }
+      },
+      "block_order": [
+        "review_beagle",
+        "review_skin",
+        "review_cat"
+      ]
+    },
+    "panel_accordion": {
+      "type": "panel-accordion",
+      "settings": {
+        "heading": "More from the farm",
+        "color": "paper"
+      },
+      "blocks": {
+        "panel_antlers": {
+          "type": "panel",
+          "settings": {
+            "title": "Antlers",
+            "text": "Sample text for your chews.",
+            "link": "/collections/all",
+            "link_label": "Shop antlers",
+            "color": "block-b",
+            "photo": "none"
+          }
+        },
+        "panel_toppers": {
+          "type": "panel",
+          "settings": {
+            "title": "Toppers",
+            "text": "Sample text for your meal toppers.",
+            "link": "/collections/all",
+            "link_label": "Shop toppers",
+            "color": "action",
+            "photo": "none"
+          }
+        },
+        "panel_bundles": {
+          "type": "panel",
+          "settings": {
+            "title": "Bundles",
+            "text": "Sample text for your bundles.",
+            "link": "/collections/all",
+            "link_label": "Shop bundles",
+            "color": "pop",
+            "photo": "none"
+          }
+        },
+        "panel_crumbles": {
+          "type": "panel",
+          "settings": {
+            "title": "Cat crumbles",
+            "text": "Sample text for your cat treats.",
+            "link": "/collections/all",
+            "link_label": "Shop crumbles",
+            "color": "block-a",
+            "photo": "none"
+          }
+        }
+      },
+      "block_order": [
+        "panel_antlers",
+        "panel_toppers",
+        "panel_bundles",
+        "panel_crumbles"
+      ]
+    },
+    "chip_rain": {
+      "type": "chip-rain",
+      "settings": {
+        "heading": "100% chicken breast",
+        "count": 14,
+        "color": "ink"
+      }
+    },
+    "story_list": {
+      "type": "story-list",
+      "settings": {
+        "heading": "From the blog",
+        "limit": 3,
+        "link_label": "Read all stories",
+        "color": "paper"
+      }
+    },
+    "inverted_close": {
+      "type": "inverted-close",
+      "settings": {
+        "heading_1": "Ten percent off.",
+        "heading_2": "One ingredient.",
+        "text": "Join the list and get 10% off your first order, plus new treats and deals.",
+        "button_label": "Sign up",
+        "success_text": "You're in. Check your inbox for your 10% off.",
+        "color": "block-b"
+      }
+    }
+  },
+  "order": [
+    "hero_peek",
+    "quotes_marquee",
+    "label_scene",
+    "protein_picker",
+    "product_rail",
+    "fan_cards",
+    "pet_split",
+    "chip_snap",
+    "held_story",
+    "review_stack",
+    "panel_accordion",
+    "chip_rain",
+    "story_list",
+    "inverted_close"
+  ]
+}

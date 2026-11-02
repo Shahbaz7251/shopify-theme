@@ -1,0 +1,106 @@
+<header class="site-header" data-site-header>
+  <div class="wrap site-header__bar">
+    <a class="site-header__logo" href="{{ routes.root_url }}">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, width: settings.logo_width, height: null, loading: 'eager', style: 'height:auto' }}
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <nav class="site-header__nav" aria-label="{{ 'general.main_menu' | t }}">
+      <ul>
+        {%- for link in section.settings.menu.links -%}
+          <li class="site-header__item">
+            <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+            {%- if link.links.size > 0 -%}
+              <ul class="site-header__drop">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}">{{ child.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="site-header__icon" href="{{ routes.search_url }}" aria-label="{{ 'search.title' | t }}" data-search-open>
+        <svg aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+      </a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="site-header__icon site-header__icon--wide" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">
+          <svg aria-hidden="true" focusable="false"><use href="#i-user"/></svg>
+        </a>
+      {%- endif -%}
+      <a class="cart-pill" href="{{ routes.cart_url }}" data-cart-open>
+        <svg aria-hidden="true" focusable="false"><use href="#i-cart"/></svg>
+        <span>{{ 'cart.title' | t }}</span>
+        <span class="cart-pill__count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      <button type="button" class="site-header__toggle" data-menu-open aria-haspopup="dialog">
+        {{ 'general.menu' | t }}
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog class="search-sheet" data-search-sheet aria-label="{{ 'search.title' | t }}" data-lenis-prevent>
+  <div class="search-sheet__in">
+    <div class="search-sheet__top">
+      <form class="search-field" action="{{ routes.search_url }}" method="get" role="search" data-search-form>
+        <svg aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+        <input
+          type="search"
+          name="q"
+          placeholder="{{ 'search.placeholder' | t }}"
+          aria-label="{{ 'search.title' | t }}"
+          autocomplete="off"
+          data-search-input
+        >
+        <input type="hidden" name="type" value="product">
+      </form>
+      <button type="button" class="btn btn--soft" data-search-close>{{ 'general.close' | t }}</button>
+    </div>
+    <div class="search-sheet__results" data-search-output aria-live="polite">
+      {% render 'search-suggestions' %}
+    </div>
+  </div>
+</dialog>
+
+<dialog class="site-menu" data-site-menu aria-label="{{ 'general.main_menu' | t }}" data-lenis-prevent>
+  <div class="site-menu__in">
+    <div class="site-menu__top">
+      <span class="site-menu__logo">{{ shop.name }}</span>
+      <button type="button" class="btn btn--paper btn--plain" data-menu-close>{{ 'general.close' | t }}</button>
+    </div>
+    <nav aria-label="{{ 'general.main_menu' | t }}">
+      <ul class="site-menu__list">
+        {%- for link in section.settings.menu.links -%}
+          <li>
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            {%- if link.links.size > 0 -%}
+              <ul class="site-menu__sub">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}">{{ child.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</dialog>
+
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "site-header-wrap",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

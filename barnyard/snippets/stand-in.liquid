@@ -1,0 +1,107 @@
+{% doc %}
+  Renders the store's default picture for a slot until a merchant uploads their own.
+
+  @param {string} name - One of golden, dachs, cat, chip, slice, barn, bag, poster, vets, tummy or training
+  @param {string} [label] - Text printed on a drawn bag.
+  @param {string} [body] - Drawn bag colour
+  @param {string} [band] - Drawn bag top band colour
+  @param {string} [print] - Drawn bag text colour
+  @param {string} [loading] - Set to eager for pictures on the first screen
+
+  @example
+  {% render 'stand-in', name: 'bag', label: 'Chicken' %}
+{% enddoc %}
+{%- liquid
+  assign file = ''
+  assign w = 0
+  assign h = 0
+  assign photo_alt = ''
+  case name
+    when 'golden'
+      assign file = 'pet-golden.webp'
+      assign w = 510
+      assign h = 473
+    when 'dachs'
+      assign file = 'pet-dachs.webp'
+      assign w = 360
+      assign h = 469
+    when 'cat'
+      assign file = 'pet-cat.webp'
+      assign w = 415
+      assign h = 468
+    when 'chip'
+      assign file = 'chip.webp'
+      assign w = 481
+      assign h = 466
+    when 'slice'
+      assign file = 'slice.webp'
+      assign w = 427
+      assign h = 320
+    when 'barn'
+      assign file = 'barn.webp'
+      assign w = 495
+      assign h = 421
+    when 'bag'
+      assign file = ''
+    when 'poster'
+      assign file = 'photo-poster.webp'
+      assign w = 1400
+      assign h = 788
+      assign photo_alt = 'A golden retriever eagerly watching a treat chip held in a hand'
+    when 'vets'
+      assign file = 'photo-vets.webp'
+      assign w = 1400
+      assign h = 933
+      assign photo_alt = 'A smiling vet offering a treat chip to a beagle'
+    when 'tummy'
+      assign file = 'photo-tummy.webp'
+      assign w = 1400
+      assign h = 933
+      assign photo_alt = 'A happy doodle lying on its back on a rug'
+    when 'training'
+      assign file = 'photo-training.webp'
+      assign w = 1400
+      assign h = 933
+      assign photo_alt = 'A black labrador looking up at a treat held in a raised hand'
+  endcase
+  assign lazy = loading | default: 'lazy'
+  assign img_class = 'stand-in stand-in--' | append: name
+  if photo_alt != ''
+    assign img_class = 'cutout'
+  endif
+-%}
+{%- if file != '' -%}
+  <img
+    class="{{ img_class }}"
+    src="{{ file | asset_url }}"
+    alt="{{ photo_alt | escape }}"
+    width="{{ w }}"
+    height="{{ h }}"
+    {% if lazy == 'eager' %}
+      fetchpriority="high"
+    {% else %}
+      loading="lazy"
+    {% endif %}
+  >
+{%- else -%}
+  {%- liquid
+    assign bag_label = label | default: 'Treats'
+    assign bag_body = body | default: '#B3261E'
+    assign bag_band = band | default: '#7F1610'
+    assign bag_print = print | default: '#FFFFFF'
+    assign bag_size = 30
+    if bag_label.size > 8
+      assign bag_size = 23
+    endif
+  -%}
+  <svg class="stand-in stand-in--bag" viewBox="0 0 200 280" aria-hidden="true" focusable="false">
+    <path d="M14 20h172l6 240q0 16-16 16H24q-16 0-16-16z" fill="{{ bag_body }}"/>
+    <path d="M14 6h172v24H14z" fill="{{ bag_band }}"/>
+    <text x="100" y="74" text-anchor="middle" font-family="Stack Sans Headline,Arial,sans-serif" font-size="{{ bag_size }}" font-weight="500" fill="{{ bag_print }}">{{ bag_label | escape }}</text>
+    <text x="100" y="98" text-anchor="middle" font-family="Stack Sans Text,Arial,sans-serif" font-size="14" fill="{{ bag_print }}">1 ingredient</text>
+    <circle cx="100" cy="186" r="66" fill="#FFF4DF"/>
+    <use href="#si-chip" x="44" y="134" width="62" height="62"/>
+    <use href="#si-chip" x="96" y="126" width="58" height="58"/>
+    <use href="#si-chip" x="72" y="180" width="62" height="62"/>
+  </svg>
+{%- endif -%}

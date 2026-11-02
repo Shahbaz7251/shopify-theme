@@ -1,0 +1,75 @@
+{%- assign token = section.settings.colour -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter quotes-marquee"
+  data-section="quotes-marquee"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+  aria-label="{{ section.settings.label | escape }}"
+>
+  <div class="quotes-marquee__track" data-track>
+    <div class="quotes-marquee__group" data-group>
+      {%- for block in section.blocks -%}
+        <p class="quotes-marquee__quote" {{ block.shopify_attributes }}>
+          {{- block.settings.text | escape -}}
+          <img src="{{ 'chip.webp' | asset_url }}" alt="" width="40" height="40" loading="lazy">
+        </p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Moving quotes",
+  "tag": "div",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "ink", "label": "Ink" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "action"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label for screen readers",
+      "default": "Customer quotes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Sample quote: my dog waits by the cupboard." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moving quotes",
+      "blocks": [
+        { "type": "quote", "settings": { "text": "Sample quote: my dog waits by the cupboard." } },
+        { "type": "quote", "settings": { "text": "Sample quote: now on our monthly list." } },
+        { "type": "quote", "settings": { "text": "Sample quote: gone in one crunch." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

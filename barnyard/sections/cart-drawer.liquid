@@ -1,0 +1,108 @@
+{%- liquid
+  assign threshold = settings.free_shipping_threshold | times: 100
+  assign pct = 0
+  assign remaining = 0
+  if threshold > 0
+    assign pct = cart.total_price | times: 100 | divided_by: threshold | at_most: 100
+    assign remaining = threshold | minus: cart.total_price | at_least: 0
+  endif
+  assign remaining_money = remaining | money
+-%}
+<dialog class="cart-drawer" id="cart-drawer" data-cart-drawer aria-label="{{ 'cart.title' | t }}" data-lenis-prevent>
+  <div class="cart-drawer__in" data-cart-inner data-count="{{ cart.item_count }}" data-pct="{{ pct }}">
+    <div class="cart-drawer__top">
+      <h2>{{ 'cart.title' | t }}</h2>
+      <button type="button" class="btn btn--soft" data-cart-close>{{ 'general.close' | t }}</button>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty">
+        <div class="cart-empty__peek">
+          {% render 'cutout', image: section.settings.empty_image, stand_in: 'golden', sizes: '200px', width: 400 %}
+        </div>
+        <div class="cart-empty__tx">
+          <h3>{{ section.settings.empty_heading | escape }}</h3>
+          <p>{{ section.settings.empty_text | escape }}</p>
+          <a class="btn" href="{{ routes.all_products_collection_url }}">
+            {{- section.settings.empty_link_label | escape -}}
+            <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
+    {%- else -%}
+      {%- if threshold > 0 -%}
+        <div class="ship">
+          <p aria-live="polite">
+            {%- if remaining == 0 -%}
+              {{ 'cart.free_shipping_unlocked' | t }}
+            {%- else -%}
+              {{ 'cart.free_shipping_remaining' | t: amount: remaining_money }}
+            {%- endif -%}
+          </p>
+          <div class="ship__track" data-ship-track style="--pct:{{ pct }}">
+            <div class="ship__fill"></div>
+            <img class="ship__chip" src="{{ 'chip.webp' | asset_url }}" alt="" width="28" height="28" loading="lazy">
+          </div>
+        </div>
+      {%- endif -%}
+
+      <ul class="cart-lines">
+        {%- for item in cart.items -%}
+          <li class="cart-line" data-line="{{ forloop.index }}">
+            <a class="cart-line__pic" href="{{ item.url }}">
+              {%- if item.image -%}
+                {{ item.image | image_url: width: 160 | image_tag: alt: item.title, loading: 'lazy', width: 80, height: 80, class: 'cutout' }}
+              {%- else -%}
+                {% render 'stand-in', name: 'bag', label: 'Treats' %}
+              {%- endif -%}
+            </a>
+            <div class="cart-line__tx">
+              <a class="cart-line__name" href="{{ item.url }}">{{ item.product.title | split: '|' | first | strip | escape }}</a>
+              {%- unless item.product.has_only_default_variant -%}
+                <small>{{ item.variant.title | escape }}</small>
+              {%- endunless -%}
+              {%- if item.selling_plan_allocation -%}
+                <small>{{ item.selling_plan_allocation.selling_plan.name | escape }}</small>
+              {%- endif -%}
+              <div class="qty">
+                <button type="button" data-line-change="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.decrease' | t: title: item.product.title | escape }}"><svg aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></button>
+                <span aria-label="{{ 'cart.quantity' | t }}">{{ item.quantity }}</span>
+                <button type="button" data-line-change="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.increase' | t: title: item.product.title | escape }}"><svg aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></button>
+              </div>
+            </div>
+            <div class="cart-line__end">
+              <span>{{ item.final_line_price | money }}</span>
+              <button type="button" class="cart-line__remove" data-line-change="{{ forloop.index }}" data-qty="0">{{ 'cart.remove' | t }}</button>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <p class="cart-error" data-cart-error role="alert" hidden></p>
+
+      <div class="cart-drawer__foot">
+        <div class="cart-drawer__total">
+          <span>{{ 'cart.subtotal' | t }}</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+        <p class="small">{{ 'cart.taxes_note' | t }}</p>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="btn btn--plain cart-drawer__checkout">{{ 'cart.checkout' | t }}</button>
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+</dialog>
+
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    { "type": "image_picker", "id": "empty_image", "label": "Empty cart pet" },
+    { "type": "text", "id": "empty_heading", "label": "Empty cart heading", "default": "Nothing in here yet" },
+    { "type": "text", "id": "empty_text", "label": "Empty cart text", "default": "Your dog is looking at you. Pick something good." },
+    { "type": "text", "id": "empty_link_label", "label": "Empty cart button", "default": "Shop the treats" }
+  ]
+}
+{% endschema %}

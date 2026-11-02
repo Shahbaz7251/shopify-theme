@@ -1,0 +1,67 @@
+<section id="section-{{ section.id }}" class="chapter search-page" style="--c:var(--paper);--i:var(--ink)">
+  <div class="search-page__head">
+    <div class="wrap search-page__head-in">
+      <h1>{{ 'search.title' | t }}</h1>
+      <form class="search-field" action="{{ routes.search_url }}" method="get" role="search">
+        <svg aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'search.placeholder' | t }}"
+          aria-label="{{ 'search.title' | t }}"
+        >
+        <input type="hidden" name="type" value="product">
+        <button type="submit" class="btn btn--plain">{{ 'search.submit' | t }}</button>
+      </form>
+      {%- if search.performed and search.results_count > 0 -%}
+        <p class="search-page__count">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="wrap search-page__body">
+    {%- if search.performed and search.results_count == 0 -%}
+      <div class="search-empty">
+        <div class="search-empty__pet">{% render 'stand-in', name: 'golden' %}</div>
+        <div class="search-empty__card">
+          <h2>{{ 'search.no_results_html' | t: terms: search.terms }}</h2>
+          <p>{{ 'search.try_again' | t }}</p>
+          <a class="btn" href="{{ routes.all_products_collection_url }}">
+            {{- 'search.shop_all' | t -}}
+            <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
+    {%- elsif search.performed -%}
+      {%- paginate search.results by 24 -%}
+        <div class="search-grid">
+          {%- for result in search.results -%}
+            {%- if result.object_type == 'product' -%}
+              {% render 'product-tile', product: result, sizes: '(min-width: 900px) 25vw, 50vw' %}
+            {%- else -%}
+              <a class="search-other" href="{{ result.url }}">
+                <span>{{ result.title | escape }}</span>
+                <svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <div class="search-pages">{{ paginate | default_pagination }}</div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      {% render 'search-suggestions' %}
+    {%- endif -%}
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": []
+}
+{% endschema %}

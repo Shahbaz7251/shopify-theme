@@ -1,0 +1,88 @@
+{% doc %}
+  Outputs the self-hosted font faces and the colour tokens every section reads.
+
+  @example
+  {% render 'css-variables' %}
+{% enddoc %}
+{% style %}
+  @font-face {
+    font-family: "Stack Sans Headline";
+    src: url("{{ 'stack-sans-headline.woff2' | asset_url }}") format("woff2");
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Stack Sans Text";
+    src: url("{{ 'stack-sans-text.woff2' | asset_url }}") format("woff2");
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  {%- liquid
+    assign chicken_ink = '#2A0E0A'
+    assign turkey_ink = '#2A0E0A'
+    assign beef_ink = '#FFFFFF'
+    assign fish_ink = '#FFFFFF'
+    assign b = settings.color_chicken | color_brightness
+    if b < 128
+      assign chicken_ink = '#FFFFFF'
+    endif
+    assign b = settings.color_turkey | color_brightness
+    if b < 128
+      assign turkey_ink = '#FFFFFF'
+    endif
+    assign b = settings.color_beef | color_brightness
+    if b >= 128
+      assign beef_ink = '#2A0E0A'
+    endif
+    assign b = settings.color_fish | color_brightness
+    if b >= 128
+      assign fish_ink = '#2A0E0A'
+    endif
+  -%}
+  :root {
+    --paper: {{ settings.color_paper }};
+    --paper-ink: {{ settings.color_ink }};
+    --ink: {{ settings.color_ink }};
+    --ink-ink: {{ settings.color_paper }};
+    --muted: {{ settings.color_muted }};
+    --hero: {{ settings.color_hero }};
+    --hero-ink: {{ settings.color_hero_ink }};
+    --block-a: {{ settings.color_block_a }};
+    --block-a-ink: {{ settings.color_block_a_ink }};
+    --block-b: {{ settings.color_block_b }};
+    --block-b-ink: {{ settings.color_block_b_ink }};
+    --action: {{ settings.color_action }};
+    --action-ink: {{ settings.color_action_ink }};
+    --pop: {{ settings.color_pop }};
+    --pop-ink: {{ settings.color_pop_ink }};
+    --rain: {{ settings.color_rain }};
+    --rain-ink: {{ settings.color_rain_ink }};
+    --chicken: {{ settings.color_chicken }};
+    --chicken-ink: {{ chicken_ink }};
+    --turkey: {{ settings.color_turkey }};
+    --turkey-ink: {{ turkey_ink }};
+    --beef: {{ settings.color_beef }};
+    --beef-ink: {{ beef_ink }};
+    --fish: {{ settings.color_fish }};
+    --fish-ink: {{ fish_ink }};
+    --other: var(--block-a);
+    --other-ink: var(--block-a-ink);
+    {%- if settings.season == 'halloween' %}
+      --hero: #F2761B;
+      --hero-ink: #1F0B10;
+      --block-a: #FFC27A;
+      --block-a-ink: #1F0B10;
+      --block-b: #2A1238;
+      --block-b-ink: #FFFFFF;
+    {%- elsif settings.season == 'christmas' %}
+      --hero: #1F5A3C;
+      --hero-ink: #FFFFFF;
+      --block-a: #CFE8D6;
+      --block-a-ink: #12301F;
+      --block-b: #B3261E;
+      --block-b-ink: #FFFFFF;
+    {%- endif %}
+  }
+{% endstyle %}

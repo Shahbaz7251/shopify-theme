@@ -1,0 +1,141 @@
+{%- liquid
+  assign token = section.settings.color
+  assign form_id = 'section-' | append: section.id | append: '-form'
+  assign email_id = 'section-' | append: section.id | append: '-email'
+  assign button_label = section.settings.button_label
+  if button_label == blank
+    assign button_label = 'newsletter.submit' | t
+  endif
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter inverted-close"
+  data-section="inverted-close"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap inverted-close__in">
+    <h2 class="inverted-close__title">
+      <span class="ln"><span>{{ section.settings.heading_1 | escape }}</span></span>
+      <span class="ln"><span>{{ section.settings.heading_2 | escape }}</span></span>
+    </h2>
+    <div class="inverted-close__foot">
+      {%- if section.settings.text != blank -%}
+        <p class="inverted-close__text lead" data-close-rise>{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- form 'customer', id: form_id, class: 'inverted-close__form' -%}
+        <div class="inverted-close__box{% if form.posted_successfully? %} inverted-close__box--done{% endif %}" data-close-rise>
+          <div class="inverted-close__peek" aria-hidden="true">
+            <div class="inverted-close__pet">
+              {% render 'cutout',
+                image: section.settings.pet,
+                stand_in: 'golden',
+                sizes: '200px',
+                width: 540
+              %}
+            </div>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="inverted-close__done" role="status">{{ section.settings.success_text | escape }}</p>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="inverted-close__field">
+              <label class="sr-only" for="{{ email_id }}">{{ 'newsletter.email_label' | t }}</label>
+              <input
+                class="inverted-close__input"
+                id="{{ email_id }}"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email }}"
+                placeholder="{{ 'newsletter.email_label' | t }}"
+                autocomplete="email"
+                autocapitalize="off"
+                spellcheck="false"
+                required
+                {% if form.errors %}
+                  aria-invalid="true"
+                {% endif %}
+              >
+              <button type="submit" class="btn">
+                {{ button_label | escape }}
+                <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
+        {%- if form.errors -%}
+          <div class="inverted-close__error" role="alert">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Inverted close",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading line 1",
+      "default": "Ten percent off."
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading line 2",
+      "default": "One ingredient."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Join the list and get 10% off your first order, plus new treats and deals."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Sign up"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Thank you message",
+      "default": "You're in. Check your inbox for your 10% off."
+    },
+    {
+      "type": "image_picker",
+      "id": "pet",
+      "label": "Pet picture",
+      "info": "Use a cut-out with a transparent background. A drawn dog shows until one is added."
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Dark text" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "block-b"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inverted close"
+    }
+  ]
+}
+{% endschema %}

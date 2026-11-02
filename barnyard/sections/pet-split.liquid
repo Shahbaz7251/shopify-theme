@@ -1,0 +1,152 @@
+{%- liquid
+  assign lead_block = section.blocks | first
+  assign token = 'turkey'
+  if lead_block
+    assign token = lead_block.settings.colour
+  endif
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter pet-split"
+  data-section="pet-split"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="pet-split__row">
+    {%- for block in section.blocks limit: 2 -%}
+      {%- liquid
+        assign panel_token = block.settings.colour
+        assign href = block.settings.link | default: routes.all_products_collection_url
+      -%}
+      <a
+        class="pet-split__panel"
+        href="{{ href }}"
+        style="--c:var(--{{ panel_token }});--i:var(--{{ panel_token }}-ink)"
+        {{ block.shopify_attributes }}
+      >
+        <h2 class="pet-split__title" data-rise>{{ block.settings.title | escape }}</h2>
+        <p class="pet-split__text" data-rise>{{ block.settings.text | escape }}</p>
+        <span class="btn pet-split__cta" data-rise>
+          {{- block.settings.link_label | escape -}}
+          <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+        </span>
+        <span class="pet-split__peek" aria-hidden="true">
+          <span class="pet-split__rise" data-pet-rise>
+            <span class="pet-split__pet">
+              {% render 'cutout',
+                image: block.settings.image,
+                stand_in: block.settings.stand_in,
+                alt: '',
+                sizes: '(min-width: 761px) 40vw, 90vw',
+                width: 1200
+              %}
+            </span>
+          </span>
+        </span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Dog or cat split",
+  "max_blocks": 2,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "For dogs"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Add a line about your dog treats here."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Pet picture",
+          "info": "Use a cut-out on a transparent background. A drawn pet shows until you add one."
+        },
+        {
+          "type": "select",
+          "id": "stand_in",
+          "label": "Drawn stand-in",
+          "options": [
+            { "value": "golden", "label": "Golden retriever" },
+            { "value": "cat", "label": "Cat" },
+            { "value": "dachs", "label": "Dachshund" }
+          ],
+          "default": "golden"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop dog treats"
+        },
+        {
+          "type": "select",
+          "id": "colour",
+          "label": "Colour",
+          "options": [
+            { "value": "hero", "label": "Hero" },
+            { "value": "paper", "label": "Page" },
+            { "value": "ink", "label": "Dark text colour" },
+            { "value": "block-a", "label": "Light block" },
+            { "value": "block-b", "label": "Dark block" },
+            { "value": "action", "label": "Button red" },
+            { "value": "pop", "label": "Accent" },
+            { "value": "rain", "label": "Chip rain" },
+            { "value": "chicken", "label": "Chicken" },
+            { "value": "turkey", "label": "Turkey" },
+            { "value": "beef", "label": "Beef" },
+            { "value": "fish", "label": "Fish" }
+          ],
+          "default": "turkey"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dog or cat split",
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "title": "For dogs",
+            "text": "Add a line about your dog treats here.",
+            "stand_in": "golden",
+            "link_label": "Shop dog treats",
+            "colour": "turkey"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "title": "For cats",
+            "text": "Add a line about your cat treats here.",
+            "stand_in": "cat",
+            "link_label": "Shop cat treats",
+            "colour": "block-a"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

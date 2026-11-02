@@ -1,0 +1,189 @@
+{%- liquid
+  assign token = section.settings.colour
+  assign bag_ink = settings.color_ink
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter fan-cards"
+  data-section="fan-cards"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="fan-cards__stage">
+    <div class="wrap">
+      <div class="fan-cards__head" data-rise>
+        <h2 class="heading-head">{{ section.settings.heading | escape }}</h2>
+        <p>{{ section.settings.text | escape }}</p>
+      </div>
+    </div>
+    <div class="fan-cards__cards" data-cards>
+      {%- for block in section.blocks -%}
+        {%- assign card_token = block.settings.colour -%}
+        <article
+          class="fan-card"
+          data-card
+          style="--cc:var(--{{ card_token }});--ci:var(--{{ card_token }}-ink)"
+          {{ block.shopify_attributes }}
+        >
+          <h3>{{ block.settings.title | escape }}</h3>
+          <div class="fan-card__pic">
+            {%- if block.settings.image == blank and block.settings.stand_in == 'bag' -%}
+              {% render 'stand-in', name: 'bag', label: 'Chicken', body: '#FFF4DF', band: bag_ink, print: bag_ink %}
+            {%- else -%}
+              {% render 'cutout',
+                image: block.settings.image,
+                stand_in: block.settings.stand_in,
+                alt: block.settings.title,
+                sizes: '(min-width: 1100px) 200px, 50vw',
+                width: 720
+              %}
+            {%- endif -%}
+          </div>
+          <p>{{ block.settings.text | escape }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Four cards, dealt",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From farm to bowl"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Tell shoppers how your treats are made, in four steps."
+    },
+    {
+      "type": "select",
+      "id": "colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Dark text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "ink"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Farm"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Add where your ingredients come from."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Picture",
+          "info": "A drawn stand-in shows until you add one."
+        },
+        {
+          "type": "select",
+          "id": "stand_in",
+          "label": "Drawn stand-in",
+          "options": [
+            { "value": "barn", "label": "Barn" },
+            { "value": "slice", "label": "Slice" },
+            { "value": "chip", "label": "Chip" },
+            { "value": "bag", "label": "Bag" }
+          ],
+          "default": "barn"
+        },
+        {
+          "type": "select",
+          "id": "colour",
+          "label": "Colour",
+          "options": [
+            { "value": "hero", "label": "Hero" },
+            { "value": "paper", "label": "Page" },
+            { "value": "ink", "label": "Dark text colour" },
+            { "value": "block-a", "label": "Light block" },
+            { "value": "block-b", "label": "Dark block" },
+            { "value": "action", "label": "Button red" },
+            { "value": "pop", "label": "Accent" },
+            { "value": "rain", "label": "Chip rain" },
+            { "value": "chicken", "label": "Chicken" },
+            { "value": "turkey", "label": "Turkey" },
+            { "value": "beef", "label": "Beef" },
+            { "value": "fish", "label": "Fish" }
+          ],
+          "default": "block-a"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Four cards, dealt",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Farm",
+            "text": "Add where your ingredients come from.",
+            "stand_in": "barn",
+            "colour": "block-a"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Slice",
+            "text": "Add how you prepare them.",
+            "stand_in": "slice",
+            "colour": "paper"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Dry",
+            "text": "Add how you make them.",
+            "stand_in": "chip",
+            "colour": "chicken"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Bag",
+            "text": "Add how you pack and ship.",
+            "stand_in": "bag",
+            "colour": "action"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

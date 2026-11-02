@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection",
+      "settings": {
+        "head_colour": "hero",
+        "pet_stand_in": "golden",
+        "brand_1_text": "Your headline here.",
+        "brand_1_small": "Add a short line about your products.",
+        "brand_1_colour": "block-b",
+        "brand_1_position": 4,
+        "brand_2_text": "Your brand message.",
+        "brand_2_small": "Add how you make them.",
+        "brand_2_colour": "pop",
+        "brand_2_position": 10
+      }
+    },
+    "tiles": {
+      "type": "word-tiles",
+      "blocks": {
+        "ingredient": {
+          "type": "tile",
+          "settings": {
+            "word": "1",
+            "caption": "Ingredient",
+            "colour": "hero"
+          }
+        },
+        "guarantee": {
+          "type": "tile",
+          "settings": {
+            "word": "100%",
+            "caption": "Satisfaction guarantee",
+            "colour": "block-b"
+          }
+        },
+        "shipping": {
+          "type": "tile",
+          "settings": {
+            "word": "$35",
+            "caption": "Free shipping from",
+            "colour": "pop"
+          }
+        },
+        "farm": {
+          "type": "tile",
+          "settings": {
+            "word": "Fresh",
+            "caption": "Your promise",
+            "colour": "block-a"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient",
+        "guarantee",
+        "shipping",
+        "farm"
+      ],
+      "settings": {
+        "heading": "Why choose us",
+        "colour": "paper"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "tiles"
+  ]
+}

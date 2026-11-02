@@ -1,0 +1,58 @@
+{%- liquid
+  assign protein = 'chicken'
+  if product
+    capture protein_raw
+      render 'product-protein', product: product
+    endcapture
+    assign protein = protein_raw | strip
+  endif
+  assign bag_label = protein | capitalize
+  assign default_line = section.settings.line
+  if protein == 'turkey' or protein == 'beef' or protein == 'fish'
+    assign default_line = '100% ' | append: protein
+  endif
+  assign line = product.metafields.custom.chapter_line.value | default: default_line
+  assign picture = section.settings.image | default: product.featured_image
+-%}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+{%- unless protein == 'other' -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter product-chapter"
+  data-section="product-chapter"
+  style="--c:var(--{{ protein }});--i:var(--{{ protein }}-ink)"
+>
+  <div class="product-chapter__line-wrap">
+    <h2 class="product-chapter__line" data-push>{{ line | escape }}</h2>
+  </div>
+  <div class="wrap product-chapter__in">
+    <p class="lead" data-rise>{{ section.settings.text | escape }}</p>
+    <div class="product-chapter__disc" data-rise>
+      <div class="product-chapter__bag{% if picture %} product-chapter__bag--photo{% endif %}">
+        {%- if picture -%}
+          {{ picture | image_url: width: 900 | image_tag: class: 'cutout', sizes: '(min-width: 861px) 22vw, 50vw', alt: picture.alt, loading: 'lazy', widths: '360, 540, 720, 900' }}
+        {%- else -%}
+          {% render 'stand-in', name: 'bag', label: bag_label %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endunless -%}
+
+
+
+{% schema %}
+{
+  "name": "Product colour chapter",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "line", "label": "Giant line", "default": "100% chicken breast", "info": "A product can override this with the custom.chapter_line metafield." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Sample text. No fillers, no additives, and nothing you need to look up." },
+    { "type": "image_picker", "id": "image", "label": "Picture", "info": "Uses the product's main picture when empty." }
+  ],
+  "presets": [
+    { "name": "Product colour chapter" }
+  ]
+}
+{% endschema %}

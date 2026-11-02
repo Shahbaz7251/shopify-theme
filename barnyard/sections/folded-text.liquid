@@ -1,0 +1,41 @@
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+<section
+  id="section-{{ section.id }}"
+  class="chapter folded-text"
+  data-section="folded-text"
+  style="--c:var(--paper);--i:var(--ink)"
+>
+  <div class="wrap folded-text__in">
+    <h2 class="folded-text__heading">{{ section.settings.heading | escape }}</h2>
+    <div class="folded-text__copy">
+      <div class="folded-text__body" data-fold-body id="fold-{{ section.id }}">{{ section.settings.text }}</div>
+      <button
+        type="button"
+        class="btn btn--soft folded-text__toggle"
+        data-fold-toggle
+        aria-expanded="false"
+        aria-controls="fold-{{ section.id }}"
+        data-more="{{ 'products.read_more' | t | escape }}"
+        data-less="{{ 'products.read_less' | t | escape }}"
+        hidden
+      >
+        {{ 'products.read_more' | t }}
+      </button>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Folded text",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More about this treat" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Longer product copy for shoppers and search engines goes here.</p>" }
+  ],
+  "presets": [
+    { "name": "Folded text" }
+  ]
+}
+{% endschema %}

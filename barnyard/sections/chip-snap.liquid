@@ -1,0 +1,87 @@
+{%- liquid
+  assign token = section.settings.color
+  assign chip_label = section.settings.image.alt | default: section.settings.heading
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter chip-snap"
+  data-section="chip-snap"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap chip-snap__in">
+    <div class="chip-snap__copy">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="heading-head">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="lead">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{- section.settings.button_label | escape -}}
+          <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+        </a>
+      {%- endif -%}
+    </div>
+    <div class="chip-snap__stage" role="img" aria-label="{{ chip_label | escape }}">
+      {%- for i in (1..4) -%}
+        <div class="chip-snap__piece chip-snap__piece--{{ i }}" aria-hidden="true">
+          {%- render 'cutout',
+            image: section.settings.image,
+            stand_in: 'chip',
+            sizes: '(min-width: 861px) 30vw, 70vw',
+            width: 900
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Chip snap",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "One chip, four training bites" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Show how your treat breaks into smaller rewards for training."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop training treats" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Chip picture",
+      "info": "A square cut-out with a transparent background works best. The picture itself snaps into four pieces."
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button colour" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "pop"
+    }
+  ],
+  "presets": [
+    { "name": "Chip snap" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+{% doc %}
+  Product tile used by rails and the collection page. Without a product it renders a sample tile.
+
+  @param {product} [product] - Product to show
+  @param {string} [sample_name] - Name for a sample tile
+  @param {string} [sample_price] - Price text for a sample tile
+  @param {string} [sample_protein] - chicken, turkey, beef or fish for a sample tile
+  @param {string} [sizes] - Sizes attribute for the bag picture
+
+  @example
+  {% render 'product-tile', product: product, sizes: '(min-width: 900px) 25vw, 50vw' %}
+{% enddoc %}
+{%- liquid
+  assign protein = sample_protein | default: 'chicken'
+  if product
+    capture protein
+      render 'product-protein', product: product
+    endcapture
+  endif
+  assign protein = protein | strip
+  assign bag_label = protein | capitalize
+-%}
+<article class="tile" data-tile data-protein="{{ protein }}" style="--tile:var(--{{ protein }})">
+  {%- if product -%}
+    <a class="tile__open" href="{{ product.url }}">
+      <span class="tile__ground{% if product.featured_image %} tile__ground--photo{% endif %}">
+        <span class="tile__bag" data-fly-source style="view-transition-name:bag-{{ product.id }}">
+          {%- if product.featured_image -%}
+            {{ product.featured_image | image_url: width: 720 | image_tag: class: 'cutout', sizes: sizes, alt: product.featured_image.alt, loading: 'lazy', widths: '240, 360, 540, 720' }}
+          {%- else -%}
+            {% render 'stand-in', name: 'bag', label: bag_label %}
+          {%- endif -%}
+        </span>
+      </span>
+      <span class="tile__name">{{ product.title | split: '|' | first | strip | escape }}</span>
+      <span class="tile__price">{{ product.price | money }}</span>
+    </a>
+    {%- if product.available -%}
+      {%- form 'product', product, class: 'tile__form', data-add-form: '' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="tile__add" aria-label="{{ 'products.quick_add_label' | t: title: product.title | escape }}">
+          <span class="tile__add-tx" data-add-label>{{ 'products.quick_add' | t }}</span>
+          <svg class="tile__add-icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>
+        </button>
+      {%- endform -%}
+    {%- endif -%}
+  {%- else -%}
+    <a class="tile__open" href="{{ routes.all_products_collection_url }}">
+      <span class="tile__ground">
+        <span class="tile__bag">{% render 'stand-in', name: 'bag', label: bag_label %}</span>
+      </span>
+      <span class="tile__name">{{ sample_name | escape }}</span>
+      <span class="tile__price">{{ sample_price | escape }}</span>
+    </a>
+  {%- endif -%}
+</article>
+

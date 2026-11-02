@@ -1,0 +1,137 @@
+{%- assign token = section.settings.color -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter held-story"
+  data-section="held-story"
+  data-count-word="{{ section.settings.count_word | escape }}"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap held-story__in">
+    <div class="held-story__media">
+      <div class="held-story__pictures"></div>
+      <p class="held-story__count small" aria-hidden="true"></p>
+    </div>
+    <div class="held-story__steps">
+      {%- for block in section.blocks -%}
+        <article class="held-story__step" {{ block.shopify_attributes }}>
+          <div class="held-story__pic" style="--f:var(--{{ block.settings.field }})">
+            {%- render 'cutout',
+              image: block.settings.image,
+              stand_in: block.settings.stand_in,
+              sizes: '(min-width: 801px) 56vw, 100vw',
+              width: 1600
+            -%}
+          </div>
+          <div class="held-story__cap">
+            {%- if block.settings.heading != blank -%}
+              <h2 class="heading-head">{{ block.settings.heading | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="lead">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Held photo, captions",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button colour" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "paper"
+    },
+    {
+      "type": "text",
+      "id": "count_word",
+      "label": "Word in the step count",
+      "info": "Shown between the numbers, as in 1 of 2.",
+      "default": "of"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        {
+          "type": "select",
+          "id": "stand_in",
+          "label": "Drawn picture until a photo is added",
+          "options": [
+            { "value": "vets", "label": "Vet photo" },
+            { "value": "tummy", "label": "Happy dog photo" },
+            { "value": "training", "label": "Training photo" },
+            { "value": "poster", "label": "Treat photo" },
+            { "value": "golden", "label": "Golden dog" },
+            { "value": "dachs", "label": "Dachshund" },
+            { "value": "cat", "label": "Cat" },
+            { "value": "chip", "label": "Chip" },
+            { "value": "bag", "label": "Bag" }
+          ],
+          "default": "golden"
+        },
+        {
+          "type": "select",
+          "id": "field",
+          "label": "Backdrop colour for the drawn picture",
+          "options": [
+            { "value": "hero", "label": "Hero" },
+            { "value": "paper", "label": "Page" },
+            { "value": "ink", "label": "Text colour" },
+            { "value": "block-a", "label": "Light block" },
+            { "value": "block-b", "label": "Dark block" },
+            { "value": "action", "label": "Button colour" },
+            { "value": "pop", "label": "Accent" },
+            { "value": "rain", "label": "Chip rain" },
+            { "value": "chicken", "label": "Chicken" },
+            { "value": "turkey", "label": "Turkey" },
+            { "value": "beef", "label": "Beef" },
+            { "value": "fish", "label": "Fish" }
+          ],
+          "default": "block-a"
+        },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Made with care" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Sample text. Explain why pet parents can trust your treats, using claims you can back up."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Held photo, captions",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}

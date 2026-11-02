@@ -1,0 +1,37 @@
+<div data-search-results>
+  {%- if predictive_search.performed -%}
+    {%- assign found = predictive_search.resources.products -%}
+    {%- if found.size > 0 -%}
+      <ul class="suggest">
+        {%- for product in found -%}
+          <li>
+            <a class="suggest__row" href="{{ product.url }}">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 144, height: 144, crop: 'center' | image_tag: class: 'suggest__pic', alt: '', loading: 'lazy', width: 72, height: 72 }}
+              {%- endif -%}
+              <span class="suggest__tx">
+                <span class="suggest__name">{{ product.title | split: '|' | first | strip | escape }}</span>
+                <span class="suggest__price">{{ product.price | money }}</span>
+              </span>
+              <svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <a class="btn btn--plain suggest__all" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&type=product">
+        {{- 'search.view_all' | t: terms: predictive_search.terms | escape -}}
+      </a>
+    {%- else -%}
+      <p class="suggest__none">{{ 'search.no_results_html' | t: terms: predictive_search.terms | escape }}</p>
+      {% render 'search-suggestions' %}
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": []
+}
+{% endschema %}

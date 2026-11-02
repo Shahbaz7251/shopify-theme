@@ -1,0 +1,62 @@
+<!doctype html>
+<html
+  lang="{{ request.locale.iso_code }}"
+  class="no-js{% if request.design_mode %} is-editor{% endif %}"
+  data-smooth="{{ settings.smooth_scroll }}"
+  {% unless settings.enable_motion %}
+    data-calm
+  {% endunless %}
+>
+  <head>
+    <script>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    {{ 'stack-sans-headline.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'stack-sans-text.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {% render 'css-variables' %}
+    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'sections.css' | asset_url | stylesheet_tag: preload: true }}
+    {% render 'meta-tags' %}
+    {%- if settings.favicon -%}
+      <link rel="icon" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+    {{ content_for_header }}
+    <script>
+      window.__ftpStrings = { added: {{ 'products.added' | t | json }}, soldOut: {{ 'products.sold_out' | t | json }} };
+    </script>
+    <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'lenis.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'home-a.js' | asset_url }}" defer></script>
+    <script src="{{ 'home-b.js' | asset_url }}" defer></script>
+    <script src="{{ 'home-c.js' | asset_url }}" defer></script>
+    <script src="{{ 'home-d.js' | asset_url }}" defer></script>
+    {%- if request.page_type == 'collection' -%}
+      <script src="{{ 'Flip.min.js' | asset_url }}" defer></script>
+      <script src="{{ 'collection.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    {%- if request.page_type == 'product' -%}
+      <script src="{{ 'product.js' | asset_url }}" defer></script>
+    {%- endif -%}
+  </head>
+
+  {%- liquid
+    assign basic_page = true
+    if request.page_type == 'index' or request.page_type == 'collection' or request.page_type == 'product' or request.page_type == 'search'
+      assign basic_page = false
+    endif
+  -%}
+  <body class="template-{{ request.page_type }}{% if basic_page %} is-basic{% endif %}">
+    <a class="skip-link" href="#main">{{ 'general.skip_to_content' | t }}</a>
+    {% render 'stand-in-sprite' %}
+    {% sections 'header-group' %}
+
+    <main id="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+    {% section 'cart-drawer' %}
+  </body>
+</html>

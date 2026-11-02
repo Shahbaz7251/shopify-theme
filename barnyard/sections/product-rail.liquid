@@ -1,0 +1,115 @@
+{%- liquid
+  assign token = section.settings.colour
+  assign rail_collection = section.settings.collection
+  assign rail_url = routes.all_products_collection_url
+  assign has_products = false
+  if rail_collection != blank
+    assign rail_url = rail_collection.url
+    if rail_collection.products_count > 0
+      assign has_products = true
+    endif
+  endif
+  assign tile_sizes = '(min-width: 1100px) 23vw, (min-width: 721px) 30vw, 62vw'
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter product-rail"
+  data-section="product-rail"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap product-rail__head" data-rise>
+    <h2 class="heading-head">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.link_label != blank -%}
+      <a class="btn btn--soft" href="{{ rail_url }}">{{ section.settings.link_label | escape }}</a>
+    {%- endif -%}
+  </div>
+  <ul class="product-rail__row" data-rail tabindex="0" aria-label="{{ section.settings.heading | escape }}">
+    {%- if has_products -%}
+      {%- for product in rail_collection.products limit: section.settings.limit -%}
+        <li class="product-rail__item" data-item>
+          {% render 'product-tile', product: product, sizes: tile_sizes %}
+        </li>
+      {%- endfor -%}
+    {%- else -%}
+      <li class="product-rail__item" data-item>
+        {% render 'product-tile', sample_name: 'Chicken chips', sample_price: '$13.95', sample_protein: 'chicken' %}
+      </li>
+      <li class="product-rail__item" data-item>
+        {% render 'product-tile', sample_name: 'Turkey chips', sample_price: '$14.95', sample_protein: 'turkey' %}
+      </li>
+      <li class="product-rail__item" data-item>
+        {% render 'product-tile', sample_name: 'Beef chips', sample_price: '$16.95', sample_protein: 'beef' %}
+      </li>
+      <li class="product-rail__item" data-item>
+        {% render 'product-tile', sample_name: 'Fish chips', sample_price: '$15.95', sample_protein: 'fish' %}
+      </li>
+      <li class="product-rail__item" data-item>
+        {% render 'product-tile', sample_name: 'Chicken crumbles', sample_price: '$9.95', sample_protein: 'chicken' %}
+      </li>
+      <li class="product-rail__item" data-item>
+        {% render 'product-tile', sample_name: 'Turkey topper', sample_price: '$12.95', sample_protein: 'turkey' %}
+      </li>
+    {%- endif -%}
+  </ul>
+</section>
+
+
+{% schema %}
+{
+  "name": "Product rail",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Sample tiles show until you choose a collection that has products."
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Number of products",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Shop all treats"
+    },
+    {
+      "type": "select",
+      "id": "colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Dark text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "paper"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product rail"
+    }
+  ]
+}
+{% endschema %}

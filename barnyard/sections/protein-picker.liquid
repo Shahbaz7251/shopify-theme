@@ -1,0 +1,192 @@
+{%- liquid
+  assign lead_block = section.blocks | first
+  assign lead_field = '#FFC531'
+  assign lead_ink = settings.color_ink
+  if lead_block
+    assign lead_field = lead_block.settings.field
+    assign lead_brightness = lead_block.settings.field | color_brightness
+    if lead_brightness < 128
+      assign lead_ink = '#FFFFFF'
+    endif
+  endif
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter protein-picker"
+  data-section="protein-picker"
+  style="--c:{{ lead_field }};--i:{{ lead_ink }}"
+  aria-label="{{ section.settings.heading | escape }}"
+>
+  <div class="protein-picker__flood" data-flood aria-hidden="true"></div>
+  <div class="wrap protein-picker__in">
+    <div class="protein-picker__list" data-rise>
+      <h2 class="heading-head protein-picker__heading">{{ section.settings.heading | escape }}</h2>
+      <div class="protein-picker__names" role="group" aria-label="{{ section.settings.heading | escape }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign ink = settings.color_ink
+            assign brightness = block.settings.field | color_brightness
+            if brightness < 128
+              assign ink = '#FFFFFF'
+            endif
+          -%}
+          <button
+            type="button"
+            class="protein-picker__name"
+            data-name
+            data-block-id="{{ block.id }}"
+            data-field="{{ block.settings.field }}"
+            data-ink="{{ ink }}"
+            aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {{- block.settings.name | escape -}}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="protein-picker__show">
+      <div class="protein-picker__disc" data-disc data-rise>
+        {%- for block in section.blocks -%}
+          {%- assign bag_image = block.settings.image | default: block.settings.product.featured_image -%}
+          <div class="protein-picker__bag{% if bag_image %} protein-picker__bag--photo{% endif %}" data-bag{% unless forloop.first %} hidden{% endunless %}>
+            {% render 'cutout',
+              image: bag_image,
+              stand_in: 'bag',
+              label: block.settings.name,
+              alt: block.settings.name,
+              sizes: '(min-width: 860px) 24vw, 46vw',
+              width: 900
+            %}
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="protein-picker__facts" aria-live="polite" data-rise>
+        {%- for block in section.blocks -%}
+          {%- assign href = block.settings.link | default: routes.all_products_collection_url -%}
+          <div class="protein-picker__fact" data-fact{% unless forloop.first %} hidden{% endunless %}>
+            <strong>{{ block.settings.line | escape }}</strong>
+            <p>{{ block.settings.fact | escape }}</p>
+            <a class="btn btn--paper" href="{{ href }}">
+              {{- block.settings.link_label | escape -}}
+              <span class="btn__dot"><svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Protein picker",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pick a protein"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "protein",
+      "name": "Protein",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Chicken"
+        },
+        {
+          "type": "color",
+          "id": "field",
+          "label": "Background colour",
+          "default": "#FFC531"
+        },
+        { "type": "product", "id": "product", "label": "Product" },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bag picture",
+          "info": "Use a cut-out on a transparent background. A drawn bag shows until you add one."
+        },
+        {
+          "type": "text",
+          "id": "line",
+          "label": "Ingredient line",
+          "default": "Ingredients: chicken breast."
+        },
+        {
+          "type": "textarea",
+          "id": "fact",
+          "label": "Fact",
+          "default": "A light, crunchy chip that snaps into training bites."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop chicken"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Protein picker",
+      "blocks": [
+        {
+          "type": "protein",
+          "settings": {
+            "name": "Chicken",
+            "field": "#FFC531",
+            "line": "Ingredients: chicken breast.",
+            "fact": "A light, crunchy chip that snaps into training bites.",
+            "link_label": "Shop chicken"
+          }
+        },
+        {
+          "type": "protein",
+          "settings": {
+            "name": "Turkey",
+            "field": "#F39A6B",
+            "line": "Ingredients: turkey breast.",
+            "fact": "A good change for dogs who have had plenty of chicken.",
+            "link_label": "Shop turkey"
+          }
+        },
+        {
+          "type": "protein",
+          "settings": {
+            "name": "Beef",
+            "field": "#4A1D16",
+            "line": "Ingredients: beef.",
+            "fact": "A richer, meatier chip for dogs who want more.",
+            "link_label": "Shop beef"
+          }
+        },
+        {
+          "type": "protein",
+          "settings": {
+            "name": "Fish",
+            "field": "#0E7C86",
+            "line": "Ingredients: wild-caught fish.",
+            "fact": "A low-allergen choice for sensitive tummies.",
+            "link_label": "Shop fish"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

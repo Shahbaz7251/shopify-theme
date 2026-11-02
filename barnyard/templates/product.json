@@ -1,0 +1,215 @@
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "feeding": {
+          "type": "accordion",
+          "settings": {
+            "title": "Feeding instructions",
+            "content": "<p>Sample text. Add your feeding instructions.</p>"
+          }
+        },
+        "use": {
+          "type": "accordion",
+          "settings": {
+            "title": "How to use",
+            "content": "<p>Sample text. Add how to use this product.</p>"
+          }
+        },
+        "analysis": {
+          "type": "analysis",
+          "settings": {
+            "title": "Guaranteed analysis",
+            "rows": "Crude protein, 80\nCrude fat, 5\nCrude fiber, 1\nMoisture, 10",
+            "content": "<p>Sample figures. Replace with the numbers on the bag.</p>"
+          }
+        },
+        "source": {
+          "type": "accordion",
+          "settings": {
+            "title": "Ingredient source",
+            "content": "<p>Sample text. Add where this protein comes from and how it is prepared.</p>"
+          }
+        },
+        "guarantee": {
+          "type": "accordion",
+          "settings": {
+            "title": "Satisfaction guarantee",
+            "content": "<p>Sample text. Add your guarantee wording here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feeding",
+        "use",
+        "analysis",
+        "source",
+        "guarantee"
+      ],
+      "settings": {}
+    },
+    "chapter": {
+      "type": "product-chapter",
+      "settings": {
+        "line": "100% chicken breast",
+        "text": "Sample text. Tell shoppers what makes this product special."
+      }
+    },
+    "story": {
+      "type": "held-story",
+      "blocks": {
+        "training": {
+          "type": "step",
+          "settings": {
+            "stand_in": "training",
+            "field": "block-a",
+            "heading": "Made for training",
+            "text": "Sample text. Explain how your treat helps with training."
+          }
+        },
+        "nutrition": {
+          "type": "step",
+          "settings": {
+            "stand_in": "poster",
+            "field": "hero",
+            "heading": "Good in every bite",
+            "text": "Sample text. Add nutrition facts you can back up."
+          }
+        },
+        "loved": {
+          "type": "step",
+          "settings": {
+            "stand_in": "tummy",
+            "field": "pop",
+            "heading": "Loved by pets",
+            "text": "Sample text. Share what customers love about this treat."
+          }
+        }
+      },
+      "block_order": [
+        "training",
+        "nutrition",
+        "loved"
+      ],
+      "settings": {
+        "color": "paper",
+        "count_word": "of"
+      }
+    },
+    "reviews": {
+      "type": "review-stack",
+      "blocks": {
+        "one": {
+          "type": "review",
+          "settings": {
+            "quote": "Sample review. My dog sits before I open the bag.",
+            "author": "Sample customer",
+            "product_name": "Chicken chips",
+            "stand_in": "dachs",
+            "color": "paper"
+          }
+        },
+        "two": {
+          "type": "review",
+          "settings": {
+            "quote": "Sample review. Replace this with real customer words.",
+            "author": "Sample customer",
+            "product_name": "Turkey chips",
+            "stand_in": "golden",
+            "color": "pop"
+          }
+        },
+        "three": {
+          "type": "review",
+          "settings": {
+            "quote": "Sample review. Even the cat wants one.",
+            "author": "Sample customer",
+            "product_name": "Cat crumbles",
+            "stand_in": "cat",
+            "color": "block-b"
+          }
+        }
+      },
+      "block_order": [
+        "one",
+        "two",
+        "three"
+      ],
+      "settings": {
+        "score": "4.9",
+        "heading": "Reviews from our customers",
+        "text": "Flick a card away to read the next one.",
+        "next_label": "Next review",
+        "small_note": "Sample reviews until real ones are added.",
+        "color": "block-a"
+      }
+    },
+    "faq": {
+      "type": "faq-tiles",
+      "blocks": {
+        "ingredients": {
+          "type": "question",
+          "settings": {
+            "question": "What ingredients are in these chips?",
+            "answer": "<p>Sample answer. List your real ingredients.</p>"
+          }
+        },
+        "texture": {
+          "type": "question",
+          "settings": {
+            "question": "Are the treats hard or soft?",
+            "answer": "<p>Sample answer. Describe your treat here.</p>"
+          }
+        },
+        "count": {
+          "type": "question",
+          "settings": {
+            "question": "How many chips are in a bag?",
+            "answer": "<p>Sample answer. Add the real count for each bag size.</p>"
+          }
+        },
+        "daily": {
+          "type": "question",
+          "settings": {
+            "question": "How many treats can my dog have in a day?",
+            "answer": "<p>Sample answer. Add your feeding guidance here, and check with your vet for dogs on special diets.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ingredients",
+        "texture",
+        "count",
+        "daily"
+      ],
+      "settings": {
+        "heading": "Good questions",
+        "colour": "paper"
+      }
+    },
+    "more": {
+      "type": "folded-text",
+      "settings": {
+        "heading": "More about these treats",
+        "text": "<p>Sample text. Write about this product in your own words.</p><p>Sample text. Replace it with the longer product story for shoppers and search engines. Keep it useful, and write it the way you would explain the treat to a friend standing in the pet aisle.</p><p>A convenient snack pouch holds just the right amount for a training session, a walk or a car ride, so a good reward is always close to hand.</p>"
+      }
+    },
+    "recs": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You may also like",
+        "limit": 6
+      }
+    }
+  },
+  "order": [
+    "main",
+    "chapter",
+    "story",
+    "reviews",
+    "faq",
+    "more",
+    "recs"
+  ]
+}

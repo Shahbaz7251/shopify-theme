@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:general.footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "wordmark": "Barnyard",
+        "about": "<p>Add a short line about your store here.</p>",
+        "menu_1": "main-menu",
+        "menu_1_title": "Quick links",
+        "menu_2": "footer",
+        "menu_2_title": "Policies",
+        "disclaimer": "",
+        "show_payment_icons": true,
+        "color": "ink"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

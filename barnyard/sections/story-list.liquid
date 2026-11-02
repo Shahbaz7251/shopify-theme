@@ -1,0 +1,135 @@
+{%- liquid
+  assign token = section.settings.color
+  assign story_blog = section.settings.blog
+  assign has_articles = false
+  assign rows = 'Your first blog post title|Your second blog post title|Your third blog post title' | split: '|'
+  if story_blog != blank and story_blog.articles_count > 0
+    assign has_articles = true
+    assign rows = story_blog.articles
+  endif
+  assign fallback_url = '#'
+  if story_blog != blank
+    assign fallback_url = story_blog.url
+  endif
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter story-list"
+  data-section="story-list"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap story-list__in">
+    <div class="story-list__head">
+      <h2 class="heading-head">{{ section.settings.heading | escape }}</h2>
+      {%- if story_blog != blank and section.settings.link_label != blank -%}
+        <a class="btn btn--soft" href="{{ story_blog.url }}">{{ section.settings.link_label | escape }}</a>
+      {%- endif -%}
+    </div>
+    <div class="story-list__body" data-story-body>
+      <ul class="story-list__rows">
+        {%- for row in rows limit: section.settings.limit -%}
+          {%- liquid
+            assign row_title = row
+            assign row_url = fallback_url
+            assign row_image = blank
+            assign row_date = blank
+            if has_articles
+              assign row_title = row.title
+              assign row_url = row.url
+              assign row_image = row.image
+              assign row_date = row.published_at
+            endif
+            assign row_alt = row_title | escape
+            assign tile_index = forloop.index0 | modulo: 3
+            assign tile = 'pop'
+            if tile_index == 1
+              assign tile = 'hero'
+            elsif tile_index == 2
+              assign tile = 'block-a'
+            endif
+          -%}
+          <li class="story-list__item" data-story-item>
+            <a class="story-row" href="{{ row_url }}" data-story-row>
+              <span class="story-row__thumb" data-story-thumb>
+                {%- if row_image != blank -%}
+                  {{ row_image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width: 900px) 34vw, 100vw', widths: '480, 720, 1000', alt: row_alt, class: 'story-row__image' }}
+                {%- else -%}
+                  <span class="story-row__tile" style="--t:var(--{{ tile }})">{% render 'stand-in', name: 'chip' %}</span>
+                {%- endif -%}
+              </span>
+              <span class="story-row__text">
+                <span class="story-row__name">{{ row_title | escape }}</span>
+                {%- if row_date != blank -%}
+                  <span class="story-row__date">{{ row_date | date: '%B %-d, %Y' }}</span>
+                {%- endif -%}
+              </span>
+              <svg class="story-row__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <div class="story-list__frame" data-story-frame aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Story list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From the blog"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Sample stories show until this blog has articles."
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Stories to show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Read all stories"
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Dark text" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "paper"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story list"
+    }
+  ]
+}
+{% endschema %}

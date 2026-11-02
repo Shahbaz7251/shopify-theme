@@ -1,0 +1,193 @@
+{%- liquid
+  assign token = section.settings.color
+  assign wordmark = section.settings.wordmark
+  assign letters = wordmark | split: ''
+  assign letter_count = wordmark | remove: ' ' | size
+  assign heights = '100,72,88,64,94,78' | split: ','
+  assign tones = 'action,pop,hero,block-a' | split: ','
+  assign placed = 0
+  assign menu_1 = section.settings.menu_1
+  assign menu_2 = section.settings.menu_2
+-%}
+<footer
+  id="section-{{ section.id }}"
+  class="chapter site-footer"
+  data-section="site-footer"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="wrap site-footer__in">
+    {%- if letter_count > 0 -%}
+      <div class="site-footer__markbox">
+        <div
+          class="site-footer__mark"
+          role="img"
+          aria-label="{{ wordmark | escape }}"
+          style="--n:{{ letter_count }}"
+        >
+          {%- for letter in letters -%}
+            {%- if letter == ' ' -%}
+              <span class="site-footer__gap" aria-hidden="true"></span>
+            {%- else -%}
+              {%- liquid
+                assign tone_index = placed | modulo: tones.size
+                assign height_index = placed | modulo: heights.size
+                assign tone = tones[tone_index]
+                assign block_height = heights[height_index]
+                assign placed = placed | plus: 1
+              -%}
+              <span
+                class="site-footer__block"
+                data-mark-block
+                aria-hidden="true"
+                style="--b:var(--{{ tone }});--b-ink:var(--{{ tone }}-ink);--h:{{ block_height }}"
+              >{{ letter | escape }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="site-footer__grid">
+      <div class="site-footer__about">
+        {%- if section.settings.about != blank -%}
+          <div class="site-footer__rte">{{ section.settings.about }}</div>
+        {%- endif -%}
+        <ul class="site-footer__social">
+          {%- if settings.social_instagram != blank -%}
+            <li><a href="{{ settings.social_instagram }}" rel="noopener" target="_blank">Instagram</a></li>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <li><a href="{{ settings.social_facebook }}" rel="noopener" target="_blank">Facebook</a></li>
+          {%- endif -%}
+          {%- if settings.social_tiktok != blank -%}
+            <li><a href="{{ settings.social_tiktok }}" rel="noopener" target="_blank">TikTok</a></li>
+          {%- endif -%}
+          {%- if settings.social_youtube != blank -%}
+            <li><a href="{{ settings.social_youtube }}" rel="noopener" target="_blank">YouTube</a></li>
+          {%- endif -%}
+          {%- if settings.social_pinterest != blank -%}
+            <li><a href="{{ settings.social_pinterest }}" rel="noopener" target="_blank">Pinterest</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      {%- if menu_1 != blank and menu_1.links.size > 0 -%}
+        <nav class="site-footer__col" aria-label="{{ section.settings.menu_1_title | default: menu_1.title | escape }}">
+          <h2 class="site-footer__title">{{ section.settings.menu_1_title | default: menu_1.title | escape }}</h2>
+          <ul class="site-footer__links{% if menu_1.links.size > 6 %} site-footer__links--two{% endif %}">
+            {%- for link in menu_1.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      {%- if menu_2 != blank and menu_2.links.size > 0 -%}
+        <nav class="site-footer__col" aria-label="{{ section.settings.menu_2_title | default: menu_2.title | escape }}">
+          <h2 class="site-footer__title">{{ section.settings.menu_2_title | default: menu_2.title | escape }}</h2>
+          <ul class="site-footer__links{% if menu_2.links.size > 6 %} site-footer__links--two{% endif %}">
+            {%- for link in menu_2.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.disclaimer != blank -%}
+      <div class="site-footer__disclaimer small">{{ section.settings.disclaimer }}</div>
+    {%- endif -%}
+
+    <div class="site-footer__base">
+      <p class="small">
+        <span class="sr-only">{{ 'footer.copyright_label' | t }}</span>
+        &copy; {{ 'now' | date: '%Y' }}
+        {{ shop.name | link_to: routes.root_url }}
+      </p>
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <ul class="site-footer__pay">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag: class: 'site-footer__pay-icon' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "site-footer-wrap",
+  "settings": [
+    {
+      "type": "text",
+      "id": "wordmark",
+      "label": "Block wordmark",
+      "default": "Barnyard"
+    },
+    {
+      "type": "richtext",
+      "id": "about",
+      "label": "About text",
+      "default": "<p>Add a short line about your store here.</p>"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "First menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_1_title",
+      "label": "First menu title",
+      "default": "Quick links"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Second menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_title",
+      "label": "Second menu title",
+      "default": "Policies"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Disclaimer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Dark text" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "ink"
+    }
+  ]
+}
+{% endschema %}

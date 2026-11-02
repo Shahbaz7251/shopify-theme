@@ -1,0 +1,357 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign short_title = product.title | split: '|' | first | strip
+  assign title_rest = product.title | remove_first: short_title | remove_first: '|' | strip
+  capture protein_raw
+    render 'product-protein', product: product
+  endcapture
+  assign protein = protein_raw | strip
+  assign bag_label = protein | capitalize
+  assign template_prefix = section.id | split: '__' | first
+  assign reviews_target = 'section-' | append: template_prefix | append: '__reviews'
+  assign rating = product.metafields.reviews.rating.value.rating | default: 5 | round
+  assign form_id = 'product-form-' | append: section.id
+  assign price_text = current.price | money | strip_html
+  assign compare_text = ''
+  if current.compare_at_price > current.price
+    assign compare_text = current.compare_at_price | money | strip_html
+  endif
+  assign media_count = product.media.size
+  assign has_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_plans = true
+  endif
+  assign requires_plan = product.requires_selling_plan
+-%}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+<section
+  id="section-{{ section.id }}"
+  class="chapter pp"
+  data-section="product-page"
+  data-product-root
+  data-sold-out="{{ 'products.sold_out' | t | escape }}"
+  data-add-text="{{ 'products.add_to_cart' | t | escape }}"
+  style="--c:var(--paper);--i:var(--ink);--tile:var(--{{ protein }})"
+>
+  <div class="wrap pp__in">
+    <div class="pp__gallery-col">
+      <div class="pp__stage">
+      <div class="pp__gallery" data-gallery tabindex="-1">
+        {%- if media_count == 0 -%}
+          <div class="pp__media pp__media--empty" data-media-item data-fly-source style="view-transition-name:bag-{{ product.id }}">
+            <div class="pp__disc">
+              <div class="pp__disc-bag">{% render 'stand-in', name: 'bag', label: bag_label %}</div>
+            </div>
+          </div>
+        {%- else -%}
+          {%- for media in product.media -%}
+            <div
+              class="pp__media pp__media--{{ media.media_type }}"
+              data-media-item
+              data-media-id="{{ media.id }}"
+              {% if forloop.first %}
+                data-fly-source style="view-transition-name:bag-{{ product.id }}"
+              {% endif %}
+            >
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  {%- if forloop.first -%}
+                    {{ media.preview_image | image_url: width: 1600 | image_tag: alt: media.alt, sizes: '(min-width: 861px) 55vw, 100vw', widths: '540, 720, 900, 1200, 1600', loading: 'eager', fetchpriority: 'high' }}
+                  {%- else -%}
+                    {{ media.preview_image | image_url: width: 1600 | image_tag: alt: media.alt, sizes: '(min-width: 861px) 55vw, 100vw', widths: '540, 720, 900, 1200, 1600', loading: 'lazy' }}
+                  {%- endif -%}
+                {%- when 'video' -%}
+                  {{ media | video_tag: controls: true, playsinline: true, image_size: '1200x' }}
+                {%- when 'external_video' -%}
+                  {{ media | external_video_tag }}
+                {%- when 'model' -%}
+                  {{ media | model_viewer_tag }}
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      {%- if media_count > 1 -%}
+        <button type="button" class="pp__nav pp__nav--prev" data-gallery-prev aria-label="{{ 'products.previous_image' | t }}" disabled>
+          <svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+        </button>
+        <button type="button" class="pp__nav pp__nav--next" data-gallery-next aria-label="{{ 'products.next_image' | t }}">
+          <svg aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+        </button>
+        <p
+          class="pp__count small"
+          data-gallery-count
+          data-template="{{ 'products.gallery_count' | t: current: '__c__', total: media_count | escape }}"
+        >
+          {{ 'products.gallery_count' | t: current: 1, total: media_count }}
+        </p>
+      {%- endif -%}
+      </div>
+      {%- if media_count > 1 -%}
+        <div class="pp__thumbs" data-thumbs>
+          {%- for media in product.media -%}
+            <button
+              type="button"
+              class="pp__thumb"
+              data-thumb="{{ forloop.index0 }}"
+              aria-label="{{ 'products.gallery_count' | t: current: forloop.index, total: media_count | escape }}"
+              {% if forloop.first %}
+                aria-current="true"
+              {% endif %}
+            >
+              {{ media.preview_image | image_url: width: 160, height: 160, crop: 'center' | image_tag: alt: '', loading: 'lazy', width: 80, height: 80 }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pp__details" data-details>
+      <div class="pp__heading">
+        <h1 class="pp__title">{{ short_title | escape }}</h1>
+        {%- if title_rest != blank -%}
+          <p class="pp__sub">{{ title_rest | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <a class="pp__rating" href="#{{ reviews_target }}" data-reviews-link>
+        <span class="pp__stars" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <svg class="{% if i > rating %}is-off{% endif %}" focusable="false"><use href="#i-star"/></svg>
+          {%- endfor -%}
+        </span>
+        <span>{{ 'products.reviews_link' | t }}</span>
+      </a>
+
+      <div class="pp__price-row">
+        <p class="pp__price" data-price>{{ price_text }}</p>
+        <s class="pp__compare" data-compare{% if compare_text == '' %} hidden{% endif %}>{{ compare_text }}</s>
+      </div>
+
+      {%- form 'product', product, id: form_id, class: 'pp__form', data-add-form: '' -%}
+        <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+        <noscript>
+          <select name="id" class="pp__noscript">
+            {%- for v in product.variants -%}
+              <option value="{{ v.id }}"{% if v.id == current.id %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title | escape }}</option>
+            {%- endfor -%}
+          </select>
+        </noscript>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign opt_index = forloop.index0 -%}
+            <div class="pp__option">
+              <p class="pp__option-name">{{ option.name | escape }}</p>
+              {%- if option.values.size >= 2 and option.values.size <= 3 -%}
+                {%- assign selected_index = 0 -%}
+                {%- for value in option.values -%}
+                  {%- if value.selected -%}
+                    {%- assign selected_index = forloop.index0 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <div class="pp__seg" role="group" aria-label="{{ option.name | escape }}" data-seg style="--n:{{ option.values.size }};--at:{{ selected_index }}">
+                  <span class="pp__seg-pill" aria-hidden="true"></span>
+                  {%- for value in option.values -%}
+                    <button
+                      type="button"
+                      data-opt="{{ opt_index }}"
+                      data-value="{{ value | escape }}"
+                      data-pos="{{ forloop.index0 }}"
+                      aria-pressed="{% if value.selected %}true{% else %}false{% endif %}"
+                    >
+                      {{ value | escape }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <div class="pp__chips" role="group" aria-label="{{ option.name | escape }}">
+                  {%- for value in option.values -%}
+                    <button
+                      type="button"
+                      data-opt="{{ opt_index }}"
+                      data-value="{{ value | escape }}"
+                      aria-pressed="{% if value.selected %}true{% else %}false{% endif %}"
+                    >
+                      {{ value | escape }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        {%- if has_plans -%}
+          <input type="hidden" name="selling_plan" value="" data-plan-input disabled>
+          <div class="pp__plans" role="group" aria-label="{{ 'products.subscribe' | t }}">
+            {%- unless requires_plan -%}
+              <button type="button" data-plan="" aria-pressed="true">{{ 'products.one_time' | t }}</button>
+            {%- endunless -%}
+            {%- for group in product.selling_plan_groups -%}
+              {%- for plan in group.selling_plans -%}
+                <button type="button" data-plan="{{ plan.id }}" aria-pressed="false">{{ plan.name | escape }}</button>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="pp__buy">
+          <div class="pp__qty">
+            <button type="button" data-qty-step="-1" aria-label="{{ 'cart.quantity' | t }} -1"><svg aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></button>
+            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="{{ 'cart.quantity' | t }}" data-qty>
+            <button type="button" data-qty-step="1" aria-label="{{ 'cart.quantity' | t }} +1"><svg aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></button>
+          </div>
+          <button type="submit" class="pp__add" data-add-button{% unless current.available %} disabled{% endunless %}>
+            <span data-add-label>
+              {%- if current.available -%}
+                {{ 'products.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.sold_out' | t }}
+              {%- endif -%}
+            </span>
+          </button>
+        </div>
+        <button type="button" class="pp__now" data-buy-now{% unless current.available %} disabled{% endunless %}>
+          {{ 'products.buy_now' | t }}
+        </button>
+        <p class="pp__error small" data-form-error role="alert" hidden></p>
+      {%- endform -%}
+
+      <ul class="pp__trust">
+        {%- if settings.free_shipping_threshold > 0 -%}
+          {%- assign free_from = settings.free_shipping_threshold | times: 100 | money_without_trailing_zeros -%}
+          <li>{{ 'products.trust_shipping' | t: amount: free_from }}</li>
+        {%- endif -%}
+        <li>{{ 'products.trust_guarantee' | t }}</li>
+      </ul>
+
+      {%- if section.blocks.size > 0 or product.description != blank -%}
+        <div class="pp__accs">
+          {%- if product.description != blank -%}
+            <div class="pp__acc" data-acc>
+              <h2 class="pp__acc-head">
+                <button type="button" data-acc-button aria-expanded="false" aria-controls="acc-description-{{ section.id }}">
+                  <span>{{ 'products.description' | t }}</span>
+                  <i class="pp__acc-icon" aria-hidden="true"></i>
+                </button>
+              </h2>
+              <div class="pp__acc-panel" id="acc-description-{{ section.id }}">
+                <div class="pp__acc-inner">
+                  <div class="pp__acc-body pp__desc">{{ product.description }}</div>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+          {%- for block in section.blocks -%}
+            <div class="pp__acc" data-acc {{ block.shopify_attributes }}>
+              <h2 class="pp__acc-head">
+                <button type="button" data-acc-button aria-expanded="false" aria-controls="acc-{{ block.id }}">
+                  <span>{{ block.settings.title | escape }}</span>
+                  <i class="pp__acc-icon" aria-hidden="true"></i>
+                </button>
+              </h2>
+              <div class="pp__acc-panel" id="acc-{{ block.id }}">
+                <div class="pp__acc-inner">
+                  <div class="pp__acc-body">
+                    {%- if block.type == 'analysis' -%}
+                      {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+                      <ul class="pp__bars">
+                        {%- for row in rows -%}
+                          {%- assign parts = row | strip | split: ',' -%}
+                          {%- if parts.size > 1 -%}
+                            {%- assign amount = parts | last | strip -%}
+                            {%- assign label_size = row | strip | size | minus: amount.size | minus: 1 -%}
+                            {%- assign label = row | strip | slice: 0, label_size | strip -%}
+                            {%- assign pct = amount | plus: 0 | at_most: 100 | at_least: 0 -%}
+                            <li style="--v:{{ pct | divided_by: 100.0 }}">
+                              <span class="pp__bar-text"><span>{{ label | escape }}</span><span>{{ pct }}%</span></span>
+                              <span class="pp__bar"><i></i></span>
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                    {{ block.settings.content }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="pp__bar-buy" data-buy-bar aria-hidden="true">
+    <div class="pp__bar-buy-info">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 120, height: 120, crop: 'center' | image_tag: class: 'pp__bar-buy-pic', alt: '', loading: 'lazy', width: 56, height: 56 }}
+      {%- endif -%}
+      <div class="pp__bar-buy-tx">
+        <span class="pp__bar-buy-title">{{ short_title | escape }}</span>
+        <span class="pp__bar-buy-meta">
+          <b data-bar-price>{{ price_text }}</b>
+          {%- unless product.has_only_default_variant -%}
+            <span data-bar-variant>{{ current.title | escape }}</span>
+          {%- endunless -%}
+        </span>
+      </div>
+    </div>
+    <div class="pp__bar-buy-actions">
+      <button type="submit" form="{{ form_id }}" class="pp__add" data-bar-button tabindex="-1"{% unless current.available %} disabled{% endunless %}>
+        <span data-bar-label>
+          {%- if current.available -%}
+            {{ 'products.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.sold_out' | t }}
+          {%- endif -%}
+        </span>
+      </button>
+      <button type="button" class="pp__now" data-buy-now data-bar-now tabindex="-1"{% unless current.available %} disabled{% endunless %}>
+        {{ 'products.buy_now' | t }}
+      </button>
+    </div>
+  </div>
+
+  <script type="application/json" data-variants>
+    [
+    {%- for v in product.variants -%}
+      { "id": {{ v.id }}, "available": {{ v.available | json }}, "options": {{ v.options | json }}, "price": {{ v.price | money | strip_html | json }}, "compare": {% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | strip_html | json }}{% else %}null{% endif %}, "media": {% if v.featured_media %}{{ v.featured_media.id }}{% else %}null{% endif %}, "plans": { {%- for allocation in v.selling_plan_allocations -%}"{{ allocation.selling_plan.id }}": {{ allocation.price | money | strip_html | json }}{% unless forloop.last %},{% endunless %}{%- endfor -%} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+    ]
+  </script>
+</section>
+
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Feeding instructions" },
+        { "type": "richtext", "id": "content", "label": "Text", "default": "<p>Add the details here.</p>" }
+      ]
+    },
+    {
+      "type": "analysis",
+      "name": "Guaranteed analysis",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Guaranteed analysis" },
+        {
+          "type": "textarea",
+          "id": "rows",
+          "label": "Bars",
+          "info": "One per line, as a name, a comma and a percent. Example: Crude protein, 80",
+          "default": "Crude protein, 80\nCrude fat, 5\nCrude fiber, 1\nMoisture, 10"
+        },
+        { "type": "richtext", "id": "content", "label": "Note" }
+      ]
+    }
+  ]
+}
+{% endschema %}

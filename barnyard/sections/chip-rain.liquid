@@ -1,0 +1,90 @@
+{%- liquid
+  assign token = section.settings.color
+  assign chips = '2,10,0,-5|14,6,1,1|24,8,0,-6|34,5,0,3|43,9,0,-5|54,6,1,0|62,7,0,-4|71,5,0,4|79,10,0,-6|90,6,1,-1|8,5,0,8|49,5,0,9|67,4,0,9|92,5,0,10' | split: '|'
+-%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter chip-rain"
+  data-section="chip-rain"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="chip-rain__stage" data-rain-stage>
+    <div class="wrap chip-rain__head">
+      <h2 class="chip-rain__title">{{ section.settings.heading | escape }}</h2>
+    </div>
+    {%- for chip in chips limit: section.settings.count -%}
+      {%- liquid
+        assign c = chip | split: ','
+        assign turn = forloop.index | times: 47 | modulo: 360
+      -%}
+      <div
+        class="chip-rain__chip{% if c[2] == '1' %} chip-rain__chip--front{% endif %}"
+        data-rain-chip
+        aria-hidden="true"
+        style="--x:{{ c[0] }};--s:{{ c[1] }};--b:{{ c[3] }};--r:{{ turn }}"
+      >
+        {% render 'cutout',
+          image: section.settings.image,
+          stand_in: 'chip',
+          sizes: '(max-width: 720px) 30vw, 14vw',
+          width: 540
+        %}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Chip rain",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "100% chicken breast"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Chip picture",
+      "info": "Use a cut-out with a transparent background. A drawn chip shows until one is added."
+    },
+    {
+      "type": "range",
+      "id": "count",
+      "label": "Number of chips",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Dark text" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "rain"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chip rain"
+    }
+  ]
+}
+{% endschema %}

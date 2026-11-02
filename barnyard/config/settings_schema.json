@@ -1,0 +1,95 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Barnyard",
+    "theme_version": "1.0.0",
+    "theme_author": "Shahbaz Ali",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      { "type": "header", "content": "Page" },
+      { "type": "color", "id": "color_paper", "label": "Page background", "default": "#FFF9EC" },
+      { "type": "color", "id": "color_ink", "label": "Text", "default": "#2A0E0A" },
+      { "type": "color", "id": "color_muted", "label": "Secondary text", "default": "#5C3A33" },
+      { "type": "header", "content": "Chapters" },
+      { "type": "color", "id": "color_hero", "label": "Hero", "default": "#FFC531" },
+      { "type": "color", "id": "color_hero_ink", "label": "Hero text", "default": "#3A0D0A" },
+      { "type": "color", "id": "color_block_a", "label": "Light block", "default": "#FFE08A" },
+      { "type": "color", "id": "color_block_a_ink", "label": "Light block text", "default": "#2A0E0A" },
+      { "type": "color", "id": "color_block_b", "label": "Dark block", "default": "#6E140C" },
+      { "type": "color", "id": "color_block_b_ink", "label": "Dark block text", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_action", "label": "Buttons", "default": "#B3261E" },
+      { "type": "color", "id": "color_action_ink", "label": "Button text", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_pop", "label": "Accent", "default": "#F39A6B" },
+      { "type": "color", "id": "color_pop_ink", "label": "Accent text", "default": "#2A0E0A" },
+      { "type": "color", "id": "color_rain", "label": "Chip rain", "default": "#6E140C" },
+      { "type": "color", "id": "color_rain_ink", "label": "Chip rain text", "default": "#FFFFFF" },
+      { "type": "header", "content": "Proteins" },
+      { "type": "color", "id": "color_chicken", "label": "Chicken", "default": "#FFC531" },
+      { "type": "color", "id": "color_turkey", "label": "Turkey", "default": "#F39A6B" },
+      { "type": "color", "id": "color_beef", "label": "Beef", "default": "#4A1D16" },
+      { "type": "color", "id": "color_fish", "label": "Fish", "default": "#0E7C86" }
+    ]
+  },
+  {
+    "name": "Season",
+    "settings": [
+      {
+        "type": "select",
+        "id": "season",
+        "label": "Seasonal look",
+        "info": "Changes the hero colours across the store. The hero section has its own seasonal headline.",
+        "options": [
+          { "value": "none", "label": "None" },
+          { "value": "halloween", "label": "Halloween" },
+          { "value": "christmas", "label": "Christmas" }
+        ],
+        "default": "none"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "range",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping starts at",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "$",
+        "default": 35,
+        "info": "Set to 0 to hide the free shipping bar."
+      }
+    ]
+  },
+  {
+    "name": "Motion",
+    "settings": [
+      { "type": "checkbox", "id": "enable_motion", "label": "Enable animations", "default": true },
+      { "type": "checkbox", "id": "smooth_scroll", "label": "Soft mouse-wheel scrolling on desktop", "default": true }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 240, "step": 4, "unit": "px", "default": 120 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" },
+      { "type": "url", "id": "social_pinterest", "label": "Pinterest" }
+    ]
+  }
+]

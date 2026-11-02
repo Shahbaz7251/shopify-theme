@@ -1,0 +1,103 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "Page not found.",
+    "back_to_shopping": "Back to shopping"
+  },
+  "blog": {
+    "article_comments": "Comments",
+    "article_metadata_html": "{{ date }} by {{ author }}",
+    "comment_form_body": "Comment",
+    "comment_form_email": "Email",
+    "comment_form_name": "Name",
+    "comment_form_submit": "Post",
+    "comment_form_title": "Add a comment"
+  },
+  "cart": {
+    "checkout": "Checkout",
+    "title": "Cart",
+    "update": "Update",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "taxes_note": "Shipping and taxes are worked out at checkout.",
+    "quantity": "Quantity",
+    "increase": "Add one more {{ title }}",
+    "decrease": "Remove one {{ title }}",
+    "free_shipping_unlocked": "Free shipping unlocked",
+    "free_shipping_remaining": "{{ amount }} away from free shipping"
+  },
+  "customers": {
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "title": "Login"
+    }
+  },
+  "collections": {
+    "title": "Collections",
+    "filter_label": "Filter by protein",
+    "filter_all": "All",
+    "sort_label": "Sort",
+    "count": "{{ count }} treats",
+    "empty": "No treats here yet."
+  },
+  "footer": {
+    "copyright_label": "All rights reserved"
+  },
+  "general": {
+    "skip_to_content": "Skip to content",
+    "main_menu": "Main menu",
+    "menu": "Menu",
+    "close": "Close",
+    "account": "Account",
+    "play_video": "Play video"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Add to Apple Wallet",
+    "card": "Gift card",
+    "expired": "This gift card has expired",
+    "expires_on": "Expires on {{ expires_on }}",
+    "use_at_checkout": "Use this gift card at checkout"
+  },
+  "newsletter": {
+    "email_label": "Email address",
+    "submit": "Sign up"
+  },
+  "password": {
+    "title": "This shop is private",
+    "password": "Password",
+    "enter": "Enter"
+  },
+  "products": {
+    "quick_add": "Quick add",
+    "quick_add_label": "Quick add {{ title }}",
+    "added": "Added",
+    "sold_out": "Sold out",
+    "add_to_cart": "Add to cart",
+    "quantity": "Quantity",
+    "one_time": "One-time purchase",
+    "subscribe": "Subscribe and save",
+    "gallery_count": "{{ current }} of {{ total }}",
+    "next_image": "Next image",
+    "previous_image": "Previous image",
+    "buy_now": "Buy it now",
+    "trust_shipping": "Free shipping over {{ amount }}",
+    "trust_guarantee": "Satisfaction guarantee",
+    "description": "Description",
+    "read_more": "Read more",
+    "read_less": "Read less",
+    "reviews_link": "Read reviews"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search chips, toppers, antlers",
+    "popular": "Popular right now",
+    "shop_all": "Shop all treats",
+    "try_again": "Check the spelling or try a protein like chicken or beef.",
+    "view_all": "See all results for {{ terms }}",
+    "submit": "Search",
+    "no_results_html": "No results found for {{ terms }}",
+    "results_for_html": "{{ count }} results found for {{ terms }}"
+  }
+}

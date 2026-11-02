@@ -1,0 +1,76 @@
+<section id="section-{{ section.id }}" class="chapter word-tiles" data-section="word-tiles" style="--c:var(--{{ section.settings.colour }});--i:var(--{{ section.settings.colour }}-ink)">
+  <h2 class="sr-only">{{ section.settings.heading | escape }}</h2>
+  <ul class="word-tiles__grid">
+    {%- for block in section.blocks -%}
+      <li class="word-tiles__tile" style="--c:var(--{{ block.settings.colour }});--i:var(--{{ block.settings.colour }}-ink)" {{ block.shopify_attributes }}>
+        <span class="word-tiles__word" data-word>{{ block.settings.word | escape }}</span>
+        <span class="word-tiles__caption">{{ block.settings.caption | escape }}</span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+
+{% schema %}
+{
+  "name": "Wall of word tiles",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading for screen readers", "default": "Why choose us" },
+    {
+      "type": "select",
+      "id": "colour",
+      "label": "Background",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Page" },
+        { "value": "ink", "label": "Text colour" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" }
+      ],
+      "default": "paper"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "text", "id": "word", "label": "Word or figure", "default": "1" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Ingredient" },
+        {
+          "type": "select",
+          "id": "colour",
+          "label": "Colour",
+          "options": [
+            { "value": "hero", "label": "Hero" },
+            { "value": "paper", "label": "Page" },
+            { "value": "ink", "label": "Text colour" },
+            { "value": "block-a", "label": "Light block" },
+            { "value": "block-b", "label": "Dark block" },
+            { "value": "action", "label": "Button red" },
+            { "value": "pop", "label": "Accent" },
+            { "value": "rain", "label": "Chip rain" },
+            { "value": "chicken", "label": "Chicken" },
+            { "value": "turkey", "label": "Turkey" },
+            { "value": "beef", "label": "Beef" },
+            { "value": "fish", "label": "Fish" }
+          ],
+          "default": "hero"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wall of word tiles",
+      "blocks": [
+        { "type": "tile", "settings": { "word": "1", "caption": "Ingredient", "colour": "hero" } },
+        { "type": "tile", "settings": { "word": "100%", "caption": "Satisfaction guarantee", "colour": "block-b" } },
+        { "type": "tile", "settings": { "word": "$35", "caption": "Free shipping from", "colour": "pop" } },
+        { "type": "tile", "settings": { "word": "USA", "caption": "Farm raised", "colour": "block-a" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

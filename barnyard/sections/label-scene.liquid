@@ -1,0 +1,101 @@
+{%- liquid
+  assign token = section.settings.colour
+  assign items = section.settings.list | split: ','
+  assign position = section.settings.keep_position
+  assign placed = false
+-%}
+{%- capture keep_span -%}
+  <span class="label-scene__keep" data-keep>{{ section.settings.keep | escape }}</span>
+{%- endcapture -%}
+<section
+  id="section-{{ section.id }}"
+  class="chapter label-scene"
+  data-section="label-scene"
+  style="--c:var(--{{ token }});--i:var(--{{ token }}-ink)"
+>
+  <div class="label-scene__stage">
+    <div class="wrap label-scene__in" data-inner>
+      <h2 class="label-scene__head">{{ section.settings.heading | escape }}</h2>
+      <p class="label-scene__body" data-body>
+        {%- for item in items -%}
+          {%- assign clean = item | strip -%}
+          {%- if forloop.index0 == position -%}
+            {{- keep_span }}{{ ' ' -}}
+            {%- assign placed = true -%}
+          {%- endif -%}
+          {%- if clean != blank -%}
+            <span class="label-scene__ing" data-other>
+              {{- clean | escape -}}
+              {%- unless forloop.last -%},{%- endunless -%}
+              <i aria-hidden="true"></i>
+            </span>
+            {{- ' ' -}}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- unless placed -%}
+          {{- keep_span -}}
+        {%- endunless -%}
+      </p>
+      <div class="label-scene__foot" data-foot>
+        <p class="label-scene__start" data-start>{{ section.settings.start_text | escape }}</p>
+        <p class="label-scene__done" data-done>{{ section.settings.done_text | escape }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "The label",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ingredients:" },
+    {
+      "type": "textarea",
+      "id": "list",
+      "label": "Ingredients to cross out",
+      "info": "Separate each one with a comma.",
+      "default": "Chicken meal, corn gluten, wheat flour, glycerin, cane molasses, soy grits, salt, sorbic acid, natural smoke flavour, caramel colour, BHA, propylene glycol, sodium nitrite, powdered cellulose, brewers rice"
+    },
+    { "type": "text", "id": "keep", "label": "The one that stays", "default": "chicken breast" },
+    {
+      "type": "range",
+      "id": "keep_position",
+      "label": "Place in the list",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "default": 7
+    },
+    {
+      "type": "text",
+      "id": "start_text",
+      "label": "Text at the start",
+      "default": "A typical treat label. Scroll to read it the way your customers should."
+    },
+    { "type": "text", "id": "done_text", "label": "Text at the end", "default": "That is the whole label." },
+    {
+      "type": "select",
+      "id": "colour",
+      "label": "Colour",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "ink", "label": "Ink" },
+        { "value": "block-a", "label": "Light block" },
+        { "value": "block-b", "label": "Dark block" },
+        { "value": "action", "label": "Button red" },
+        { "value": "pop", "label": "Accent" },
+        { "value": "rain", "label": "Chip rain" },
+        { "value": "chicken", "label": "Chicken" },
+        { "value": "turkey", "label": "Turkey" },
+        { "value": "beef", "label": "Beef" },
+        { "value": "fish", "label": "Fish" }
+      ],
+      "default": "paper"
+    }
+  ],
+  "presets": [{ "name": "The label" }]
+}
+{% endschema %}

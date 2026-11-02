@@ -1,0 +1,20 @@
+{% doc %}
+  Quick links shown before a visitor has typed a search.
+
+  @example
+  {% render 'search-suggestions' %}
+{% enddoc %}
+<div class="search-popular">
+  <p class="search-popular__title">{{ 'search.popular' | t }}</p>
+  <div class="search-popular__links">
+    {%- assign handles = 'best-sellers,dog-treats,cat-treats,accessories' | split: ',' -%}
+    {%- for handle in handles -%}
+      {%- assign c = collections[handle] -%}
+      {%- if c.title != blank -%}
+        <a href="{{ c.url }}">{{ c.title | escape }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+    <a href="{{ routes.all_products_collection_url }}">{{ 'search.shop_all' | t }}</a>
+  </div>
+</div>
+

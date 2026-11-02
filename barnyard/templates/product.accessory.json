@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "feeding": {
+          "type": "accordion",
+          "settings": {
+            "title": "Feeding instructions",
+            "content": "<p>Sample text. Add your feeding instructions.</p>"
+          }
+        },
+        "use": {
+          "type": "accordion",
+          "settings": {
+            "title": "How to use",
+            "content": "<p>Sample text. Add how to use this product.</p>"
+          }
+        },
+        "analysis": {
+          "type": "analysis",
+          "settings": {
+            "title": "Guaranteed analysis",
+            "rows": "Crude protein, 80\nCrude fat, 5\nCrude fiber, 1\nMoisture, 10",
+            "content": "<p>Sample figures. Replace with the numbers on the bag.</p>"
+          }
+        },
+        "source": {
+          "type": "accordion",
+          "settings": {
+            "title": "Ingredient source",
+            "content": "<p>Sample text. Add where this protein comes from and how it is prepared.</p>"
+          }
+        },
+        "guarantee": {
+          "type": "accordion",
+          "settings": {
+            "title": "Satisfaction guarantee",
+            "content": "<p>Sample text. Add your guarantee wording here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feeding",
+        "use",
+        "analysis",
+        "source",
+        "guarantee"
+      ],
+      "settings": {}
+    },
+    "recs": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You may also like",
+        "limit": 6
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recs"
+  ]
+}
